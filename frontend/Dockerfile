@@ -1,7 +1,8 @@
 FROM node:22-slim AS build
 WORKDIR /app
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile --ignore-engines --network-timeout 600000
+COPY package.json yarn.lock* ./
+RUN if [ -f yarn.lock ]; then yarn install --frozen-lockfile --ignore-engines --network-timeout 600000; \
+    else yarn install --ignore-engines --network-timeout 600000; fi
 COPY . .
 ENV REACT_APP_BACKEND_URL="" GENERATE_SOURCEMAP=false
 RUN yarn build

@@ -1,0 +1,75 @@
+{
+  "summary": "Frontend-only verification of the Cinema page additions: live search (title + director), sort (Selection/Newest/Oldest), YouTube/Vimeo trailer block in film modal, admin 'Bande-annonce' field. All 7 review items pass. No code changes made.",
+  "backend_issues": { "critical": [], "minor": [] },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "verified": {
+    "search": {
+      "title_match_titre_du_film_02": "1 card",
+      "director_match_LASRI_case_insensitive": "4 cards (all directed by Lasri)",
+      "no_match_zzz": "film-no-result visible, 0 visible cards",
+      "film-search-clear_empties_input": true,
+      "accent_case_insensitive_norm_NFD": true
+    },
+    "sort": {
+      "default_order": ["Titre du film 01 (2026)","Titre du film 02 (2025)","Titre du film 03 (2024)","Titre du film 04 (2023)"],
+      "new_desc_year": "2026 -> 2023",
+      "old_asc_year": "2023 -> 2026",
+      "default_restores_admin_order": true,
+      "active_button_underlined": true,
+      "chip_order_unchanged_after_sort": ["Tous","Long métrage","Documentaire","Court métrage"],
+      "combined_chip+sort+search": "Long métrage (2 cards) + 'film 02' => 1 card"
+    },
+    "trailer": {
+      "youtube_url_renders_iframe_src": "https://www.youtube.com/embed/aqz-KE-bpKQ?autoplay=1&rel=0&modestbranding=1&playsinline=1",
+      "vimeo_url_renders_iframe_src": "https://player.vimeo.com/video/76979871?autoplay=1&title=0&byline=0",
+      "film-trailer_above_film-netflix-link": "trailer top=325 < netflix top=788",
+      "film-trailer-play_replaces_block_with_iframe": true,
+      "film-trailer-iframe_data_testid_present": true,
+      "modal_close_unmounts_modal_and_iframe": "after 1500ms wait: modal=False, iframe=False",
+      "film_without_trailer_shows_no_block": "films[2].trailer='' -> no film-trailer block"
+    },
+    "admin": {
+      "login": "admin@outsidersproduction.ma logged in successfully",
+      "cinema_tab_present": true,
+      "cms-films.N.trailer_testids": ["cms-films.0.trailer","cms-films.1.trailer","cms-films.2.trailer","cms-films.3.trailer"],
+      "note": "Items collapsed by default; the 'Bande-annonce' visible label appears when expanded. Did not save (no persistence)."
+    },
+    "i18n": {
+      "FR": {"placeholder":"Rechercher un titre ou un réalisateur","sort":["Sélection","Plus récents","Plus anciens"],"trailer_label_in_modal":"Bande-annonce"},
+      "EN": {"placeholder":"Search a title or a director","sort":["Selection","Newest","Oldest"],"trailer_label_in_modal":"TRAILER"},
+      "lang-toggle-en/-fr_testids_present": true
+    },
+    "mobile_390": {
+      "horizontal_overflow_px": 0,
+      "sort_buttons_single_line": true,
+      "sort_tops_identical": [449,449,449]
+    },
+    "home_section": {
+      "no_toolbar_on_home": true,
+      "films_grid_present": true,
+      "card_count_home_<=6": 4
+    },
+    "console_errors": 0
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "FilmToolbar.useFilmQuery normalises accents with NFD and filters on `${title} ${director}` — matches review spec exactly.",
+    "FilmGrid uses AnimatePresence with exit transition ~0.7s; during search typing, old cards remain mounted until exit completes. The no-result message correctly reflects the already-filtered list (not DOM count), so UX is still truthful. Fine as-is.",
+    "Trailer component in FilmGrid.jsx renders ABOVE NetflixLink JSX order (verified by DOM bounding rects). toPlayable regex covers both youtube.com/watch?v=, youtu.be, embed, shorts and vimeo.com/<id> / vimeo.com/video/<id>.",
+    "FilmModal close triggers AnimatePresence exit; after 1500ms modal is unmounted and iframe is fully removed from DOM — YouTube/Vimeo playback stops as expected.",
+    "withNewPages() in i18n.js correctly backfills { trailer: '' } for legacy saved films so the admin always sees the Bande-annonce input (confirmed via cms-films.N.trailer testids in the Cinéma admin tab).",
+    "Mobile toolbar at 390px has no horizontal overflow and all three sort buttons sit on one line thanks to whitespace-nowrap + sm:px-3 padding reduction. Good."
+  ],
+  "updated_files": [],
+  "success_rate": { "backend": "n/a (skipped)", "frontend": "100%" },
+  "test_credentials": "admin@outsidersproduction.ma / Outsiders2026! (used to view Cinéma admin tab; no save performed)",
+  "seed_data_creation": "Transient localStorage 'op-preview-draft' injected (+ ?preview=1) to set films.0.trailer=YouTube and films.1.trailer=Vimeo. Cleared after tests. No admin save performed; no persisted content changes.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "All 7 review items pass. Search uses NFD normalisation on title+director; sort has three states (default/new/old) with underline on active; chip order and chip testid indices (film-filter-0/1/2) remain stable regardless of sort or search. Trailer block uses toPlayable() for YouTube/Vimeo and renders inline inside the modal above NetflixLink. Admin Cinéma tab exposes cms-films.N.trailer inputs (collapsed by default). lang-toggle-fr/-en testids drive i18n."
+}

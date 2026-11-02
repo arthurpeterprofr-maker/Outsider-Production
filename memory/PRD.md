@@ -79,6 +79,11 @@ User choices: bilingue FR/EN avec bouton de langue; formulaire = enregistrement 
 - Cinéma & Publicités : défilement horizontal bloquant remplacé par grille + fiche au clic (FilmGrid.jsx, AdGrid.jsx, Chips.jsx). Accueil = 6 premiers + bouton ; pages /cinema (filtres par type) et /publicites (filtres par client si ≥2). Pub avec lien YouTube/Vimeo lue sur le site. lockScroll = compteur (overlays imbriqués).
 - Admin : en-têtes de fiches affichent le titre FR quand titre bilingue.
 
+## Implemented (2026-11-02, itération 16)
+- Page Cinéma : recherche titre/réalisateur (sans accents), tri Sélection / Plus récents / Plus anciens (FilmToolbar.jsx), combinables avec les filtres.
+- Fiche film : bande-annonce YouTube/Vimeo/.mp4 lue dans la fiche (champ films[].trailer, ajouté automatiquement aux films déjà enregistrés).
+- Guide PDF pas encore mis à jour pour le champ Bande-annonce.
+
 
 ## Backlog
 - P0 : renseigner l'email de réception réel (CONTACT_NOTIFY_EMAIL), remplacer contenus/photos par ceux du client.

@@ -54,6 +54,11 @@ User choices: bilingue FR/EN avec bouton de langue; formulaire = enregistrement 
 - Lecteur vidéo plein écran (YouTube, Vimeo, .mp4) sur la fiche artiste ; Netflix/autres liens s'ouvrent dans un nouvel onglet.
 - Admin : réordonnancement par glisser-déposer (poignée) + flèches haut/bas sur toutes les listes (artistes, films, pubs…).
 
+## Implemented (2026-11-02, itération 10)
+- Vraies photos des fondateurs (public/images/founder1.jpg = Hicham, founder2.jpg = Nadia) ; les galeries d'artistes n'utilisent plus ces photos.
+- Logos officiels détourés en blanc : logo-mark.png (nav, intro, admin), logo-full.png (footer), favicon.png + apple-touch-icon.png.
+
+
 ## Backlog
 - P0 : renseigner l'email de réception réel (CONTACT_NOTIFY_EMAIL), remplacer contenus/photos par ceux du client.
 - P1 : section projets/filmographie, vrais liens réseaux sociaux, SEO (OG, sitemap).

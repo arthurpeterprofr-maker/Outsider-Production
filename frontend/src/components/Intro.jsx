@@ -34,12 +34,9 @@ export const Intro = () => {
             exit={{ opacity: 0, scale: 0.94 }}
             transition={{ duration: 0.4 }}
           >
-            <svg viewBox="0 0 64 64" className="h-16 w-16" fill="none">
-              <motion.circle cx="28" cy="34" r="20" stroke="currentColor" strokeWidth="2"
-                initial={{ pathLength: 0, rotate: -90 }} animate={{ pathLength: 1, rotate: 0 }} transition={{ duration: 1.2, ease: [0.65, 0, 0.35, 1] }} />
-              <motion.circle cx="52" cy="12" r="6" fill="currentColor"
-                initial={{ scale: 0, x: -24, y: 22 }} animate={{ scale: 1, x: 0, y: 0 }} transition={{ delay: 1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }} />
-            </svg>
+            <motion.img src="/logo-mark.png" alt="" aria-hidden="true" className="h-16 w-auto" data-testid="intro-logo"
+              initial={{ clipPath: "inset(0% 100% 0% 0%)", scale: 0.9 }} animate={{ clipPath: "inset(0% 0% 0% 0%)", scale: 1 }}
+              transition={{ duration: 1.2, ease: [0.65, 0, 0.35, 1] }} />
             <span className="block overflow-hidden">
               <motion.span className="op-label block !text-white" initial={{ y: "110%" }} animate={{ y: "0%" }} transition={{ delay: 0.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}>
                 Outsiders Production

@@ -128,7 +128,7 @@ export default function Admin() {
     <main className="min-h-screen bg-[#050505] px-5 py-8 text-white sm:px-10" data-testid="admin-page">
       <header className="mx-auto flex max-w-5xl items-center justify-between">
         <Link to="/" className="flex items-center gap-3 text-zinc-300 hover:text-white" data-testid="admin-back-link">
-          <ArrowLeft className="h-4 w-4" /><LogoMark className="h-6 w-6" /><span className="op-label !text-white">Outsiders</span>
+          <ArrowLeft className="h-4 w-4" /><LogoMark className="h-5" /><span className="op-label !text-white">Outsiders</span>
         </Link>
         {user && <button onClick={logout} className="op-icon-btn" aria-label="logout" data-testid="admin-logout-btn"><LogOut className="h-4 w-4" /></button>}
       </header>

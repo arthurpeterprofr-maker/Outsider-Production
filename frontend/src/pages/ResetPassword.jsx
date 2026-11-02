@@ -69,7 +69,7 @@ export default function ResetPassword() {
   return (
     <main className="min-h-screen bg-[#050505] px-5 py-8 text-white sm:px-10" data-testid="reset-page">
       <Link to="/admin" className="mx-auto flex max-w-5xl items-center gap-3 text-zinc-300 hover:text-white" data-testid="reset-back-link">
-        <ArrowLeft className="h-4 w-4" /><LogoMark className="h-6 w-6" /><span className="op-label !text-white">Outsiders</span>
+        <ArrowLeft className="h-4 w-4" /><LogoMark className="h-5" /><span className="op-label !text-white">Outsiders</span>
       </Link>
       <form onSubmit={submit} className="mx-auto mt-24 w-full max-w-sm space-y-8" data-testid="reset-form">
         <h1 className="font-display text-5xl">Nouveau mot de passe</h1>

@@ -296,12 +296,12 @@ const artist = (n, tags, film, photos) => ({
 });
 
 export const artistItems = [
-  artist("01", ["directors", "luxury", "morocco"], "/images/ad1.jpg", ["/images/poster1.jpg", "/images/ad3.jpg", "/images/founder2.jpg", "/images/street.jpg", "/images/poster4.jpg"]),
-  artist("02", ["photographers", "beauty", "international"], "/images/ad3.jpg", ["/images/founder2.jpg", "/images/poster1.jpg", "/images/ad1.jpg", "/images/eye.jpg"]),
+  artist("01", ["directors", "luxury", "morocco"], "/images/ad1.jpg", ["/images/poster1.jpg", "/images/ad3.jpg", "/images/set.jpg", "/images/street.jpg", "/images/poster4.jpg"]),
+  artist("02", ["photographers", "beauty", "international"], "/images/ad3.jpg", ["/images/ad2.jpg", "/images/poster1.jpg", "/images/ad1.jpg", "/images/eye.jpg"]),
   artist("03", ["directors", "commercial", "morocco"], "/images/ad2.jpg", ["/images/poster2.jpg", "/images/hero.jpg", "/images/ad2.jpg", "/images/street.jpg"]),
   artist("04", ["photographers", "music", "international"], "/images/street.jpg", ["/images/poster3.jpg", "/images/street.jpg", "/images/set.jpg", "/images/poster4.jpg"]),
   artist("05", ["directors", "music", "international"], "/images/set.jpg", ["/images/set.jpg", "/images/eye.jpg", "/images/poster2.jpg", "/images/ad4.jpg"]),
-  artist("06", ["photographers", "luxury", "morocco"], "/images/ad4.jpg", ["/images/ad4.jpg", "/images/poster3.jpg", "/images/ad1.jpg", "/images/founder1.jpg"]),
+  artist("06", ["photographers", "luxury", "morocco"], "/images/ad4.jpg", ["/images/ad4.jpg", "/images/poster3.jpg", "/images/ad1.jpg", "/images/hero.jpg"]),
   artist("07", ["directors", "beauty", "morocco"], "/images/poster1.jpg", ["/images/poster1.jpg", "/images/ad3.jpg", "/images/eye.jpg", "/images/hero.jpg"]),
   artist("08", ["directors", "photographers", "commercial", "international"], "/images/hero.jpg", ["/images/hero.jpg", "/images/ad2.jpg", "/images/poster4.jpg", "/images/street.jpg"]),
 ];

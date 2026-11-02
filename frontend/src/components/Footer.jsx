@@ -1,7 +1,7 @@
 import { Instagram, Linkedin, Mail } from "lucide-react";
 import { useLang } from "../lib/i18n";
 import { useGoTo } from "../lib/nav";
-import { LogoMark } from "./Logo";
+import { LogoFull } from "./Logo";
 
 export const Footer = () => {
   const { t, site } = useLang();
@@ -11,10 +11,7 @@ export const Footer = () => {
     <footer className="relative overflow-hidden bg-[#050505] pt-20" data-testid="site-footer">
       <div className="mx-auto grid max-w-[1500px] grid-cols-1 gap-12 px-5 sm:px-10 md:grid-cols-12">
         <div className="md:col-span-6">
-          <div className="flex items-center gap-3 text-white">
-            <LogoMark className="h-8 w-8" />
-            <span className="op-label !text-white">Outsiders Production</span>
-          </div>
+          <LogoFull className="h-14 sm:h-16" />
           <p className="mt-6 max-w-sm font-body text-sm leading-relaxed text-zinc-400">{t.footer.blurb}</p>
         </div>
         <div className="md:col-span-3">

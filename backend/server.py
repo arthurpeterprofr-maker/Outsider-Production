@@ -74,6 +74,17 @@ class LoginIn(BaseModel):
     password: str
 
 
+class PasswordChangeIn(BaseModel):
+    current_password: str
+    new_password: str = Field(min_length=8, max_length=128)
+
+
+class EditorIn(BaseModel):
+    email: EmailStr
+    name: str = Field(default="", max_length=120)
+    password: str = Field(min_length=8, max_length=128)
+
+
 class ContentIn(BaseModel):
     content: Dict[str, Any]
 
@@ -124,6 +135,12 @@ async def get_current_user(request: Request) -> dict:
 
 async def require_admin(user: dict = Depends(get_current_user)) -> dict:
     if user["role"] != "admin":
+        raise HTTPException(403, "Forbidden")
+    return user
+
+
+async def require_editor(user: dict = Depends(get_current_user)) -> dict:
+    if user["role"] not in ("admin", "editor"):
         raise HTTPException(403, "Forbidden")
     return user
 
@@ -179,6 +196,50 @@ async def refresh(request: Request, response: Response):
     if payload.get("type") != "refresh":
         raise HTTPException(401, "Invalid token type")
     set_auth_cookies(response, payload["sub"], payload.get("email", ""))
+    return {"ok": True}
+
+
+@api.post("/auth/change-password")
+async def change_password(body: PasswordChangeIn, user: dict = Depends(get_current_user)):
+    doc = await db.users.find_one({"_id": ObjectId(user["id"])})
+    if not verify_password(body.current_password, doc["password_hash"]):
+        raise HTTPException(400, "Mot de passe actuel incorrect / Current password is incorrect")
+    await db.users.update_one({"_id": doc["_id"]}, {"$set": {"password_hash": hash_password(body.new_password),
+                                                         "password_changed_at": datetime.now(timezone.utc).isoformat()}})
+    return {"ok": True}
+
+
+# ---------- Editor accounts (admin only) ----------
+def public_user(u: dict) -> dict:
+    return {"id": str(u["_id"]), "email": u["email"], "name": u.get("name", ""), "role": u.get("role", ""),
+            "created_at": str(u.get("created_at", ""))}
+
+
+@api.get("/admin/users")
+async def list_users(_: dict = Depends(require_admin)):
+    docs = await db.users.find({}, {"password_hash": 0}).sort("created_at", 1).to_list(200)
+    return [public_user(d) for d in docs]
+
+
+@api.post("/admin/users", status_code=201)
+async def create_editor(body: EditorIn, _: dict = Depends(require_admin)):
+    email = body.email.lower()
+    if await db.users.find_one({"email": email}):
+        raise HTTPException(409, "Cet email existe déjà / Email already exists")
+    doc = {"email": email, "name": body.name, "role": "editor", "password_hash": hash_password(body.password),
+           "created_at": datetime.now(timezone.utc).isoformat()}
+    res = await db.users.insert_one(doc)
+    doc["_id"] = res.inserted_id
+    return public_user(doc)
+
+
+@api.delete("/admin/users/{user_id}")
+async def delete_editor(user_id: str, _: dict = Depends(require_admin)):
+    if not ObjectId.is_valid(user_id):
+        raise HTTPException(404, "Not found")
+    res = await db.users.delete_one({"_id": ObjectId(user_id), "role": "editor"})
+    if not res.deleted_count:
+        raise HTTPException(404, "Not found")
     return {"ok": True}
 
 
@@ -246,7 +307,7 @@ async def get_content():
 
 
 @api.put("/admin/content")
-async def put_content(body: ContentIn, user: dict = Depends(require_admin)):
+async def put_content(body: ContentIn, user: dict = Depends(require_editor)):
     if len(json.dumps(body.content)) > 1_000_000:
         raise HTTPException(413, "Content too large")
     now = datetime.now(timezone.utc).isoformat()
@@ -257,7 +318,7 @@ async def put_content(body: ContentIn, user: dict = Depends(require_admin)):
 
 
 @api.post("/admin/media")
-async def upload_media(file: UploadFile = File(...), _: dict = Depends(require_admin)):
+async def upload_media(file: UploadFile = File(...), _: dict = Depends(require_editor)):
     if not (file.content_type or "").startswith("image/"):
         raise HTTPException(400, "Images only")
     data = await file.read()

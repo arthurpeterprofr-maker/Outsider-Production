@@ -33,6 +33,11 @@ User choices: bilingue FR/EN avec bouton de langue; formulaire = enregistrement 
 - Cinéma (#films) : bouton « Regarder sur Netflix » (champ `netflix`) à la place des bandes-annonces. Nouvelle section Publicités (#commercials) avec 4 visuels IA + lien Netflix.
 - CMS admin (/admin → « Contenu du site ») : édition de tous les textes FR/EN, films, pubs, fondateurs, lauriers, coordonnées, images (upload stocké en base, max 6 Mo). API : GET /api/content, PUT /api/admin/content, POST /api/admin/media, GET /api/media/{id}. Le frontend fusionne le contenu enregistré avec les valeurs par défaut de content.js.
 
+## Implemented (2026-11-02, itération 5)
+- Comptes éditeurs (rôle editor) créés/supprimés par l'admin : accès au contenu et aux images uniquement (messages et comptes interdits, 403).
+- Changement de mot de passe pour tout utilisateur connecté (/admin → « Mot de passe »).
+- Aperçu avant publication : bouton « Aperçu » ouvre /?preview=1 avec le brouillon (localStorage, mise à jour en direct), bandeau « Aperçu — non publié ».
+
 ## Backlog
 - P0 : renseigner l'email de réception réel (CONTACT_NOTIFY_EMAIL), remplacer contenus/photos par ceux du client.
 - P1 : section projets/filmographie, vrais liens réseaux sociaux, SEO (OG, sitemap).

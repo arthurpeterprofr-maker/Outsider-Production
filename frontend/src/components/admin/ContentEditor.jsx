@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
-import { Save, RotateCcw } from "lucide-react";
+import { Save, RotateCcw, Eye } from "lucide-react";
 import { useLang } from "../../lib/i18n";
+import { PREVIEW_KEY } from "../../lib/preview";
 import { FieldEditor } from "./FieldEditor";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
@@ -26,6 +27,15 @@ export const ContentEditor = () => {
   const dirty = draft !== site;
 
   useEffect(() => { setDraft(site); }, [site]);
+  useEffect(() => {
+    const t = setTimeout(() => localStorage.setItem(PREVIEW_KEY, JSON.stringify(draft)), 300);
+    return () => clearTimeout(t);
+  }, [draft]);
+
+  const openPreview = () => {
+    localStorage.setItem(PREVIEW_KEY, JSON.stringify(draft));
+    window.open("/?preview=1", "op-preview");
+  };
 
   const save = async () => {
     setBusy(true);
@@ -53,10 +63,11 @@ export const ContentEditor = () => {
         </div>
         <div className="flex items-center gap-3">
           {dirty && <button onClick={() => setDraft(site)} className="op-icon-btn" aria-label="annuler" data-testid="cms-reset-btn"><RotateCcw className="h-4 w-4" /></button>}
+          <button onClick={openPreview} className="op-btn !py-3" data-testid="cms-preview-btn"><Eye className="h-4 w-4" /><span>Aperçu</span></button>
           <button onClick={save} disabled={busy || !dirty} className="op-btn !py-3" data-testid="cms-save-btn"><Save className="h-4 w-4" /><span>{busy ? "…" : "Enregistrer"}</span></button>
         </div>
       </div>
-      <p className="mt-6 font-body text-sm text-zinc-400">Les modifications sont visibles sur le site dès l'enregistrement. Pour les images, importez un fichier (max 6 Mo) ou collez un lien.</p>
+      <p className="mt-6 font-body text-sm text-zinc-400">Les modifications ne sont visibles par le public qu'après « Enregistrer ». Le bouton « Aperçu » ouvre le site avec vos changements non publiés (mis à jour en direct). Pour les images, importez un fichier (max 6 Mo) ou collez un lien.</p>
       <div className="mt-8 space-y-4 pb-24">
         <FieldEditor k={tab} value={draft[tab]} path={tab} depth={0} onChange={(nv) => setDraft({ ...draft, [tab]: nv })} />
       </div>

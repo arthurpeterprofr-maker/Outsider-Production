@@ -13,6 +13,7 @@ import { Films } from "../components/Films";
 import { Intro } from "../components/Intro";
 import { Press } from "../components/Press";
 import { Commercials } from "../components/Commercials";
+import { PreviewBanner } from "../components/PreviewBanner";
 
 export default function Home() {
   return (
@@ -32,6 +33,7 @@ export default function Home() {
       <Expertise />
       <Contact />
       <Footer />
+      <PreviewBanner />
     </main>
   );
 }

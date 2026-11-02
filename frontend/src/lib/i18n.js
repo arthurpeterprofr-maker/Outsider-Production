@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { defaultContent } from "./content";
+import { PREVIEW_KEY, isPreview, readPreview } from "./preview";
 
 const BACKEND = process.env.REACT_APP_BACKEND_URL;
 const LangContext = createContext(null);
@@ -20,6 +21,10 @@ export const LangProvider = ({ children }) => {
   const [site, setSite] = useState(defaultContent);
 
   const reload = useCallback(async () => {
+    if (isPreview()) {
+      const draft = readPreview();
+      if (isObj(draft)) { setSite(deepMerge(defaultContent, draft)); return; }
+    }
     if (!BACKEND) return;
     try {
       const { data } = await axios.get(`${BACKEND}/api/content`);
@@ -30,6 +35,12 @@ export const LangProvider = ({ children }) => {
   }, []);
 
   useEffect(() => { reload(); }, [reload]);
+  useEffect(() => {
+    if (!isPreview()) return undefined;
+    const onStorage = (e) => { if (e.key === PREVIEW_KEY) reload(); };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, [reload]);
   useEffect(() => {
     localStorage.setItem("op-lang", lang);
     document.documentElement.lang = lang;

@@ -5,6 +5,8 @@ import { LogOut, Trash2, Mail, MailOpen, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { LogoMark } from "../components/Logo";
 import { ContentEditor } from "../components/admin/ContentEditor";
+import { Accounts } from "../components/admin/Accounts";
+import { PasswordForm } from "../components/admin/PasswordForm";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 const http = axios.create({ baseURL: API, withCredentials: true });
@@ -75,7 +77,8 @@ const MessageRow = ({ m, onToggle, onDelete }) => (
 export default function Admin() {
   const [user, setUser] = useState(null);
   const [messages, setMessages] = useState([]);
-  const [view, setView] = useState("messages");
+  const [view, setView] = useState(null);
+  const isAdmin = user?.role === "admin";
   const load = useCallback(async () => {
     try {
       const { data } = await http.get("/admin/messages");
@@ -90,7 +93,9 @@ export default function Admin() {
   }, []);
 
   useEffect(() => {
-    if (user) load();
+    if (!user) return;
+    setView((v) => v || (user.role === "admin" ? "messages" : "content"));
+    if (user.role === "admin") load();
   }, [user, load]);
 
   const toggle = async (m) => {
@@ -106,10 +111,14 @@ export default function Admin() {
   const logout = async () => {
     await http.post("/auth/logout");
     setUser(false);
+    setView(null);
     setMessages([]);
   };
 
   const unread = messages.filter((m) => !m.read).length;
+  const tabs = isAdmin
+    ? [["messages", `Messages (${unread})`], ["content", "Contenu du site"], ["accounts", "Comptes éditeurs"], ["password", "Mot de passe"]]
+    : [["content", "Contenu du site"], ["password", "Mot de passe"]];
 
   return (
     <main className="min-h-screen bg-[#050505] px-5 py-8 text-white sm:px-10" data-testid="admin-page">
@@ -122,15 +131,18 @@ export default function Admin() {
       {user === null && <p className="mt-24 text-center font-mono text-xs text-zinc-400">…</p>}
       {user === false && <Login onDone={setUser} />}
       {user && (
-        <nav className="mx-auto mt-12 flex max-w-5xl gap-2" data-testid="admin-tabs">
-          {[["messages", `Messages (${unread})`], ["content", "Contenu du site"]].map(([k, l]) => (
+        <nav className="mx-auto mt-12 flex max-w-5xl flex-wrap items-center gap-2" data-testid="admin-tabs">
+          {tabs.map(([k, l]) => (
             <button key={k} onClick={() => setView(k)} data-testid={`admin-tab-${k}`}
               className={`rounded-full px-5 py-2 font-mono text-[11px] uppercase tracking-[0.2em] ${view === k ? "bg-white text-black" : "border border-white/15 text-zinc-300 hover:text-white"}`}>{l}</button>
           ))}
+          <span className="ml-auto font-mono text-[11px] text-zinc-400" data-testid="admin-current-user">{user.email} · {isAdmin ? "admin" : "éditeur"}</span>
         </nav>
       )}
       {user && view === "content" && <section className="mx-auto mt-6 max-w-5xl"><ContentEditor /></section>}
-      {user && view === "messages" && (
+      {isAdmin && view === "accounts" && <section className="mx-auto mt-12 max-w-5xl"><Accounts /></section>}
+      {user && view === "password" && <section className="mx-auto mt-12 max-w-5xl"><PasswordForm /></section>}
+      {isAdmin && view === "messages" && (
         <section className="mx-auto mt-16 max-w-5xl">
           <div className="flex items-end justify-between">
             <h1 className="font-display text-5xl sm:text-6xl">Messages</h1>

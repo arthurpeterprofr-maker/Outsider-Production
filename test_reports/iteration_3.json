@@ -1,0 +1,75 @@
+{
+  "summary": "Frontend-only verification of the 3 new features: (1) Home 'À découvrir' section (discover-section) with 2 panels linking to /ai-studio and /voice-room, (2) Voice Room 'Partenaires engagés' block (voice-partners) with 4 cells, (3) PDF guide updated to 21 pages and still linked from admin. Admin CMS 'Voice Room — vidéos' tab exposes partners upload field, item headers now render '#1 — [Projet IA 01]' instead of '[object Object]', and Textes FR exposes the 'Bandeaux « À découvrir » (accueil)' block. Preview flow (localStorage op-preview-draft + ?preview=1) correctly renders partner logo + external link in new tab. FR→EN toggle updates discover text and partners label. Desktop (1440) shows discover side-by-side and partners 4 columns; mobile 390 shows discover stacked (flex-direction=column) and partners 2 columns. Zero page errors. No persisted admin changes (preview-only draft cleared after test).",
+  "backend_issues": { "critical": [], "minor": [] },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "verified": {
+    "home_discover": {
+      "discover-section_present": true,
+      "order_expertise<discover<contact": true,
+      "discover-0_href": "/ai-studio",
+      "discover-1_href": "/voice-room",
+      "discover-0_cta_fr": "DÉCOUVRIR LE STUDIO",
+      "discover-1_cta_fr": "ENTRER DANS THE VOICE ROOM",
+      "click_discover-0_scrollY_on_destination": 0,
+      "click_discover-1_scrollY_on_destination": 0,
+      "mobile_390_flex_direction": "column",
+      "desktop_1440_flex_direction": "row (lg:flex-row)",
+      "en_discover-0_text": "New technologies. Unlimited imagination.",
+      "en_discover-1_text": "Every voice deserves to be heard.",
+      "en_cta_0": "DISCOVER THE STUDIO",
+      "en_cta_1": "ENTER THE VOICE ROOM"
+    },
+    "voice_partners": {
+      "voice-partners_present_after_capsules": true,
+      "label_fr": "PARTENAIRES ENGAGÉS",
+      "label_en": "COMMITTED PARTNERS",
+      "voice-partner-0..3_present": true,
+      "partner_names": ["WE4SHE", "[Partenaire 02]", "[Partenaire 03]", "[Partenaire 04]"],
+      "desktop_cols": 4,
+      "mobile_390_cols": 2,
+      "preview_logo_render": { "tag": "A", "href": "https://example.com", "target": "_blank", "img_src": "/logo-mark.png" }
+    },
+    "pdf_guide": {
+      "GET_/guide-admin-outsiders.pdf_status": 200,
+      "content_type": "application/pdf",
+      "pages": 21,
+      "mentions_ai_studio": 11,
+      "mentions_voice_room": 10,
+      "admin_guide_link_href": "/guide-admin-outsiders.pdf"
+    },
+    "admin_cms": {
+      "login_ok": true,
+      "cms_tabs": ["fr","en","films","commercials","artists","artistFilters","aiStudioMedia","voiceRoomMedia","people","laurels","contact","media"],
+      "cms-upload-voiceRoomMedia.partners.0.logo_present": true,
+      "ai_works_item_headers": ["#1 — [Projet IA 01]", "#2 — [Projet IA 02]", "#3 — [Projet IA 03]"],
+      "voice_capsule_item_headers": ["#1 — Capsule 01", "#2 — Capsule 02", "#3 — Capsule 03"],
+      "no_object_object_on_page": true,
+      "textes_fr_has_discover_block_label": true
+    },
+    "regression": {
+      "home_renders": true,
+      "ai_studio_renders": true,
+      "voice_room_renders": true,
+      "artistes_renders": true,
+      "page_errors": 0
+    }
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Discover panel click uses onClick={() => window.scrollTo(0,0)} and target page starts at top — works but React Router scroll restoration would be cleaner globally.",
+    "ArrayEditor template cloning uses blank(value[last]) — if last item has partially-filled nested object, user may expect blank; current behavior is correct (recursive blank). OK.",
+    "FieldEditor summary name derivation handles title/name/label as objects (fr/en) correctly, fixing the previous '[object Object]' in aiStudioMedia.works and voiceRoomMedia.capsules headers. Verified."
+  ],
+  "updated_files": [],
+  "success_rate": { "backend": "n/a", "frontend": "100%" },
+  "test_credentials": "admin@outsidersproduction.ma / Outsiders2026! (from /app/memory/test_credentials.md)",
+  "seed_data_creation": "No persisted content. Transient localStorage 'op-preview-draft' was injected to validate partner logo preview on /voice-room?preview=1 and then removed. No admin PUT /api/admin/content call was performed, so no Versions restore needed.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "All three client requests verified. Home Discover (discover-section with discover-0 → /ai-studio and discover-1 → /voice-room), Voice Room Partners block (voice-partners with 4 cells, 2 cols at 390, 4 cols at desktop, FR/EN labels), 21-page PDF guide at /guide-admin-outsiders.pdf with AI Studio + Voice Room procedures (admin header admin-guide-link points to it), admin CMS summary headers fixed ('#1 — [Projet IA 01]'), Textes FR exposes 'Bandeaux « À découvrir » (accueil)', partners.0.logo upload button present. Preview flow uses localStorage key 'op-preview-draft' + ?preview=1 (same pattern as prev iteration)."
+}

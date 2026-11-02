@@ -50,6 +50,8 @@ export const content = {
       directed: "Réalisation",
       more: "La suite s'écrit maintenant.",
       moreCta: "Parlons de votre projet",
+      all: "Tous",
+      viewAll: "Voir tous les films",
     },
     commercials: {
       label: "Publicités",
@@ -57,6 +59,9 @@ export const content = {
       intro: "Des campagnes pensées comme du cinéma : des images fortes qui révèlent l'ADN d'une marque.",
       watch: "Regarder sur Netflix",
       soon: "Bientôt disponible",
+      all: "Toutes",
+      viewAll: "Voir toutes les publicités",
+      close: "Fermer",
     },
     artists: {
       label: "Artistes résidents", intro: "Réalisateurs et photographes qui façonnent avec nous des images singulières.",
@@ -206,6 +211,8 @@ export const content = {
       directed: "Directed by",
       more: "The next chapter is being written.",
       moreCta: "Tell us about your project",
+      all: "All",
+      viewAll: "See all films",
     },
     commercials: {
       label: "Commercials",
@@ -213,6 +220,9 @@ export const content = {
       intro: "Campaigns crafted like cinema: striking images that reveal the true DNA of a brand.",
       watch: "Watch on Netflix",
       soon: "Coming soon",
+      all: "All",
+      viewAll: "See all commercials",
+      close: "Close",
     },
     artists: {
       label: "Resident Artists", intro: "Directors and photographers crafting singular images with us.",

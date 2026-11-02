@@ -9,6 +9,7 @@ import Artists from "./pages/Artists";
 import ArtistDetail from "./pages/ArtistDetail";
 import AiStudio from "./pages/AiStudio";
 import VoiceRoom from "./pages/VoiceRoom";
+import Catalogue from "./pages/Catalogue";
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
           <Route path="/artistes/:slug" element={<ArtistDetail />} />
           <Route path="/ai-studio" element={<AiStudio />} />
           <Route path="/voice-room" element={<VoiceRoom />} />
+          <Route path="/cinema" element={<Catalogue key="films" kind="films" />} />
+          <Route path="/publicites" element={<Catalogue key="ads" kind="ads" />} />
         </Routes>
       </BrowserRouter>
       <Toaster theme="dark" position="bottom-right" />

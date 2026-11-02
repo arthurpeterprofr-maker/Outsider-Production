@@ -11,10 +11,13 @@ export const scrollToId = (id) => {
   else el.scrollIntoView({ behavior: "smooth" });
 };
 
+let locks = 0;
 export const lockScroll = (locked) => {
-  document.documentElement.style.overflow = locked ? "hidden" : "";
+  locks = Math.max(0, locks + (locked ? 1 : -1));
+  const on = locks > 0;
+  document.documentElement.style.overflow = on ? "hidden" : "";
   if (!lenisInstance) return;
-  if (locked) lenisInstance.stop();
+  if (on) lenisInstance.stop();
   else lenisInstance.start();
 };
 

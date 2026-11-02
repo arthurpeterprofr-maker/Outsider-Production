@@ -7,6 +7,7 @@ import { LogoMark } from "../components/Logo";
 import { ContentEditor } from "../components/admin/ContentEditor";
 import { Accounts } from "../components/admin/Accounts";
 import { PasswordForm } from "../components/admin/PasswordForm";
+import { ForgotForm } from "./ResetPassword";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 const http = axios.create({ baseURL: API, withCredentials: true });
@@ -19,6 +20,7 @@ const errText = (e) => {
 };
 
 const Login = ({ onDone }) => {
+  const [forgot, setForgot] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -36,6 +38,7 @@ const Login = ({ onDone }) => {
       setBusy(false);
     }
   };
+  if (forgot) return <ForgotForm onBack={() => setForgot(false)} />;
   return (
     <form onSubmit={submit} className="mx-auto mt-24 w-full max-w-sm space-y-8" data-testid="admin-login-form">
       <h1 className="font-display text-5xl text-white">Admin</h1>
@@ -45,6 +48,7 @@ const Login = ({ onDone }) => {
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required data-testid="admin-password-input" /></label>
       {error && <p className="font-body text-sm text-red-400" data-testid="admin-login-error">{error}</p>}
       <button type="submit" disabled={busy} className="op-btn" data-testid="admin-login-submit">{busy ? "…" : "Connexion / Sign in"}</button>
+      <button type="button" onClick={() => setForgot(true)} className="op-underline block font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-400" data-testid="admin-forgot-link">Mot de passe oublié ?</button>
     </form>
   );
 };

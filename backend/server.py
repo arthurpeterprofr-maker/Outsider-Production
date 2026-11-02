@@ -18,7 +18,9 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, Field, EmailStr, BeforeValidator, ConfigDict
 from starlette.middleware.cors import CORSMiddleware
 
-from email_service import send_email, contact_notification_html
+from email_service import send_email, contact_notification_html, password_reset_html
+import hashlib
+import secrets
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -76,6 +78,15 @@ class LoginIn(BaseModel):
 
 class PasswordChangeIn(BaseModel):
     current_password: str
+    new_password: str = Field(min_length=8, max_length=128)
+
+
+class ForgotIn(BaseModel):
+    email: EmailStr
+
+
+class ResetIn(BaseModel):
+    token: str = Field(min_length=10, max_length=200)
     new_password: str = Field(min_length=8, max_length=128)
 
 
@@ -209,6 +220,50 @@ async def change_password(body: PasswordChangeIn, user: dict = Depends(get_curre
     return {"ok": True}
 
 
+# ---------- Password reset ----------
+def token_hash(token: str) -> str:
+    return hashlib.sha256(token.encode()).hexdigest()
+
+
+async def send_reset_email(email: str, name: str, token: str):
+    link = f"{os.environ['FRONTEND_URL'].rstrip('/')}/admin/reset?token={token}"
+    try:
+        await send_email(to=email, subject="Réinitialisation de votre mot de passe — Outsiders Production",
+                         html=password_reset_html(link, name))
+    except Exception as e:
+        logger.error(f"Reset email failed: {e}")
+
+
+@api.post("/auth/forgot-password")
+async def forgot_password(body: ForgotIn, background: BackgroundTasks):
+    email = body.email.lower()
+    user = await db.users.find_one({"email": email})
+    if user:
+        since = (datetime.now(timezone.utc) - timedelta(hours=1)).isoformat()
+        recent = await db.password_reset_tokens.count_documents({"user_id": str(user["_id"]), "created_at": {"$gte": since}})
+        if recent < 3:
+            token = secrets.token_urlsafe(32)
+            now = datetime.now(timezone.utc)
+            await db.password_reset_tokens.insert_one({
+                "token_hash": token_hash(token), "user_id": str(user["_id"]), "used": False,
+                "created_at": now.isoformat(), "expires_at": now + timedelta(hours=1)})
+            background.add_task(send_reset_email, email, user.get("name", ""), token)
+    return {"ok": True}
+
+
+@api.post("/auth/reset-password")
+async def reset_password(body: ResetIn):
+    rec = await db.password_reset_tokens.find_one({"token_hash": token_hash(body.token)})
+    expires = rec["expires_at"].replace(tzinfo=timezone.utc) if rec else None
+    if not rec or rec.get("used") or expires < datetime.now(timezone.utc):
+        raise HTTPException(400, "Lien invalide ou expiré / Invalid or expired link")
+    await db.users.update_one({"_id": ObjectId(rec["user_id"])},
+                              {"$set": {"password_hash": hash_password(body.new_password),
+                                        "password_changed_at": datetime.now(timezone.utc).isoformat()}})
+    await db.password_reset_tokens.update_one({"_id": rec["_id"]}, {"$set": {"used": True}})
+    return {"ok": True}
+
+
 # ---------- Editor accounts (admin only) ----------
 def public_user(u: dict) -> dict:
     return {"id": str(u["_id"]), "email": u["email"], "name": u.get("name", ""), "role": u.get("role", ""),
@@ -314,7 +369,36 @@ async def put_content(body: ContentIn, user: dict = Depends(require_editor)):
     await db.site_content.update_one({"key": "site"},
                                      {"$set": {"data": body.content, "updated_at": now, "updated_by": user["email"]}},
                                      upsert=True)
+    await save_version(body.content, user["email"], now)
     return {"ok": True, "updated_at": now}
+
+
+async def save_version(data: dict, email: str, now: str, note: str = ""):
+    await db.content_versions.insert_one({"data": data, "saved_at": now, "saved_by": email, "note": note})
+    old = await db.content_versions.find({}, {"_id": 1}).sort("saved_at", -1).skip(10).to_list(100)
+    if old:
+        await db.content_versions.delete_many({"_id": {"$in": [o["_id"] for o in old]}})
+
+
+@api.get("/admin/content/versions")
+async def list_versions(_: dict = Depends(require_editor)):
+    docs = await db.content_versions.find({}, {"data": 0}).sort("saved_at", -1).to_list(10)
+    return [{"id": str(d["_id"]), "saved_at": d["saved_at"], "saved_by": d.get("saved_by", ""), "note": d.get("note", "")} for d in docs]
+
+
+@api.post("/admin/content/versions/{version_id}/restore")
+async def restore_version(version_id: str, user: dict = Depends(require_editor)):
+    if not ObjectId.is_valid(version_id):
+        raise HTTPException(404, "Not found")
+    ver = await db.content_versions.find_one({"_id": ObjectId(version_id)})
+    if not ver:
+        raise HTTPException(404, "Not found")
+    now = datetime.now(timezone.utc).isoformat()
+    await db.site_content.update_one({"key": "site"},
+                                     {"$set": {"data": ver["data"], "updated_at": now, "updated_by": user["email"]}},
+                                     upsert=True)
+    await save_version(ver["data"], user["email"], now, note=f"restored:{ver['saved_at']}")
+    return {"ok": True, "content": ver["data"]}
 
 
 @api.post("/admin/media")
@@ -360,6 +444,9 @@ async def startup():
     await db.users.create_index("email", unique=True)
     await db.login_attempts.create_index("identifier")
     await db.messages.create_index("created_at")
+    await db.content_versions.create_index("saved_at")
+    await db.password_reset_tokens.create_index("token_hash")
+    await db.password_reset_tokens.create_index("expires_at", expireAfterSeconds=0)
     admin_email = os.environ["ADMIN_EMAIL"].lower()
     if not await db.users.find_one({"email": admin_email}):
         await db.users.insert_one({"email": admin_email, "password_hash": hash_password(os.environ["ADMIN_PASSWORD"]),

@@ -105,6 +105,22 @@ async def send_email(*, to: str, subject: str, html: str) -> str:
     return resp.json().get("id", "")
 
 
+def password_reset_html(link: str, name: str) -> str:
+    return (f'<table role="presentation" width="100%" style="background:#f4f4f4"><tr><td style="padding:32px">'
+            f'<table role="presentation" width="100%" style="max-width:600px;margin:0 auto;background:#ffffff">'
+            f'<tr><td style="background:#050505;padding:24px 32px;color:#ffffff;font-family:Georgia,serif;font-size:22px;letter-spacing:2px">'
+            f'OUTSIDERS PRODUCTION</td></tr>'
+            f'<tr><td style="padding:32px;font-family:Arial,sans-serif;color:#111">'
+            f'<p style="font-size:16px;margin:0 0 16px">Bonjour {escape(name or "")},</p>'
+            f'<p style="font-size:14px;line-height:1.6;margin:0 0 24px">Une demande de réinitialisation a été faite pour votre accès à l\'espace admin du site. '
+            f'Ce lien est valable 1 heure et ne peut servir qu\'une fois.</p>'
+            f'<p style="margin:0 0 24px"><a href="{escape(link)}" style="display:inline-block;background:#050505;color:#ffffff;padding:14px 28px;'
+            f'text-decoration:none;font-size:13px;letter-spacing:2px">CHOISIR UN NOUVEAU MOT DE PASSE</a></p>'
+            f'<p style="font-size:12px;color:#888;line-height:1.6;margin:0">Si vous n\'êtes pas à l\'origine de cette demande, ignorez simplement cet email : '
+            f'votre mot de passe actuel reste inchangé.</p>'
+            f'</td></tr></table></td></tr></table>')
+
+
 def contact_notification_html(msg: dict) -> str:
     rows = [("Nom / Name", msg["name"]), ("Email", msg["email"]), ("Société / Company", msg.get("company") or "—"),
             ("Projet / Project", msg.get("project_type") or "—")]

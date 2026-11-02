@@ -38,6 +38,10 @@ User choices: bilingue FR/EN avec bouton de langue; formulaire = enregistrement 
 - Changement de mot de passe pour tout utilisateur connecté (/admin → « Mot de passe »).
 - Aperçu avant publication : bouton « Aperçu » ouvre /?preview=1 avec le brouillon (localStorage, mise à jour en direct), bandeau « Aperçu — non publié ».
 
+## Implemented (2026-11-02, itération 6)
+- Mot de passe oublié : /admin → lien « Mot de passe oublié ? », email (Resend managé) avec lien /admin/reset?token= (1 h, usage unique, 3 demandes/h max, token hashé). FRONTEND_URL dans backend/.env sert à construire le lien (à mettre à jour avec le domaine final).
+- Historique : chaque enregistrement crée une version (10 dernières gardées), restauration en un clic (admin et éditeurs).
+
 ## Backlog
 - P0 : renseigner l'email de réception réel (CONTACT_NOTIFY_EMAIL), remplacer contenus/photos par ceux du client.
 - P1 : section projets/filmographie, vrais liens réseaux sociaux, SEO (OG, sitemap).

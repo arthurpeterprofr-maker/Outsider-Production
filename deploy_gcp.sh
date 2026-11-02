@@ -3,13 +3,20 @@
 set -euo pipefail
 
 # ====== À RENSEIGNER ======
-PROJECT_ID="VOTRE_ID_PROJET"
+PROJECT_ID="${PROJECT_ID:-${GOOGLE_CLOUD_PROJECT:-}}"
 REGION="europe-west1"
 SITE_URL="https://www.outsidersproduction.ma"
 ADMIN_EMAIL="admin@outsidersproduction.ma"
 CONTACT_EMAIL="hello@outsidersproduction.ma"
 EMAIL_FROM="Outsiders Production <no-reply@outsidersproduction.ma>"
 # ==========================
+
+if [ -z "$PROJECT_ID" ]; then
+  echo "Vos projets Google Cloud :"
+  gcloud projects list --format="table(projectId,name)"
+  read -rp "Copiez l'ID du projet (colonne PROJECT_ID) : " PROJECT_ID
+fi
+echo "Projet utilisé : $PROJECT_ID"
 
 gcloud config set project "$PROJECT_ID"
 gcloud config set run/region "$REGION"

@@ -1,5 +1,4 @@
 import { useLang } from "../lib/i18n";
-import { laurels } from "../lib/content";
 import { MaskLines, Reveal, Label } from "./motion";
 
 const LEAVES = Array.from({ length: 7 }, (_, k) => k);
@@ -29,7 +28,8 @@ const Laurel = ({ l, tag, i }) => (
 );
 
 export const Press = () => {
-  const { t, lang } = useLang();
+  const { t, lang, site } = useLang();
+  const laurels = site.laurels || [];
   const p = t.press;
   return (
     <section className="relative border-t border-white/10 bg-[#050505] py-24 sm:py-36" data-testid="press-section">
@@ -43,7 +43,7 @@ export const Press = () => {
         </div>
 
         <div className="mt-16 grid grid-cols-1 border-y border-white/10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6" data-testid="laurels-grid">
-          {laurels.map((l, i) => <Laurel key={l.name} l={l} tag={p.laurelTag} i={i} />)}
+          {laurels.map((l, i) => <Laurel key={`${l.name}-${i}`} l={l} tag={p.laurelTag} i={i} />)}
         </div>
 
         <div className="mt-20 grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-10" data-testid="press-quotes">

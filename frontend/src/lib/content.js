@@ -3,13 +3,12 @@ export const content = {
     nav: [
       { id: "home", label: "Accueil" },
       { id: "about", label: "À propos" },
-      { id: "founders", label: "Fondateurs" },
-      { id: "films", label: "Films" },
-      { id: "expertise", label: "Expertise" },
+      { id: "films", label: "Cinéma" },
+      { id: "commercials", label: "Publicités" },
       { id: "contact", label: "Contact" },
     ],
     hero: {
-      eyebrow: "Outsiders Production — Casablanca",
+      eyebrow: "Outsiders Production",
       title: ["Nous sommes", "Outsiders."],
       lines: ["Nous défions les conventions.", "Nous piratons les récits.", "Nous créons du sens."],
       scroll: "Défiler",
@@ -30,24 +29,31 @@ export const content = {
       label: "Fondateurs",
       title: "Les Outsiders",
       people: [
-        { name: "Hicham Lasri", role: "Cinéaste · Scénariste · Producteur", img: "/images/founder1.jpg",
-          bio: "Plusieurs de ses films ont été sélectionnés dans des festivals internationaux majeurs, dont Cannes ACID, la Berlinale Panorama, TIFF, MoMA, Rotterdam et Dubaï." },
-        { name: "Nadia Assad", role: "Stratège créative · Architecte de marque · Productrice", img: "/images/founder2.jpg",
-          bio: "Spécialisée en branding, storytelling et direction créative, Nadia développe des récits forts et des liens durables entre les marques, les personnes et les histoires." },
+        { role: "Cinéaste · Scénariste · Producteur",
+          bio: "Plusieurs de ses films ont été sélectionnés dans de grands festivals internationaux, dont Cannes ACID, la Berlinale Panorama, IFFR, AFAC, El Gouna et Red Sea." },
+        { role: "Stratège créative · Architecte de marque · Productrice",
+          bio: "Spécialisée en branding, storytelling et direction créative, Nadia développe des récits forts et des liens porteurs de sens entre les marques et leurs publics." },
       ],
     },
     films: {
-      label: "Filmographie",
+      label: "Cinéma",
       title: ["Œuvres", "choisies"],
       intro: "Longs métrages, courts, documentaires : des films pensés pour voyager, de Casablanca aux plus grands festivals.",
       view: "Voir le film",
-      trailer: "Bande-annonce",
-      soon: "Bande-annonce à venir",
+      watch: "Regarder sur Netflix",
+      soon: "Bientôt sur Netflix",
       festivals: "Sélections & prix",
       close: "Fermer",
       directed: "Réalisation",
       more: "La suite s'écrit maintenant.",
       moreCta: "Parlons de votre projet",
+    },
+    commercials: {
+      label: "Publicités",
+      title: ["Films publicitaires"],
+      intro: "Des campagnes pensées comme du cinéma : des images fortes qui révèlent l'ADN d'une marque.",
+      watch: "Regarder sur Netflix",
+      soon: "Bientôt disponible",
     },
     press: {
       label: "Sélections & presse",
@@ -73,7 +79,7 @@ export const content = {
       tail: ["Nous ne suivons pas les tendances.", "Nous créons des récits qui durent."],
     },
     expertise: {
-      label: "Expertise",
+      label: "Savoir-faire",
       title: "Ce que nous faisons",
       columns: [
         { title: "Développement", items: ["Concepts originaux", "Développement de scénario", "Co-écriture", "Conseil créatif"] },
@@ -92,20 +98,26 @@ export const content = {
     },
     footer: {
       blurb: "Une société de production marocaine où le cinéma d'auteur rencontre un storytelling visuel audacieux. Basée à Casablanca. Pensée pour le monde.",
-      explore: "Explorer", connect: "Contact", rights: "Tous droits réservés.",
+      explore: "Navigation", connect: "Contact", rights: "Tous droits réservés.",
+      links: [
+        { id: "about", label: "Studio" },
+        { id: "expertise", label: "Services" },
+        { id: "founders", label: "Fondateurs" },
+        { id: "dna", label: "ADN" },
+        { id: "contact", label: "Contact" },
+      ],
     },
   },
   en: {
     nav: [
       { id: "home", label: "Home" },
       { id: "about", label: "About" },
-      { id: "founders", label: "Founders" },
-      { id: "films", label: "Films" },
-      { id: "expertise", label: "Expertise" },
+      { id: "films", label: "Cinema" },
+      { id: "commercials", label: "Commercials" },
       { id: "contact", label: "Contact" },
     ],
     hero: {
-      eyebrow: "Outsiders Production — Casablanca",
+      eyebrow: "Outsiders Production",
       title: ["We are", "Outsiders."],
       lines: ["We challenge conventions.", "We hack narratives.", "We create meaning."],
       scroll: "Scroll",
@@ -126,24 +138,31 @@ export const content = {
       label: "Founders",
       title: "The Outsiders",
       people: [
-        { name: "Hicham Lasri", role: "Filmmaker · Writer · Producer", img: "/images/founder1.jpg",
-          bio: "Several of his films have been selected at major international festivals including Cannes ACID, Berlinale Panorama, TIFF, MoMA, Rotterdam and Dubai." },
-        { name: "Nadia Assad", role: "Creative Strategist · Brand Architect · Producer", img: "/images/founder2.jpg",
-          bio: "Specialized in branding, storytelling and creative direction, Nadia develops strong narratives and meaningful connections between brands, people and stories." },
+        { role: "Filmmaker · Writer · Producer",
+          bio: "Several of his films have been selected at major international festivals including Cannes ACID, Berlinale Panorama, IFFR, AFAC, El Gouna and Red Sea." },
+        { role: "Creative Strategist · Brand Architect · Producer",
+          bio: "Specialised in branding, storytelling and creative direction, Nadia develops strong narratives and meaningful connections between brands and audiences." },
       ],
     },
     films: {
-      label: "Filmography",
+      label: "Cinema",
       title: ["Selected", "Works"],
       intro: "Features, shorts, documentaries: films built to travel, from Casablanca to the world's leading festivals.",
       view: "View film",
-      trailer: "Trailer",
-      soon: "Trailer coming soon",
+      watch: "Watch on Netflix",
+      soon: "Coming soon on Netflix",
       festivals: "Selections & awards",
       close: "Close",
       directed: "Directed by",
       more: "The next chapter is being written.",
       moreCta: "Tell us about your project",
+    },
+    commercials: {
+      label: "Commercials",
+      title: ["Commercial Works"],
+      intro: "Campaigns crafted like cinema: striking images that reveal the true DNA of a brand.",
+      watch: "Watch on Netflix",
+      soon: "Coming soon",
     },
     press: {
       label: "Selections & press",
@@ -169,12 +188,12 @@ export const content = {
       tail: ["We don't follow trends.", "We create narratives that endure."],
     },
     expertise: {
-      label: "Expertise",
+      label: "Capabilities",
       title: "What We Do",
       columns: [
         { title: "Development", items: ["Original concepts", "Script development", "Co-writing", "Creative consulting"] },
-        { title: "Production", items: ["Feature films", "Short films", "Documentaries", "Experimental formats", "Commercials"] },
-        { title: "International Strategy", items: ["Co-production", "Festival positioning", "International partnerships"] },
+        { title: "Production", items: ["Feature Films", "Short Films", "Documentaries", "Experimental formats", "Commercials"] },
+        { title: "International Strategy", items: ["Coproduction", "Festival positioning", "International partnerships"] },
       ],
     },
     contact: {
@@ -188,33 +207,40 @@ export const content = {
     },
     footer: {
       blurb: "A Moroccan production company where auteur cinema meets bold visual storytelling. Based in Casablanca. Built for the world.",
-      explore: "Explore", connect: "Connect", rights: "All rights reserved.",
+      explore: "Navigate", connect: "Connect", rights: "All rights reserved.",
+      links: [
+        { id: "about", label: "Studio" },
+        { id: "expertise", label: "Services" },
+        { id: "founders", label: "Founders" },
+        { id: "dna", label: "DNA" },
+        { id: "contact", label: "Contact" },
+      ],
     },
   },
 };
 
-// Sample projects: replace titles, synopses, festivals and trailer links (YouTube/Vimeo URL) with the client's real films.
+// Sample projects: replace titles, synopses, festivals and Netflix links with the client's real films.
 export const filmItems = [
   {
-    title: "Titre du film 01", year: "2026", director: "Hicham Lasri", poster: "/images/poster1.jpg", trailer: "",
+    title: "Titre du film 01", year: "2026", director: "Hicham Lasri", poster: "/images/poster1.jpg", netflix: "",
     type: { fr: "Long métrage · Fiction", en: "Feature · Fiction" },
     synopsis: { fr: "[Synopsis à compléter] Une femme face à ses ombres, dans une ville qui ne dort jamais.", en: "[Synopsis to come] A woman facing her shadows, in a city that never sleeps." },
     festivals: ["[Festival] · Sélection officielle", "[Festival] · Compétition"],
   },
   {
-    title: "Titre du film 02", year: "2025", director: "Hicham Lasri", poster: "/images/poster2.jpg", trailer: "",
+    title: "Titre du film 02", year: "2025", director: "Hicham Lasri", poster: "/images/poster2.jpg", netflix: "",
     type: { fr: "Long métrage · Road movie", en: "Feature · Road movie" },
     synopsis: { fr: "[Synopsis à compléter] Une nuit, une route, une fuite vers le sud.", en: "[Synopsis to come] One night, one road, a flight to the south." },
     festivals: ["[Festival] · Panorama"],
   },
   {
-    title: "Titre du film 03", year: "2024", director: "Hicham Lasri", poster: "/images/poster3.jpg", trailer: "",
+    title: "Titre du film 03", year: "2024", director: "Hicham Lasri", poster: "/images/poster3.jpg", netflix: "",
     type: { fr: "Documentaire", en: "Documentary" },
     synopsis: { fr: "[Synopsis à compléter] Les toits de Casablanca racontés par ceux qui y grandissent.", en: "[Synopsis to come] Casablanca's rooftops told by those who grow up there." },
     festivals: ["[Festival] · Prix du public", "[Festival] · Sélection"],
   },
   {
-    title: "Titre du film 04", year: "2023", director: "Hicham Lasri", poster: "/images/poster4.jpg", trailer: "",
+    title: "Titre du film 04", year: "2023", director: "Hicham Lasri", poster: "/images/poster4.jpg", netflix: "",
     type: { fr: "Court métrage · Expérimental", en: "Short · Experimental" },
     synopsis: { fr: "[Synopsis à compléter] Un geste, une lumière, une déchirure.", en: "[Synopsis to come] A gesture, a light, a tear." },
     festivals: ["[Festival] · Courts métrages"],
@@ -225,24 +251,35 @@ export const filmItems = [
 export const laurels = [
   { name: "Cannes", detail: "ACID" },
   { name: "Berlinale", detail: "Panorama" },
-  { name: "TIFF", detail: "Toronto" },
-  { name: "MoMA", detail: "New York" },
   { name: "IFFR", detail: "Rotterdam" },
-  { name: "Dubai", detail: "Intl. Film Festival" },
+  { name: "AFAC", detail: "Arab Fund for Arts & Culture" },
+  { name: "El Gouna", detail: "Film Festival" },
+  { name: "Red Sea", detail: "Film Festival" },
 ];
 
-export const toEmbedUrl = (url) => {
-  if (!url) return "";
-  const yt = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]{11})/);
-  if (yt) return `https://www.youtube.com/embed/${yt[1]}?autoplay=1&rel=0`;
-  const vm = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
-  if (vm) return `https://player.vimeo.com/video/${vm[1]}?autoplay=1`;
-  return url;
-};
+export const commercialItems = [
+  { title: "[Campagne 01]", client: "[Marque]", year: "2026", image: "/images/ad1.jpg", netflix: "" },
+  { title: "[Campagne 02]", client: "[Marque]", year: "2025", image: "/images/ad2.jpg", netflix: "" },
+  { title: "[Campagne 03]", client: "[Marque]", year: "2025", image: "/images/ad3.jpg", netflix: "" },
+  { title: "[Campagne 04]", client: "[Marque]", year: "2024", image: "/images/ad4.jpg", netflix: "" },
+];
 
 export const contactInfo = {
   email: "hello@outsidersproduction.ma",
   phone: "+212 522 00 00 00",
   instagram: "https://instagram.com/",
   linkedin: "https://linkedin.com/",
+};
+
+export const defaultContent = {
+  ...content,
+  people: [
+    { name: "Hicham Lasri", img: "/images/founder1.jpg" },
+    { name: "Nadia Assad", img: "/images/founder2.jpg" },
+  ],
+  films: filmItems,
+  commercials: commercialItems,
+  laurels,
+  contact: contactInfo,
+  media: { hero: "/images/hero.jpg", about: "/images/set.jpg", manifesto: "/images/eye.jpg" },
 };

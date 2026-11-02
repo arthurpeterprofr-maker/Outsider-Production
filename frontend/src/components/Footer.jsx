@@ -1,11 +1,11 @@
 import { Instagram, Linkedin, Mail } from "lucide-react";
 import { useLang } from "../lib/i18n";
-import { contactInfo } from "../lib/content";
 import { scrollToId } from "../lib/smooth";
 import { LogoMark } from "./Logo";
 
 export const Footer = () => {
-  const { t } = useLang();
+  const { t, site } = useLang();
+  const contactInfo = site.contact;
   return (
     <footer className="relative overflow-hidden bg-[#050505] pt-20" data-testid="site-footer">
       <div className="mx-auto grid max-w-[1500px] grid-cols-1 gap-12 px-5 sm:px-10 md:grid-cols-12">
@@ -19,7 +19,7 @@ export const Footer = () => {
         <div className="md:col-span-3">
           <p className="op-label !text-[10px] !text-zinc-400">{t.footer.explore}</p>
           <ul className="mt-5 space-y-3">
-            {t.nav.map((n) => (
+            {t.footer.links.map((n) => (
               <li key={n.id}>
                 <button onClick={() => scrollToId(n.id)} className="op-underline font-body text-sm text-zinc-200" data-testid={`footer-link-${n.id}`}>{n.label}</button>
               </li>
@@ -39,7 +39,7 @@ export const Footer = () => {
       <p className="pointer-events-none mt-16 select-none whitespace-nowrap text-center font-display text-[19vw] uppercase leading-[0.8] text-white/[0.06]" aria-hidden="true">Outsiders</p>
       <div className="mx-auto flex max-w-[1500px] flex-col justify-between gap-2 border-t border-white/10 px-5 py-6 font-mono text-xs text-zinc-400 sm:flex-row sm:px-10">
         <span>© {new Date().getFullYear()} Outsiders Production. {t.footer.rights}</span>
-        <span>Casablanca — Morocco</span>
+        <span>Casablanca, Morocco</span>
       </div>
     </footer>
   );

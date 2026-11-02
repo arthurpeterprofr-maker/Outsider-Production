@@ -3,7 +3,6 @@ import axios from "axios";
 import { toast } from "sonner";
 import { ArrowUpRight, Instagram, Linkedin, Mail } from "lucide-react";
 import { useLang } from "../lib/i18n";
-import { contactInfo } from "../lib/content";
 import { MaskLines, Reveal, Label } from "./motion";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
@@ -75,7 +74,8 @@ const InfoBlock = ({ label, children }) => (
 );
 
 export const Contact = () => {
-  const { t, lang } = useLang();
+  const { t, lang, site } = useLang();
+  const contactInfo = site.contact;
   const l = t.contact.labels;
   return (
     <section id="contact" className="relative bg-[#050505] pt-24 sm:pt-40" data-testid="contact-section">

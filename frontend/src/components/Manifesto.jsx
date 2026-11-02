@@ -1,18 +1,18 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useLang } from "../lib/i18n";
+import { useLang, asset } from "../lib/i18n";
 import { MaskLines, Reveal, Label } from "./motion";
 
 export const Manifesto = () => {
-  const { t, lang } = useLang();
+  const { t, lang, site } = useLang();
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const scale = useTransform(scrollYProgress, [0, 1], [1.25, 1]);
   const rotate = useTransform(scrollYProgress, [0, 1], [-4, 4]);
 
   return (
-    <section ref={ref} className="relative overflow-hidden bg-black py-24 sm:py-40" data-testid="manifesto-section">
-      <motion.img style={{ scale, rotate }} src="/images/eye.jpg" alt="" className="absolute inset-0 h-full w-full object-cover opacity-30" />
+    <section id="dna" ref={ref} className="relative overflow-hidden bg-black py-24 sm:py-40" data-testid="manifesto-section">
+      <motion.img style={{ scale, rotate }} src={asset(site.media?.manifesto)} alt="" className="absolute inset-0 h-full w-full object-cover opacity-30" />
       <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-black/40 to-[#050505]" />
       <div className="op-grain" />
       <div className="relative mx-auto max-w-[1500px] px-5 sm:px-10">

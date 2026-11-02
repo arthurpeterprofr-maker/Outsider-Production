@@ -1,10 +1,10 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useLang } from "../lib/i18n";
+import { useLang, asset } from "../lib/i18n";
 import { MaskLines, Reveal, Label, EASE } from "./motion";
 
 export const About = () => {
-  const { t, lang } = useLang();
+  const { t, lang, site } = useLang();
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
@@ -22,12 +22,9 @@ export const About = () => {
             className="relative aspect-[4/5] overflow-hidden"
             variants={{ hidden: { clipPath: "inset(12% 12% 12% 12%)" }, show: { clipPath: "inset(0% 0% 0% 0%)", transition: { duration: 1.6, ease: EASE } } }}
           >
-            <motion.img style={{ y, scale: 1.18 }} src="/images/set.jpg" alt="Film set with spotlight" className="h-full w-full object-cover" data-testid="about-image" />
+            <motion.img style={{ y, scale: 1.18 }} src={asset(site.media?.about)} alt="Film set with spotlight" className="h-full w-full object-cover" data-testid="about-image" />
             <div className="op-grain" />
           </motion.div>
-          <p className="mt-4 flex justify-between font-mono text-xs uppercase tracking-[0.25em] text-zinc-400">
-            <span>{t.about.caption}</span><span>01 / 05</span>
-          </p>
         </motion.div>
 
         <div className="flex flex-col justify-center lg:col-span-6">

@@ -12,6 +12,7 @@ import { SmoothScroll } from "../lib/smooth";
 import { Films } from "../components/Films";
 import { Intro } from "../components/Intro";
 import { Press } from "../components/Press";
+import { Commercials } from "../components/Commercials";
 
 export default function Home() {
   return (
@@ -24,6 +25,7 @@ export default function Home() {
       <About />
       <Founders />
       <Films />
+      <Commercials />
       <Press />
       <Manifesto />
       <Vision />

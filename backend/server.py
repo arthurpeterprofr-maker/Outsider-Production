@@ -6,13 +6,14 @@ load_dotenv(ROOT_DIR / '.env')
 
 import os
 import logging
+import json
 from datetime import datetime, timezone, timedelta
-from typing import Annotated, Optional, List
+from typing import Annotated, Optional, List, Any, Dict
 
 import bcrypt
 import jwt
 from bson import ObjectId
-from fastapi import FastAPI, APIRouter, HTTPException, Request, Response, Depends, BackgroundTasks
+from fastapi import FastAPI, APIRouter, HTTPException, Request, Response, Depends, BackgroundTasks, UploadFile, File
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, Field, EmailStr, BeforeValidator, ConfigDict
 from starlette.middleware.cors import CORSMiddleware
@@ -71,6 +72,13 @@ class MessagePatch(BaseModel):
 class LoginIn(BaseModel):
     email: EmailStr
     password: str
+
+
+class ContentIn(BaseModel):
+    content: Dict[str, Any]
+
+
+MAX_UPLOAD = 6 * 1024 * 1024
 
 
 def hash_password(p: str) -> str:
@@ -228,6 +236,47 @@ async def delete_message(message_id: str, _: dict = Depends(require_admin)):
     if not res.deleted_count:
         raise HTTPException(404, "Not found")
     return {"ok": True}
+
+
+# ---------- Site content (CMS) ----------
+@api.get("/content")
+async def get_content():
+    doc = await db.site_content.find_one({"key": "site"}, {"_id": 0})
+    return {"content": doc.get("data") if doc else None, "updated_at": doc.get("updated_at") if doc else None}
+
+
+@api.put("/admin/content")
+async def put_content(body: ContentIn, user: dict = Depends(require_admin)):
+    if len(json.dumps(body.content)) > 1_000_000:
+        raise HTTPException(413, "Content too large")
+    now = datetime.now(timezone.utc).isoformat()
+    await db.site_content.update_one({"key": "site"},
+                                     {"$set": {"data": body.content, "updated_at": now, "updated_by": user["email"]}},
+                                     upsert=True)
+    return {"ok": True, "updated_at": now}
+
+
+@api.post("/admin/media")
+async def upload_media(file: UploadFile = File(...), _: dict = Depends(require_admin)):
+    if not (file.content_type or "").startswith("image/"):
+        raise HTTPException(400, "Images only")
+    data = await file.read()
+    if len(data) > MAX_UPLOAD:
+        raise HTTPException(413, "Image too large (max 6 MB)")
+    res = await db.media.insert_one({"content_type": file.content_type, "data": data, "filename": file.filename,
+                                     "created_at": datetime.now(timezone.utc).isoformat()})
+    return {"url": f"/api/media/{res.inserted_id}"}
+
+
+@api.get("/media/{media_id}")
+async def get_media(media_id: str):
+    if not ObjectId.is_valid(media_id):
+        raise HTTPException(404, "Not found")
+    doc = await db.media.find_one({"_id": ObjectId(media_id)})
+    if not doc:
+        raise HTTPException(404, "Not found")
+    return Response(content=bytes(doc["data"]), media_type=doc["content_type"],
+                    headers={"Cache-Control": "public, max-age=31536000, immutable"})
 
 
 @api.get("/")

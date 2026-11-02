@@ -28,6 +28,11 @@ User choices: bilingue FR/EN avec bouton de langue; formulaire = enregistrement 
 - Section « Sélections & presse » : 6 lauriers SVG (festivals cités dans la bio de référence) + 3 citations presse placeholders.
 - Lecteur bande-annonce prêt (YouTube/Vimeo) — liens réels non fournis.
 
+## Implemented (2026-11-02, itération 4)
+- Textes alignés sur la maquette client (menu Home/About/Cinema/Commercials/Contact, labels Capabilities, bios, footer Navigate: Studio/Services/Founders/DNA/Contact).
+- Cinéma (#films) : bouton « Regarder sur Netflix » (champ `netflix`) à la place des bandes-annonces. Nouvelle section Publicités (#commercials) avec 4 visuels IA + lien Netflix.
+- CMS admin (/admin → « Contenu du site ») : édition de tous les textes FR/EN, films, pubs, fondateurs, lauriers, coordonnées, images (upload stocké en base, max 6 Mo). API : GET /api/content, PUT /api/admin/content, POST /api/admin/media, GET /api/media/{id}. Le frontend fusionne le contenu enregistré avec les valeurs par défaut de content.js.
+
 ## Backlog
 - P0 : renseigner l'email de réception réel (CONTACT_NOTIFY_EMAIL), remplacer contenus/photos par ceux du client.
 - P1 : section projets/filmographie, vrais liens réseaux sociaux, SEO (OG, sitemap).

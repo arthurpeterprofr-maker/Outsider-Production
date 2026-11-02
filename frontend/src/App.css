@@ -145,6 +145,20 @@ html.lenis, html.lenis body { height: auto; }
 .op-noscrollbar { scrollbar-width: none; }
 .op-noscrollbar::-webkit-scrollbar { display: none; }
 
+.op-admin-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 10px 12px;
+  color: #fff;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.op-admin-input:focus { border-color: #fff; }
+.op-admin-input[readonly] { color: #71717a; }
+
 .op-map { filter: grayscale(1) invert(0.92) contrast(1.1); }
 
 @media (prefers-reduced-motion: reduce) {

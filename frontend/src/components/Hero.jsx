@@ -1,13 +1,13 @@
 import { useRef } from "react";
 import { motion, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
 import { ArrowDown } from "lucide-react";
-import { useLang } from "../lib/i18n";
+import { useLang, asset } from "../lib/i18n";
 import { scrollToId } from "../lib/smooth";
 import { MaskLines, EASE } from "./motion";
 import { INTRO_DELAY as D } from "../lib/intro";
 
 export const Hero = () => {
-  const { t, lang } = useLang();
+  const { t, lang, site } = useLang();
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
@@ -32,7 +32,7 @@ export const Hero = () => {
     <section id="home" ref={ref} onMouseMove={onMove} className="relative h-[100svh] min-h-[620px] overflow-hidden bg-black" data-testid="hero-section">
       <motion.div style={{ y: imgY }} className="absolute inset-0">
         <motion.img
-          src="/images/hero.jpg"
+          src={asset(site.media?.hero)}
           alt="Lone figure in a desert"
           className="h-full w-full object-cover object-center"
           initial={{ scale: 1.3, opacity: 0 }}

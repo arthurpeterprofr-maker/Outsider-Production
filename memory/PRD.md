@@ -19,6 +19,10 @@ User choices: bilingue FR/EN avec bouton de langue; formulaire = enregistrement 
 - Logo SVG original + favicon, toggle FR/EN persistant, menu mobile plein écran.
 - Formulaire → MongoDB + email (testé : 202 Accepted), portail admin (login, lu/non lu, suppression).
 
+## Implemented (2026-11-02, itération 2)
+- Section Filmographie (#films) : 4 affiches IA, fiche film en modale (synopsis, sélections festivals, lecteur bande-annonce YouTube/Vimeo via `trailer`), données dans `filmItems` (content.js) — contenus d'exemple entre [crochets].
+- Écran d'ouverture (rideau + logo dessiné + compteur), 1 fois par session ; animations du hero décalées en conséquence.
+
 ## Backlog
 - P0 : renseigner l'email de réception réel (CONTACT_NOTIFY_EMAIL), remplacer contenus/photos par ceux du client.
 - P1 : section projets/filmographie, vrais liens réseaux sociaux, SEO (OG, sitemap).

@@ -4,6 +4,7 @@ export const content = {
       { id: "home", label: "Accueil" },
       { id: "about", label: "À propos" },
       { id: "founders", label: "Fondateurs" },
+      { id: "films", label: "Films" },
       { id: "expertise", label: "Expertise" },
       { id: "contact", label: "Contact" },
     ],
@@ -34,6 +35,17 @@ export const content = {
         { name: "Nadia Assad", role: "Stratège créative · Architecte de marque · Productrice", img: "/images/founder2.jpg",
           bio: "Spécialisée en branding, storytelling et direction créative, Nadia développe des récits forts et des liens durables entre les marques, les personnes et les histoires." },
       ],
+    },
+    films: {
+      label: "Filmographie",
+      title: ["Œuvres", "choisies"],
+      intro: "Longs métrages, courts, documentaires : des films pensés pour voyager, de Casablanca aux plus grands festivals.",
+      view: "Voir le film",
+      trailer: "Bande-annonce",
+      soon: "Bande-annonce à venir",
+      festivals: "Sélections & prix",
+      close: "Fermer",
+      directed: "Réalisation",
     },
     manifesto: {
       label: "Notre ADN",
@@ -75,6 +87,7 @@ export const content = {
       { id: "home", label: "Home" },
       { id: "about", label: "About" },
       { id: "founders", label: "Founders" },
+      { id: "films", label: "Films" },
       { id: "expertise", label: "Expertise" },
       { id: "contact", label: "Contact" },
     ],
@@ -105,6 +118,17 @@ export const content = {
         { name: "Nadia Assad", role: "Creative Strategist · Brand Architect · Producer", img: "/images/founder2.jpg",
           bio: "Specialized in branding, storytelling and creative direction, Nadia develops strong narratives and meaningful connections between brands, people and stories." },
       ],
+    },
+    films: {
+      label: "Filmography",
+      title: ["Selected", "Works"],
+      intro: "Features, shorts, documentaries: films built to travel, from Casablanca to the world's leading festivals.",
+      view: "View film",
+      trailer: "Trailer",
+      soon: "Trailer coming soon",
+      festivals: "Selections & awards",
+      close: "Close",
+      directed: "Directed by",
     },
     manifesto: {
       label: "Our DNA",
@@ -141,6 +165,43 @@ export const content = {
       explore: "Explore", connect: "Connect", rights: "All rights reserved.",
     },
   },
+};
+
+// Sample projects: replace titles, synopses, festivals and trailer links (YouTube/Vimeo URL) with the client's real films.
+export const filmItems = [
+  {
+    title: "Titre du film 01", year: "2026", director: "Hicham Lasri", poster: "/images/poster1.jpg", trailer: "",
+    type: { fr: "Long métrage · Fiction", en: "Feature · Fiction" },
+    synopsis: { fr: "[Synopsis à compléter] Une femme face à ses ombres, dans une ville qui ne dort jamais.", en: "[Synopsis to come] A woman facing her shadows, in a city that never sleeps." },
+    festivals: ["[Festival] · Sélection officielle", "[Festival] · Compétition"],
+  },
+  {
+    title: "Titre du film 02", year: "2025", director: "Hicham Lasri", poster: "/images/poster2.jpg", trailer: "",
+    type: { fr: "Long métrage · Road movie", en: "Feature · Road movie" },
+    synopsis: { fr: "[Synopsis à compléter] Une nuit, une route, une fuite vers le sud.", en: "[Synopsis to come] One night, one road, a flight to the south." },
+    festivals: ["[Festival] · Panorama"],
+  },
+  {
+    title: "Titre du film 03", year: "2024", director: "Hicham Lasri", poster: "/images/poster3.jpg", trailer: "",
+    type: { fr: "Documentaire", en: "Documentary" },
+    synopsis: { fr: "[Synopsis à compléter] Les toits de Casablanca racontés par ceux qui y grandissent.", en: "[Synopsis to come] Casablanca's rooftops told by those who grow up there." },
+    festivals: ["[Festival] · Prix du public", "[Festival] · Sélection"],
+  },
+  {
+    title: "Titre du film 04", year: "2023", director: "Hicham Lasri", poster: "/images/poster4.jpg", trailer: "",
+    type: { fr: "Court métrage · Expérimental", en: "Short · Experimental" },
+    synopsis: { fr: "[Synopsis à compléter] Un geste, une lumière, une déchirure.", en: "[Synopsis to come] A gesture, a light, a tear." },
+    festivals: ["[Festival] · Courts métrages"],
+  },
+];
+
+export const toEmbedUrl = (url) => {
+  if (!url) return "";
+  const yt = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]{11})/);
+  if (yt) return `https://www.youtube.com/embed/${yt[1]}?autoplay=1&rel=0`;
+  const vm = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  if (vm) return `https://player.vimeo.com/video/${vm[1]}?autoplay=1`;
+  return url;
 };
 
 export const contactInfo = {

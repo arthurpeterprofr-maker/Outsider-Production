@@ -9,16 +9,20 @@ import { Expertise } from "../components/Expertise";
 import { Contact } from "../components/Contact";
 import { Footer } from "../components/Footer";
 import { SmoothScroll } from "../lib/smooth";
+import { Films } from "../components/Films";
+import { Intro } from "../components/Intro";
 
 export default function Home() {
   return (
     <main className="bg-[#050505] text-white" data-testid="home-page">
       <SmoothScroll />
+      <Intro />
       <Nav />
       <Hero />
       <Marquee />
       <About />
       <Founders />
+      <Films />
       <Manifesto />
       <Vision />
       <Expertise />

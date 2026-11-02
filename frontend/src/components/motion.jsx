@@ -17,17 +17,17 @@ export const Reveal = ({ children, delay = 0, y = 32, className = "", ...rest })
 
 const lineVariants = {
   hidden: { y: "110%" },
-  show: (i) => ({ y: "0%", transition: { duration: 1.1, ease: EASE, delay: i * 0.12 } }),
+  show: ({ i, d }) => ({ y: "0%", transition: { duration: 1.1, ease: EASE, delay: i * 0.12 + d } }),
 };
 
-export const MaskLines = ({ lines, className = "", lineClassName = "", as = "h2", onLoad = false, baseDelay = 0 }) => {
+export const MaskLines = ({ lines, className = "", lineClassName = "", as = "h2", onLoad = false, delay = 0 }) => {
   const Tag = motion[as];
   const trigger = onLoad ? { animate: "show" } : { whileInView: "show", viewport: { once: true, amount: 0.1 } };
   return (
     <Tag className={className} initial="hidden" {...trigger}>
       {lines.map((line, i) => (
         <span key={`${line}-${i}`} className="block overflow-hidden pb-[0.08em]">
-          <motion.span className={`block ${lineClassName}`} variants={lineVariants} custom={i + baseDelay}>
+          <motion.span className={`block ${lineClassName}`} variants={lineVariants} custom={{ i, d: delay }}>
             {line}
           </motion.span>
         </span>

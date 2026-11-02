@@ -4,6 +4,7 @@ import { ArrowDown } from "lucide-react";
 import { useLang } from "../lib/i18n";
 import { scrollToId } from "../lib/smooth";
 import { MaskLines, EASE } from "./motion";
+import { INTRO_DELAY as D } from "../lib/intro";
 
 export const Hero = () => {
   const { t, lang } = useLang();
@@ -36,7 +37,7 @@ export const Hero = () => {
           className="h-full w-full object-cover object-center"
           initial={{ scale: 1.3, opacity: 0 }}
           animate={{ scale: 1.05, opacity: 0.75 }}
-          transition={{ duration: 2.8, ease: EASE }}
+          transition={{ duration: 2.8, ease: EASE, delay: D * 0.75 }}
         />
       </motion.div>
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/10 to-[#050505]" />
@@ -47,7 +48,7 @@ export const Hero = () => {
         <motion.p
           initial={{ opacity: 0, letterSpacing: "0.8em" }}
           animate={{ opacity: 1, letterSpacing: "0.4em" }}
-          transition={{ duration: 1.6, ease: EASE, delay: 0.3 }}
+          transition={{ duration: 1.6, ease: EASE, delay: D + 0.3 }}
           className="op-label mb-8 !text-zinc-300"
           data-testid="hero-eyebrow"
         >
@@ -58,6 +59,7 @@ export const Hero = () => {
             key={lang}
             as="h1"
             onLoad
+            delay={D}
             lines={t.hero.title}
             className="font-display uppercase leading-[0.86] tracking-[-0.02em] text-white text-[15vw] sm:text-[12vw] lg:text-[9.5vw]"
             lineClassName="op-hero-line"
@@ -70,7 +72,7 @@ export const Hero = () => {
                 className="block font-body text-base text-zinc-200 sm:text-lg"
                 initial={{ y: "110%" }}
                 animate={{ y: "0%" }}
-                transition={{ duration: 1, ease: EASE, delay: 0.9 + i * 0.14 }}
+                transition={{ duration: 1, ease: EASE, delay: D + 0.9 + i * 0.14 }}
               >
                 {l}
               </motion.span>
@@ -82,7 +84,7 @@ export const Hero = () => {
       <motion.button
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.8, duration: 1 }}
+        transition={{ delay: D + 1.8, duration: 1 }}
         onClick={() => scrollToId("about")}
         className="group absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3 text-zinc-300"
         data-testid="hero-scroll-btn"

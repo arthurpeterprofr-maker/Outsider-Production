@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 import { useLang } from "../lib/i18n";
 import { scrollToId } from "../lib/smooth";
 import { Logo } from "./Logo";
+import { INTRO_DELAY } from "../lib/intro";
 
 const LangToggle = ({ testId }) => {
   const { lang, setLang } = useLang();
@@ -45,13 +46,13 @@ export const Nav = () => {
       <motion.header
         initial={{ y: -40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 1, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 1, delay: INTRO_DELAY + 0.9, ease: [0.22, 1, 0.36, 1] }}
         className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,padding] duration-500 ${scrolled ? "border-b border-white/10 bg-black/60 py-3 backdrop-blur-xl" : "border-b border-transparent py-5"}`}
         data-testid="site-nav"
       >
         <div className="mx-auto flex max-w-[1500px] items-center justify-between px-5 sm:px-10">
           <Logo onClick={() => go("home")} />
-          <nav className="hidden items-center gap-9 lg:flex">
+          <nav className="hidden items-center gap-7 lg:flex xl:gap-9">
             {t.nav.map((n) => (
               <button key={n.id} onClick={() => go(n.id)} data-testid={`nav-link-${n.id}`} className="op-navlink">
                 {n.label}

@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { introPending, markIntroSeen, markIntroPlayed } from "../lib/intro";
+import { introPending, markIntroSeen, markIntroPlayed, INTRO_MS } from "../lib/intro";
+import { useLang, asset } from "../lib/i18n";
+import { LetterLogo } from "./LetterLogo";
 
 const CURTAIN = [0.76, 0, 0.24, 1];
 
 const Counter = () => {
   const [n, setN] = useState(0);
   useEffect(() => {
-    const id = setInterval(() => setN((v) => (v >= 100 ? 100 : v + 4)), 60);
+    const id = setInterval(() => setN((v) => Math.min(100, v + 3)), 100);
     return () => clearInterval(id);
   }, []);
   return <span className="font-mono text-xs tabular-nums text-zinc-400" data-testid="intro-counter">{String(n).padStart(3, "0")}</span>;
@@ -16,10 +18,11 @@ const Counter = () => {
 export const Intro = () => {
   const [show] = useState(introPending);
   const [visible, setVisible] = useState(show);
+  const { site } = useLang();
   useEffect(() => {
     if (!show) return undefined;
     markIntroSeen();
-    const t = setTimeout(() => { setVisible(false); markIntroPlayed(); }, 1900);
+    const t = setTimeout(() => { setVisible(false); markIntroPlayed(); }, INTRO_MS);
     return () => clearTimeout(t);
   }, [show]);
 
@@ -34,14 +37,7 @@ export const Intro = () => {
             exit={{ opacity: 0, scale: 0.94 }}
             transition={{ duration: 0.4 }}
           >
-            <motion.img src="/logo-mark.png" alt="" aria-hidden="true" className="h-16 w-auto" data-testid="intro-logo"
-              initial={{ clipPath: "inset(0% 100% 0% 0%)", scale: 0.9 }} animate={{ clipPath: "inset(0% 0% 0% 0%)", scale: 1 }}
-              transition={{ duration: 1.2, ease: [0.65, 0, 0.35, 1] }} />
-            <span className="block overflow-hidden">
-              <motion.span className="op-label block !text-white" initial={{ y: "110%" }} animate={{ y: "0%" }} transition={{ delay: 0.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}>
-                Outsiders Production
-              </motion.span>
-            </span>
+            <LetterLogo src={asset(site.media?.logoFull) || "/logo-full.png"} className="w-[78vw] max-w-[520px]" />
             <Counter />
           </motion.div>
           <div className="op-grain" />

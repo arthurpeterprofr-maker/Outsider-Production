@@ -318,5 +318,5 @@ export const defaultContent = {
   artists: artistItems,
   laurels,
   contact: contactInfo,
-  media: { hero: "/images/hero.jpg", about: "/images/set.jpg", manifesto: "/images/eye.jpg" },
+  media: { logoMark: "/logo-mark.png", logoFull: "/logo-full.png", hero: "/images/hero.jpg", about: "/images/set.jpg", manifesto: "/images/eye.jpg" },
 };

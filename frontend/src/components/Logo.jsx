@@ -1,9 +1,16 @@
+import { useLang, asset } from "../lib/i18n";
+
+const useLogo = (key, fallback) => {
+  const { site } = useLang();
+  return asset(site.media?.[key]) || fallback;
+};
+
 export const LogoMark = ({ className = "h-6" }) => (
-  <img src="/logo-mark.png" alt="" aria-hidden="true" className={`w-auto select-none ${className}`} draggable="false" />
+  <img src={useLogo("logoMark", "/logo-mark.png")} alt="" aria-hidden="true" className={`w-auto select-none ${className}`} draggable="false" />
 );
 
 export const LogoFull = ({ className = "h-16" }) => (
-  <img src="/logo-full.png" alt="Outsiders Production — Crafting Dreams" className={`w-auto select-none ${className}`} draggable="false" />
+  <img src={useLogo("logoFull", "/logo-full.png")} alt="Outsiders Production — Crafting Dreams" className={`w-auto select-none ${className}`} draggable="false" data-testid="footer-logo" />
 );
 
 export const Logo = ({ onClick }) => (

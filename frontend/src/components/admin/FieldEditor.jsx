@@ -19,9 +19,10 @@ const LABELS = {
   detail: "Détail", links: "Liens", form: "Formulaire", labels: "Libellés", location: "Adresse", eyebrow: "Sur-titre",
   scroll: "Texte défiler", text: "Texte", id: "Ancre (ne pas modifier)", projectTypes: "Types de projet", blurb: "Description",
   artists: "Artistes résidents", artistFilters: "Filtres", slug: "Identifiant d'URL (sans espaces)", tags: "Catégories (clés des filtres)",
+  logoMark: "Logo miniature — menu, admin (PNG blanc sur fond transparent)", logoFull: "Logo entier — ouverture animée et pied de page (PNG blanc sur fond transparent)",
   photos: "Photos", film: "Film", link: "Lien vidéo (YouTube, Vimeo ou fichier .mp4 — lu sur le site ; Netflix s'ouvre dans un nouvel onglet)", key: "Clé", route: "Page (ne pas modifier)",
 };
-const IMAGE_KEYS = ["img", "image", "poster", "hero", "about", "manifesto"];
+const IMAGE_KEYS = ["img", "image", "poster", "hero", "about", "manifesto", "logoMark", "logoFull"];
 const LONG_KEYS = ["bio", "synopsis", "quote", "intro", "note", "blurb", "text", "paragraphs", "success"];
 
 const labelOf = (k) => (typeof k === "number" ? `#${k + 1}` : LABELS[k] || k);
@@ -55,7 +56,7 @@ const ImageField = ({ value, onChange, path }) => {
   };
   return (
     <div className="flex items-center gap-4">
-      {value && <img src={asset(value)} alt="" className="h-16 w-16 shrink-0 object-cover" />}
+      {value && <img src={asset(value)} alt="" className={`h-16 w-16 shrink-0 ${path.includes("logo") ? "bg-zinc-900 object-contain p-1" : "object-cover"}`} />}
       <input className="op-admin-input flex-1" value={value} onChange={(e) => onChange(e.target.value)} data-testid={`cms-${path}`} />
       <input ref={ref} type="file" accept="image/*" hidden onChange={upload} />
       <button type="button" onClick={() => ref.current?.click()} className="op-icon-btn shrink-0" disabled={busy} aria-label="upload" data-testid={`cms-upload-${path}`}>

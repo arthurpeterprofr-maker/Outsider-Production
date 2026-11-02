@@ -23,6 +23,11 @@ User choices: bilingue FR/EN avec bouton de langue; formulaire = enregistrement 
 - Section Filmographie (#films) : 4 affiches IA, fiche film en modale (synopsis, sélections festivals, lecteur bande-annonce YouTube/Vimeo via `trailer`), données dans `filmItems` (content.js) — contenus d'exemple entre [crochets].
 - Écran d'ouverture (rideau + logo dessiné + compteur), 1 fois par session ; animations du hero décalées en conséquence.
 
+## Implemented (2026-11-02, itération 3)
+- Filmographie en pellicule horizontale épinglée au scroll (desktop, barre de progression, perforations), swipe horizontal sur mobile, carte de fin vers Contact.
+- Section « Sélections & presse » : 6 lauriers SVG (festivals cités dans la bio de référence) + 3 citations presse placeholders.
+- Lecteur bande-annonce prêt (YouTube/Vimeo) — liens réels non fournis.
+
 ## Backlog
 - P0 : renseigner l'email de réception réel (CONTACT_NOTIFY_EMAIL), remplacer contenus/photos par ceux du client.
 - P1 : section projets/filmographie, vrais liens réseaux sociaux, SEO (OG, sitemap).

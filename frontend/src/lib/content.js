@@ -46,6 +46,19 @@ export const content = {
       festivals: "Sélections & prix",
       close: "Fermer",
       directed: "Réalisation",
+      more: "La suite s'écrit maintenant.",
+      moreCta: "Parlons de votre projet",
+    },
+    press: {
+      label: "Sélections & presse",
+      title: ["Vus et salués", "dans le monde"],
+      laurelTag: "Sélection officielle",
+      note: "Les films de Hicham Lasri ont été sélectionnés dans des festivals internationaux majeurs.",
+      quotes: [
+        { text: "[Citation presse à insérer — une phrase forte d'un critique sur le film.]", source: "[Nom du média]" },
+        { text: "[Citation presse à insérer — un regard sur l'audace du projet.]", source: "[Nom du média]" },
+        { text: "[Citation presse à insérer — un mot sur la signature visuelle.]", source: "[Nom du média]" },
+      ],
     },
     manifesto: {
       label: "Notre ADN",
@@ -129,6 +142,19 @@ export const content = {
       festivals: "Selections & awards",
       close: "Close",
       directed: "Directed by",
+      more: "The next chapter is being written.",
+      moreCta: "Tell us about your project",
+    },
+    press: {
+      label: "Selections & press",
+      title: ["Seen and praised", "around the world"],
+      laurelTag: "Official selection",
+      note: "Hicham Lasri's films have been selected at major international festivals.",
+      quotes: [
+        { text: "[Press quote to insert — a strong line from a critic about the film.]", source: "[Media name]" },
+        { text: "[Press quote to insert — a take on the project's boldness.]", source: "[Media name]" },
+        { text: "[Press quote to insert — a word on the visual signature.]", source: "[Media name]" },
+      ],
     },
     manifesto: {
       label: "Our DNA",
@@ -193,6 +219,16 @@ export const filmItems = [
     synopsis: { fr: "[Synopsis à compléter] Un geste, une lumière, une déchirure.", en: "[Synopsis to come] A gesture, a light, a tear." },
     festivals: ["[Festival] · Courts métrages"],
   },
+];
+
+// Festivals cited in the reference bio (Hicham Lasri). Edit freely.
+export const laurels = [
+  { name: "Cannes", detail: "ACID" },
+  { name: "Berlinale", detail: "Panorama" },
+  { name: "TIFF", detail: "Toronto" },
+  { name: "MoMA", detail: "New York" },
+  { name: "IFFR", detail: "Rotterdam" },
+  { name: "Dubai", detail: "Intl. Film Festival" },
 ];
 
 export const toEmbedUrl = (url) => {

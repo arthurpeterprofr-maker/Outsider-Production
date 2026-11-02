@@ -1,40 +1,55 @@
-import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { Award, Play, X } from "lucide-react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
+import { ArrowUpRight, Award, Play, X } from "lucide-react";
 import { useLang } from "../lib/i18n";
 import { filmItems, toEmbedUrl } from "../lib/content";
 import { lockScroll } from "../lib/smooth";
 import { MaskLines, Reveal, Label, EASE } from "./motion";
 
-const PosterCard = ({ f, i, onOpen, lang, label }) => (
-  <motion.button
+const useIsDesktop = () => {
+  const [d, setD] = useState(() => window.matchMedia("(min-width: 1024px)").matches);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const on = () => setD(mq.matches);
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, []);
+  return d;
+};
+
+const Sprockets = () => <div className="op-sprockets h-4 w-full shrink-0" aria-hidden="true" />;
+
+const FilmFrame = ({ f, i, onOpen, lang, t }) => (
+  <button
     type="button"
     onClick={onOpen}
-    initial="hidden"
-    whileInView="show"
-    viewport={{ once: true, amount: 0.1 }}
-    className={`group block text-left ${i % 2 ? "lg:mt-24" : ""}`}
+    className="group flex w-[78vw] shrink-0 snap-start flex-col gap-5 text-left sm:w-[56vw] lg:h-[52vh] lg:w-auto lg:flex-row lg:gap-8"
     data-testid={`film-card-${i}`}
   >
-    <motion.div
-      className="relative aspect-[2/3] overflow-hidden bg-zinc-900"
-      variants={{ hidden: { clipPath: "inset(0% 0% 100% 0%)" }, show: { clipPath: "inset(0% 0% 0% 0%)", transition: { duration: 1.3, ease: EASE, delay: (i % 4) * 0.12 } } }}
-    >
-      <img src={f.poster} alt={f.title} className="h-full w-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-[1.07]" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-black/30" />
-      <span className="absolute left-4 top-4 font-mono text-[11px] text-white/80">{f.year}</span>
-      <span className="absolute right-4 top-4 flex h-11 w-11 scale-75 items-center justify-center rounded-full bg-white text-black opacity-0 transition-[opacity,transform] duration-500 group-hover:scale-100 group-hover:opacity-100">
+    <div className="relative aspect-[2/3] w-full overflow-hidden bg-zinc-900 lg:h-full lg:w-auto">
+      <img src={f.poster} alt={f.title} className="h-full w-full object-cover grayscale transition-transform duration-[1.4s] ease-out group-hover:scale-[1.07]" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+      <span className="absolute right-4 top-4 flex h-12 w-12 items-center justify-center rounded-full bg-white text-black transition-transform duration-500 lg:scale-0 lg:group-hover:scale-100">
         <Play className="ml-0.5 h-4 w-4 fill-current" />
       </span>
-      <div className="absolute inset-x-4 bottom-4">
-        <p className="font-display text-xl leading-tight text-white sm:text-2xl lg:text-3xl">{f.title}</p>
-        <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-300">{f.type[lang]}</p>
+    </div>
+    <div className="flex flex-col justify-between lg:w-[300px] lg:py-2">
+      <div>
+        <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-zinc-400">{String(i + 1).padStart(2, "0")} — {f.year}</p>
+        <h3 className="mt-4 font-display text-3xl leading-[1.02] text-white sm:text-4xl">{f.title}</h3>
+        <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-300">{f.type[lang]}</p>
+        <ul className="mt-6 space-y-2">
+          {f.festivals.map((fe) => (
+            <li key={fe} className="flex items-center gap-2 font-body text-sm text-zinc-300"><Award className="h-3.5 w-3.5 shrink-0 text-zinc-400" />{fe}</li>
+          ))}
+        </ul>
       </div>
-    </motion.div>
-    <p className="mt-4 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.25em] text-zinc-400 transition-colors duration-300 group-hover:text-white">
-      <span className="h-px w-6 bg-current transition-[width] duration-500 group-hover:w-10" />{label}
-    </p>
-  </motion.button>
+      <p className="mt-6 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.25em] text-zinc-300 transition-colors duration-300 group-hover:text-white">
+        <span className="h-px w-6 bg-current transition-[width] duration-500 group-hover:w-12" />{t.view}
+        <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+      </p>
+    </div>
+  </button>
 );
 
 const TrailerBlock = ({ f, t }) => {
@@ -105,22 +120,67 @@ const FilmModal = ({ f, onClose, lang, t }) => {
 export const Films = () => {
   const { t, lang } = useLang();
   const [active, setActive] = useState(null);
+  const isDesktop = useIsDesktop();
+  const sectionRef = useRef(null);
+  const trackRef = useRef(null);
+  const [shift, setShift] = useState(0);
+  const [vh, setVh] = useState(window.innerHeight);
+
+  useLayoutEffect(() => {
+    const measure = () => {
+      const el = trackRef.current;
+      setVh(window.innerHeight);
+      setShift(el ? Math.max(0, el.scrollWidth - window.innerWidth) : 0);
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    if (trackRef.current) ro.observe(trackRef.current);
+    window.addEventListener("resize", measure);
+    return () => { ro.disconnect(); window.removeEventListener("resize", measure); };
+  }, [isDesktop, lang]);
+
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
+  const x = useTransform(scrollYProgress, (v) => -v * shift);
+  const pinned = isDesktop && shift > 0;
+
   return (
-    <section id="films" className="relative border-t border-white/10 bg-[#050505] py-24 sm:py-36" data-testid="films-section">
-      <div className="mx-auto max-w-[1500px] px-5 sm:px-10">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-end">
-          <div className="lg:col-span-7">
+    <section
+      id="films"
+      ref={sectionRef}
+      style={pinned ? { height: shift + vh } : undefined}
+      className="relative border-t border-white/10 bg-[#050505]"
+      data-testid="films-section"
+    >
+      <div className={`flex flex-col justify-center overflow-hidden ${pinned ? "sticky top-0 h-screen pt-14" : "py-24"}`}>
+        <div className="mx-auto flex w-full max-w-[1500px] flex-col gap-6 px-5 sm:px-10 lg:flex-row lg:items-end lg:justify-between">
+          <div>
             <Reveal><Label>{t.films.label}</Label></Reveal>
-            <MaskLines key={lang} lines={t.films.title} className="mt-6 font-display text-6xl italic leading-[0.95] text-white sm:text-7xl lg:text-8xl" />
+            <MaskLines key={lang} lines={[t.films.title.join(" ")]} className="mt-5 font-display text-5xl italic leading-[0.95] text-white sm:text-7xl" />
           </div>
-          <Reveal delay={0.2} className="lg:col-span-5">
-            <p className="max-w-md font-body text-base leading-relaxed text-zinc-300">{t.films.intro}</p>
+          <Reveal delay={0.2} className="max-w-sm">
+            <p className="font-body text-base leading-relaxed text-zinc-300">{t.films.intro}</p>
+            {pinned && (
+              <div className="mt-6 h-px w-full bg-white/15" data-testid="films-progress">
+                <motion.div className="h-px origin-left bg-white" style={{ scaleX: scrollYProgress }} />
+              </div>
+            )}
           </Reveal>
         </div>
-        <div className="mt-16 grid grid-cols-2 gap-x-4 gap-y-12 sm:gap-x-8 lg:grid-cols-4">
-          {filmItems.map((f, i) => (
-            <PosterCard key={f.title} f={f} i={i} lang={lang} label={t.films.view} onOpen={() => setActive(f)} />
-          ))}
+
+        <div className="mt-12 border-y border-white/10 bg-black py-3 lg:mt-14">
+          <Sprockets />
+          <div className={`py-6 ${pinned ? "" : "overflow-x-auto snap-x snap-mandatory op-noscrollbar"}`}>
+            <motion.div ref={trackRef} style={pinned ? { x } : undefined} className="flex w-max gap-10 px-5 sm:px-10 lg:gap-16" data-testid="films-track">
+              {filmItems.map((f, i) => (
+                <FilmFrame key={f.title} f={f} i={i} lang={lang} t={t.films} onOpen={() => setActive(f)} />
+              ))}
+              <div className="flex w-[60vw] shrink-0 snap-start flex-col justify-center sm:w-[40vw] lg:h-[52vh] lg:w-[340px]">
+                <p className="font-display text-4xl italic leading-tight text-white sm:text-5xl">{t.films.more}</p>
+                <a href="#contact" className="op-underline mt-6 self-start font-mono text-[11px] uppercase tracking-[0.25em] text-zinc-300" data-testid="films-more-link">{t.films.moreCta}</a>
+              </div>
+            </motion.div>
+          </div>
+          <Sprockets />
         </div>
       </div>
       <AnimatePresence>

@@ -133,6 +133,18 @@ html.lenis, html.lenis body { height: auto; }
 }
 .op-icon-btn:hover { background: #fff; color: #000; transform: translateY(-2px); }
 
+.op-sprockets {
+  background-image: radial-gradient(circle at center, transparent 0, transparent 0), linear-gradient(90deg, rgba(255, 255, 255, 0.85) 0 14px, transparent 14px 34px);
+  background-size: 34px 10px;
+  background-repeat: repeat-x;
+  background-position: 10px center;
+  opacity: 0.18;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.op-noscrollbar { scrollbar-width: none; }
+.op-noscrollbar::-webkit-scrollbar { display: none; }
+
 .op-map { filter: grayscale(1) invert(0.92) contrast(1.1); }
 
 @media (prefers-reduced-motion: reduce) {

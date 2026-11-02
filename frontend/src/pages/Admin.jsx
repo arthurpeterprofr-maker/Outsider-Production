@@ -140,7 +140,10 @@ export default function Admin() {
             <button key={k} onClick={() => setView(k)} data-testid={`admin-tab-${k}`}
               className={`rounded-full px-5 py-2 font-mono text-[11px] uppercase tracking-[0.2em] ${view === k ? "bg-white text-black" : "border border-white/15 text-zinc-300 hover:text-white"}`}>{l}</button>
           ))}
-          <span className="ml-auto font-mono text-[11px] text-zinc-400" data-testid="admin-current-user">{user.email} · {isAdmin ? "admin" : "éditeur"}</span>
+          <div className="ml-auto flex flex-wrap items-center gap-5">
+            <a href="/guide-admin-outsiders.pdf" target="_blank" rel="noreferrer" className="op-underline font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-300 hover:text-white" data-testid="admin-guide-link">Mode d'emploi (PDF)</a>
+            <span className="font-mono text-[11px] text-zinc-400" data-testid="admin-current-user">{user.email} · {isAdmin ? "admin" : "éditeur"}</span>
+          </div>
         </nav>
       )}
       {user && view === "content" && <section className="mx-auto mt-6 max-w-5xl"><ContentEditor /></section>}

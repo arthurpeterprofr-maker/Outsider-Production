@@ -63,6 +63,10 @@ User choices: bilingue FR/EN avec bouton de langue; formulaire = enregistrement 
 - Ouverture animée : logo entier découpé automatiquement lettre par lettre (LetterLogo.jsx + lib/logoSlices.js), fonctionne aussi avec un logo importé. Intro 3,8 s.
 - Nouvelle photo de Nadia (founder2.jpg, portrait assis).
 
+## Implemented (2026-11-02, itération 12)
+- Mode d'emploi PDF de l'admin (18 pages, captures réelles) : source /app/docs/guide/guide.html + shots/, PDF publié dans frontend/public/guide-admin-outsiders.pdf (régénérer : google-chrome --headless --print-to-pdf). Lien « Mode d'emploi (PDF) » dans l'en-tête de l'admin.
+- Libellés admin ajoutés : « Lauriers (festivals) », « Mention sous les lauriers ».
+
 
 ## Backlog
 - P0 : renseigner l'email de réception réel (CONTACT_NOTIFY_EMAIL), remplacer contenus/photos par ceux du client.

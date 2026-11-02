@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<title>Outsiders Production — Mode d'emploi de l'administration</title>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: "Plus Jakarta Sans", sans-serif; color: #141414; background: #fff; font-size: 10.5pt; line-height: 1.6; }
+  .page { width: 210mm; height: 297mm; padding: 20mm 18mm 18mm; position: relative; overflow: hidden; page-break-after: always; background: #f6f4f0; }
+  .page.dark { background: #050505; color: #f2f2f2; }
+  .mono { font-family: "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: .22em; font-size: 7.5pt; }
+  .serif { font-family: "Bodoni Moda", serif; }
+  h1 { font-family: "Bodoni Moda", serif; font-weight: 400; font-size: 34pt; line-height: 1.05; letter-spacing: -.01em; }
+  h1 em { font-style: italic; }
+  h2 { font-family: "Bodoni Moda", serif; font-weight: 400; font-size: 15pt; margin: 7mm 0 3mm; }
+  p { margin: 0 0 3mm; }
+  .lead { font-size: 11.5pt; color: #3a3a3a; max-width: 150mm; margin-top: 5mm; }
+  .head { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #d9d4cb; padding-bottom: 4mm; margin-bottom: 9mm; color: #6b6b6b; }
+  .head img { height: 6mm; filter: invert(1); }
+  .num { font-family: "Bodoni Moda", serif; font-style: italic; font-size: 60pt; line-height: 1; color: #c9c2b6; position: absolute; right: 18mm; top: 33mm; }
+  .foot { position: absolute; bottom: 10mm; left: 18mm; right: 18mm; display: flex; justify-content: space-between; color: #8a8a8a; }
+  figure { margin: 5mm 0; }
+  figure img { width: 100%; max-height: 98mm; object-fit: cover; object-position: top; display: block; border-radius: 2mm; box-shadow: 0 6mm 14mm -8mm rgba(0,0,0,.45); border: 1px solid #222; }
+  figcaption { margin-top: 2.5mm; color: #6b6b6b; font-size: 8.5pt; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
+  .steps { counter-reset: s; list-style: none; margin: 3mm 0; }
+  .steps li { counter-increment: s; position: relative; padding: 0 0 3mm 11mm; }
+  .steps li::before { content: counter(s, decimal-leading-zero); position: absolute; left: 0; top: .5mm; font-family: "JetBrains Mono", monospace; font-size: 8pt; color: #fff; background: #050505; border-radius: 99px; width: 7.5mm; height: 5mm; text-align: center; line-height: 5mm; }
+  .tip { background: #050505; color: #eaeaea; padding: 4mm 5mm; border-radius: 2mm; font-size: 9.5pt; margin: 4mm 0; }
+  .tip b { color: #fff; }
+  .tip .mono { color: #9a9a9a; display: block; margin-bottom: 1.5mm; }
+  .warn { border-left: 2px solid #b5452f; padding: 1mm 0 1mm 4mm; color: #3a3a3a; font-size: 9.5pt; margin: 4mm 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 9pt; margin: 3mm 0; }
+  td, th { text-align: left; padding: 2mm 2.5mm; border-bottom: 1px solid #dcd6cc; vertical-align: top; }
+  th { font-family: "JetBrains Mono", monospace; font-weight: 500; font-size: 7pt; letter-spacing: .18em; text-transform: uppercase; color: #6b6b6b; }
+  td:first-child { font-weight: 600; white-space: nowrap; }
+  .kbd { font-family: "JetBrains Mono", monospace; font-size: 8pt; background: #050505; color: #fff; padding: .4mm 2mm; border-radius: 99px; letter-spacing: .1em; white-space: nowrap; }
+  /* cover */
+  .cover { display: flex; flex-direction: column; justify-content: space-between; padding: 22mm 20mm; }
+  .cover .bg { position: absolute; inset: 0; background: url(shots/00_site.jpg) center/cover; opacity: .16; filter: grayscale(1); }
+  .cover .veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,5,5,.6), #050505 75%); }
+  .cover > * { position: relative; }
+  .cover h1 { font-size: 46pt; color: #fff; }
+  .cover .logo { width: 95mm; }
+  .toc { list-style: none; margin-top: 10mm; }
+  .toc li { display: flex; justify-content: space-between; align-items: baseline; padding: 3.2mm 0; border-bottom: 1px solid #d9d4cb; font-size: 12pt; }
+  .toc li span:first-child { font-family: "Bodoni Moda", serif; }
+  .toc li span:last-child { font-family: "JetBrains Mono", monospace; font-size: 8pt; color: #8a8a8a; }
+  .flow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; margin: 6mm 0; }
+  .flow div { background: #fff; border: 1px solid #ddd6ca; border-radius: 2mm; padding: 5mm; }
+  .flow b { font-family: "Bodoni Moda", serif; font-weight: 400; font-size: 14pt; display: block; margin: 2mm 0 1.5mm; }
+  .roles { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; margin: 5mm 0; }
+  .roles div { border: 1px solid #ddd6ca; background: #fff; border-radius: 2mm; padding: 5mm; font-size: 9.5pt; }
+  .roles b { font-family: "Bodoni Moda", serif; font-weight: 400; font-size: 14pt; display: block; margin: 2mm 0; }
+</style>
+</head>
+<body>
+
+<!-- COUVERTURE -->
+<section class="page dark cover">
+  <div class="bg"></div><div class="veil"></div>
+  <div class="mono" style="color:#9a9a9a">Guide interne · Espace d'administration</div>
+  <div>
+    <img class="logo" src="../../frontend/public/logo-full.png" alt="Outsiders Production" />
+    <h1 style="margin-top:16mm">Mode d'emploi<br /><em>de l'administration</em></h1>
+    <p class="lead" style="color:#bdbdbd">Modifier les textes, ajouter un film, publier une sélection en festival, présenter un artiste : tout se fait depuis votre navigateur, sans développeur et sans redéploiement.</p>
+  </div>
+  <div style="display:flex;justify-content:space-between" class="mono"><span style="color:#9a9a9a">votre-site/admin</span><span style="color:#9a9a9a">Édition novembre 2026</span></div>
+</section>
+
+<!-- SOMMAIRE -->
+<section class="page">
+  <div class="head mono"><span>Sommaire</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <h1>Ce que vous pouvez<br /><em>faire seul</em></h1>
+  <ul class="toc">
+    <li><span>01 — Se connecter, rôles et sécurité</span><span>p. 3</span></li>
+    <li><span>02 — L'éditeur de contenu en un coup d'œil</span><span>p. 4</span></li>
+    <li><span>03 — La règle d'or : modifier, prévisualiser, publier</span><span>p. 5</span></li>
+    <li><span>04 — Procédure : ajouter un nouveau film</span><span>p. 6</span></li>
+    <li><span>05 — Procédure : mettre à jour la presse et les festivals</span><span>p. 8</span></li>
+    <li><span>06 — Publicités</span><span>p. 10</span></li>
+    <li><span>07 — Artistes résidents</span><span>p. 11</span></li>
+    <li><span>08 — Fondateurs, logos et images du site</span><span>p. 13</span></li>
+    <li><span>09 — Coordonnées et textes du site</span><span>p. 14</span></li>
+    <li><span>10 — Historique des versions</span><span>p. 15</span></li>
+    <li><span>11 — Messages, comptes éditeurs, mot de passe</span><span>p. 16</span></li>
+    <li><span>12 — Bonnes pratiques et questions fréquentes</span><span>p. 18</span></li>
+  </ul>
+  <div class="foot mono"><span>Outsiders Production</span><span>02</span></div>
+</section>
+
+<!-- 01 CONNEXION -->
+<section class="page">
+  <div class="head mono"><span>01 · Connexion</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">01</span>
+  <h1>Se connecter</h1>
+  <p class="lead">L'espace d'administration est à l'adresse de votre site suivie de <b>/admin</b>, par exemple <b>www.outsidersproduction.ma/admin</b>.</p>
+  <figure><img src="shots/01_login.jpg" alt="" /><figcaption>Écran de connexion : email, mot de passe, puis « Connexion ».</figcaption></figure>
+  <div class="roles">
+    <div><span class="mono">Rôle</span><b>Administrateur</b>Lit les messages du formulaire de contact, modifie tout le contenu, crée ou supprime les comptes éditeurs, change son mot de passe.</div>
+    <div><span class="mono">Rôle</span><b>Éditeur</b>Modifie le contenu du site et son propre mot de passe. Il ne voit pas les messages et ne gère pas les comptes.</div>
+  </div>
+  <div class="tip"><span class="mono">Mot de passe oublié</span>Cliquez sur <b>« Mot de passe oublié ? »</b> sous le formulaire : un lien de réinitialisation est envoyé par email. Après plusieurs essais ratés, la connexion est bloquée quelques minutes par sécurité.</div>
+  <div class="foot mono"><span>Outsiders Production · Mode d'emploi</span><span>03</span></div>
+</section>
+
+<!-- 02 EDITEUR -->
+<section class="page">
+  <div class="head mono"><span>02 · L'éditeur</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">02</span>
+  <h1>L'éditeur<br /><em>en un coup d'œil</em></h1>
+  <p class="lead">Onglet <span class="kbd">Contenu du site</span> : chaque partie du site a son onglet. Les textes existent en français et en anglais.</p>
+  <figure><img src="shots/03_contenu.jpg" alt="" /><figcaption>Les onglets de contenu, la barre d'actions et les champs à remplir.</figcaption></figure>
+  <table>
+    <tr><th>Onglet</th><th>Ce qu'il contient</th></tr>
+    <tr><td>Textes FR / EN</td><td>Tous les textes du site : menu, accueil, à propos, fondateurs (rôle, biographie), presse, contact, pied de page.</td></tr>
+    <tr><td>Cinéma · Publicités</td><td>Les films et les campagnes, avec affiche, infos et lien vidéo.</td></tr>
+    <tr><td>Artistes · Filtres</td><td>La page « Artistes résidents » et ses catégories de filtre.</td></tr>
+    <tr><td>Fondateurs · Lauriers</td><td>Noms et photos des fondateurs, logos des festivals.</td></tr>
+    <tr><td>Coordonnées · Images</td><td>Email, téléphone, réseaux sociaux, logos et grandes images du site.</td></tr>
+  </table>
+  <div class="foot mono"><span>Outsiders Production · Mode d'emploi</span><span>04</span></div>
+</section>
+
+<!-- 03 REGLE D'OR -->
+<section class="page">
+  <div class="head mono"><span>03 · Publier</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">03</span>
+  <h1>La règle d'or</h1>
+  <p class="lead">Rien n'est visible par le public tant que vous n'avez pas cliqué sur <b>« Enregistrer »</b>. Vous pouvez donc tester sans risque.</p>
+  <div class="flow">
+    <div><span class="mono">Étape 1</span><b>Modifier</b>Changez les champs dans l'onglet voulu.</div>
+    <div><span class="mono">Étape 2</span><b>Aperçu</b>Ouvre le site avec vos changements non publiés, mis à jour en direct.</div>
+    <div><span class="mono">Étape 3</span><b>Enregistrer</b>Publie immédiatement et crée une version dans l'historique.</div>
+  </div>
+  <figure><img src="shots/07_save_bar.jpg" alt="" /><figcaption>La barre d'actions : annuler (flèche), historique (horloge), Aperçu, Enregistrer.</figcaption></figure>
+  <h2>Les gestes communs à toutes les listes</h2>
+  <table>
+    <tr><th>Geste</th><th>Effet</th></tr>
+    <tr><td>+ Ajouter</td><td>Crée un nouvel élément vide en bas de la liste.</td></tr>
+    <tr><td>Poignée ⋮⋮ (glisser)</td><td>Glissez-déposez pour changer l'ordre. Les flèches haut/bas font la même chose, une place à la fois.</td></tr>
+    <tr><td>Corbeille</td><td>Supprime l'élément. Avant d'enregistrer, la flèche « annuler » le fait revenir ; après, restaurez une version.</td></tr>
+    <tr><td>Bouton image</td><td>Importe une image depuis votre ordinateur (6 Mo maximum). Vous pouvez aussi coller un lien.</td></tr>
+    <tr><td>Flèche annuler</td><td>Efface toutes les modifications non enregistrées.</td></tr>
+  </table>
+  <div class="foot mono"><span>Outsiders Production · Mode d'emploi</span><span>05</span></div>
+</section>
+
+<!-- 04 AJOUTER UN FILM -->
+<section class="page">
+  <div class="head mono"><span>04 · Procédure</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">04</span>
+  <h1>Ajouter<br /><em>un nouveau film</em></h1>
+  <ol class="steps">
+    <li>Connectez-vous, ouvrez <span class="kbd">Contenu du site</span> puis l'onglet <span class="kbd">Cinéma</span>.</li>
+    <li>Cliquez sur <b>+ Ajouter</b> en haut à droite de la liste : une fiche vide apparaît en bas.</li>
+    <li>Ouvrez la fiche en cliquant sur son titre, puis remplissez les champs (voir le tableau page suivante).</li>
+    <li>Pour l'affiche, cliquez sur le bouton image à droite du champ <b>Affiche</b> et choisissez le fichier.</li>
+    <li>Placez le film à la bonne position avec la poignée ⋮⋮ : le premier de la liste est le premier affiché.</li>
+    <li>Cliquez sur <b>Aperçu</b> pour vérifier, puis sur <b>Enregistrer</b>.</li>
+  </ol>
+  <figure><img src="shots/06_film_new.jpg" alt="" /><figcaption>Une nouvelle fiche film en cours de saisie.</figcaption></figure>
+  <div class="foot mono"><span>Outsiders Production · Mode d'emploi</span><span>06</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>04 · Les champs d'un film</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <figure style="margin-top:0"><img src="shots/05_film_detail.jpg" alt="" /><figcaption>Fiche d'un film existant : affiche, lien, type, synopsis.</figcaption></figure>
+  <table>
+    <tr><th>Champ</th><th>À saisir</th></tr>
+    <tr><td>Titre · Année · Réalisation</td><td>Le titre tel qu'il doit apparaître, l'année de sortie, le ou les réalisateurs.</td></tr>
+    <tr><td>Affiche</td><td>Image verticale, idéalement 1200 × 1800 px (format 2:3), en JPG.</td></tr>
+    <tr><td>Lien Netflix</td><td>Lien vers le film ou la bande-annonce (Netflix, YouTube, Vimeo…). Il s'ouvre dans un nouvel onglet. Laissé vide, le site affiche « Bientôt ».</td></tr>
+    <tr><td>Type FR / EN</td><td>Ex. « Long métrage · Fiction » et « Feature · Fiction ».</td></tr>
+    <tr><td>Synopsis FR / EN</td><td>2 à 4 phrases dans chaque langue.</td></tr>
+    <tr><td>Festivals</td><td>Une ligne par sélection, ex. « Berlinale · Panorama ». + Ajouter pour une ligne de plus.</td></tr>
+  </table>
+  <figure><img src="shots/22_site_films.jpg" alt="" /><figcaption>Le résultat sur le site : la bande horizontale « Œuvres choisies ».</figcaption></figure>
+  <div class="foot mono"><span>Outsiders Production · Mode d'emploi</span><span>07</span></div>
+</section>
+
+<!-- 05 PRESSE -->
+<section class="page">
+  <div class="head mono"><span>05 · Procédure</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">05</span>
+  <h1>Mettre à jour<br /><em>presse &amp; festivals</em></h1>
+  <p class="lead">Les actualités du studio (citations de presse, sélections en festival) se trouvent dans la section « Sélections &amp; presse » du site.</p>
+  <h2>Ajouter une citation de presse</h2>
+  <ol class="steps">
+    <li>Onglet <span class="kbd">Textes FR</span>, ouvrez le bloc <b>Sélections &amp; presse</b>.</li>
+    <li>Dans <b>Citations</b>, cliquez sur <b>+ Ajouter</b>, saisissez le <b>Texte</b> et la <b>Source</b> (nom du média).</li>
+    <li>Faites la même chose dans <span class="kbd">Textes EN</span> pour la version anglaise.</li>
+    <li>Vous pouvez aussi changer le titre, la phrase d'introduction et la mention sous les lauriers.</li>
+    <li>Aperçu, puis Enregistrer.</li>
+  </ol>
+  <figure><img src="shots/15b_presse_quotes.jpg" alt="" /><figcaption>Le bloc « Sélections &amp; presse » et ses citations.</figcaption></figure>
+  <div class="foot mono"><span>Outsiders Production · Mode d'emploi</span><span>08</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>05 · Les lauriers</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <h2 style="margin-top:0">Ajouter une sélection en festival</h2>
+  <ol class="steps">
+    <li>Onglet <span class="kbd">Lauriers</span>, cliquez sur <b>+ Ajouter</b>.</li>
+    <li><b>Nom</b> : le festival (ex. « Venise »). <b>Détail</b> : la section (ex. « Orizzonti »).</li>
+    <li>Glissez le laurier à la bonne place, puis Enregistrer.</li>
+  </ol>
+  <figure><img src="shots/11_lauriers.jpg" alt="" /><figcaption>La liste des lauriers, réordonnable par glisser-déposer.</figcaption></figure>
+  <div class="tip"><span class="mono">Astuce</span>Pensez aussi à ajouter la sélection dans la fiche du film (champ <b>Festivals</b>, onglet Cinéma) pour qu'elle apparaisse sous l'affiche.</div>
+  <div class="foot mono"><span>Outsiders Production · Mode d'emploi</span><span>09</span></div>
+</section>
+
+<!-- 06 PUBS -->
+<section class="page">
+  <div class="head mono"><span>06 · Publicités</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">06</span>
+  <h1>Publicités</h1>
+  <p class="lead">Même principe que les films : onglet <span class="kbd">Publicités</span>, + Ajouter, remplissez la fiche, Enregistrer.</p>
+  <figure><img src="shots/08_pubs.jpg" alt="" /><figcaption>Une campagne : titre, client, année, image, lien vidéo.</figcaption></figure>
+  <table>
+    <tr><th>Champ</th><th>À saisir</th></tr>
+    <tr><td>Titre · Client · Année</td><td>Nom de la campagne, marque, année.</td></tr>
+    <tr><td>Image</td><td>Image horizontale, idéalement 1920 × 1080 px.</td></tr>
+    <tr><td>Lien</td><td>Lien de la vidéo (YouTube, Vimeo…). Vide : « Bientôt ».</td></tr>
+  </table>
+  <div class="foot mono"><span>Outsiders Production · Mode d'emploi</span><span>10</span></div>
+</section>
+
+<!-- 07 ARTISTES -->
+<section class="page">
+  <div class="head mono"><span>07 · Artistes résidents</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">07</span>
+  <h1>Artistes<br /><em>résidents</em></h1>
+  <ol class="steps">
+    <li>Onglet <span class="kbd">Artistes</span>, + Ajouter, ouvrez la fiche.</li>
+    <li><b>Nom</b>, puis <b>Identifiant d'URL</b> : en minuscules, sans espaces ni accents (ex. « sara-benali »). Il devient l'adresse de sa page.</li>
+    <li><b>Catégories</b> : une ligne par filtre, en reprenant exactement les <b>clés</b> de l'onglet Filtres artistes (ex. « directors », « morocco »).</li>
+    <li><b>Biographie</b> en français et en anglais.</li>
+    <li><b>Film</b> : une image de couverture et un lien vidéo (YouTube, Vimeo ou fichier .mp4), lu en plein écran sur le site.</li>
+    <li><b>Photos</b> : + Ajouter pour chaque image de la galerie, glissez pour l'ordre.</li>
+  </ol>
+  <figure><img src="shots/09_artistes.jpg" alt="" /><figcaption>Fiche d'un artiste, ordre réglable par glisser-déposer.</figcaption></figure>
+  <div class="foot mono"><span>Outsiders Production · Mode d'emploi</span><span>11</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>07 · Film, photos et filtres</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <figure style="margin-top:0"><img src="shots/10_artiste_photos.jpg" alt="" /><figcaption>Le film (image + lien vidéo) et la galerie de photos.</figcaption></figure>
+  <div class="two">
+    <figure><img src="shots/10b_filtres.jpg" alt="" /><figcaption>Onglet Filtres artistes : la <b>clé</b> sert dans les fiches, les libellés FR/EN sont affichés.</figcaption></figure>
+    <figure><img src="shots/20_site_artiste_detail.jpg" alt="" /><figcaption>La page d'un artiste sur le site.</figcaption></figure>
+  </div>
+  <div class="warn">Ne modifiez pas la <b>clé</b> d'un filtre déjà utilisé : les artistes qui l'utilisent disparaîtraient de ce filtre. Créez plutôt un nouveau filtre.</div>
+  <div class="foot mono"><span>Outsiders Production · Mode d'emploi</span><span>12</span></div>
+</section>
+
+<!-- 08 FONDATEURS LOGOS -->
+<section class="page">
+  <div class="head mono"><span>08 · Visuels</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">08</span>
+  <h1>Fondateurs,<br /><em>logos et images</em></h1>
+  <div class="two">
+    <figure><img src="shots/12_fondateurs.jpg" alt="" /><figcaption>Onglet Fondateurs : nom et photo (portrait vertical).</figcaption></figure>
+    <figure><img src="shots/13_images.jpg" alt="" /><figcaption>Onglet Images du site : logos, image d'accueil, à propos, manifeste.</figcaption></figure>
+  </div>
+  <table>
+    <tr><th>Visuel</th><th>Recommandation</th></tr>
+    <tr><td>Photo fondateur</td><td>Portrait vertical (3:4), au moins 900 × 1200 px. Rôle et biographie : onglet Textes FR / EN, bloc Fondateurs.</td></tr>
+    <tr><td>Logo miniature</td><td>PNG <b>blanc sur fond transparent</b>. Affiché dans le menu et l'admin.</td></tr>
+    <tr><td>Logo entier</td><td>PNG blanc sur fond transparent, lettres bien séparées. Il est découpé automatiquement lettre par lettre pour l'ouverture animée, et affiché dans le pied de page.</td></tr>
+    <tr><td>Accueil · À propos · Manifeste</td><td>Grandes images horizontales, 2400 px de large minimum, en JPG.</td></tr>
+  </table>
+  <figure style="width:95mm"><img src="shots/21_intro_crop.jpg" alt="" /><figcaption>L'ouverture animée : le logo apparaît lettre par lettre.</figcaption></figure>
+  <div class="foot mono"><span>Outsiders Production · Mode d'emploi</span><span>13</span></div>
+</section>
+
+<!-- 09 COORDONNEES -->
+<section class="page">
+  <div class="head mono"><span>09 · Coordonnées et textes</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">09</span>
+  <h1>Coordonnées<br /><em>et textes</em></h1>
+  <figure><img src="shots/14_contact.jpg" alt="" /><figcaption>Onglet Coordonnées : email, téléphone, liens Instagram et LinkedIn.</figcaption></figure>
+  <figure><img src="shots/15_presse.jpg" alt="" style="max-height:72mm" /><figcaption>Onglet Textes FR : chaque bloc correspond à une section du site.</figcaption></figure>
+  <div class="warn">Les champs « Ancre » et « Page » sont grisés : ils relient le menu aux sections et ne doivent pas être modifiés.</div>
+  <div class="foot mono"><span>Outsiders Production · Mode d'emploi</span><span>14</span></div>
+</section>
+
+<!-- 10 VERSIONS -->
+<section class="page">
+  <div class="head mono"><span>10 · Historique</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">10</span>
+  <h1>Historique<br /><em>des versions</em></h1>
+  <p class="lead">Chaque « Enregistrer » crée une version. Les <b>10 dernières</b> sont conservées : en cas d'erreur, revenez en arrière en un clic.</p>
+  <ol class="steps">
+    <li>Cliquez sur l'icône horloge dans la barre d'actions.</li>
+    <li>Repérez la version à sa date, son heure et son auteur.</li>
+    <li>Cliquez sur <b>Restaurer</b> et confirmez : cette version est publiée immédiatement.</li>
+  </ol>
+  <figure><img src="shots/16_versions.jpg" alt="" /><figcaption>Le panneau d'historique.</figcaption></figure>
+  <div class="foot mono"><span>Outsiders Production · Mode d'emploi</span><span>15</span></div>
+</section>
+
+<!-- 11 MESSAGES COMPTES -->
+<section class="page">
+  <div class="head mono"><span>11 · Administration</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">11</span>
+  <h1>Messages</h1>
+  <p class="lead">Réservé à l'administrateur. Chaque message du formulaire de contact arrive ici et est aussi envoyé par email.</p>
+  <figure><img src="shots/02_messages.jpg" alt="" /><figcaption>Onglet Messages : nombre de non lus, marquer comme lu, supprimer.</figcaption></figure>
+  <div class="foot mono"><span>Outsiders Production · Mode d'emploi</span><span>16</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>11 · Comptes et mot de passe</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <h2 style="margin-top:0">Créer un compte éditeur</h2>
+  <ol class="steps">
+    <li>Onglet <span class="kbd">Comptes éditeurs</span> : saisissez le nom, l'email et un mot de passe provisoire.</li>
+    <li>Transmettez ces informations à la personne : elle pourra changer son mot de passe dans l'onglet Mot de passe.</li>
+    <li>Pour retirer l'accès, cliquez sur la corbeille à côté du compte.</li>
+  </ol>
+  <figure><img src="shots/17_comptes.jpg" alt="" style="max-height:72mm" /><figcaption>Comptes éditeurs.</figcaption></figure>
+  <figure><img src="shots/18_password.jpg" alt="" style="max-height:72mm" /><figcaption>Changer son mot de passe : l'actuel, puis le nouveau.</figcaption></figure>
+  <div class="foot mono"><span>Outsiders Production · Mode d'emploi</span><span>17</span></div>
+</section>
+
+<!-- 12 FAQ -->
+<section class="page">
+  <div class="head mono"><span>12 · Bonnes pratiques</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">12</span>
+  <h1>Bonnes pratiques</h1>
+  <table style="margin-top:8mm">
+    <tr><th>Question</th><th>Réponse</th></tr>
+    <tr><td>Je ne vois pas mes changements</td><td>Avez-vous cliqué sur « Enregistrer » ? Le bouton est grisé quand il n'y a rien à publier.</td></tr>
+    <tr><td>Mon image ne s'importe pas</td><td>Elle dépasse 6 Mo. Réduisez-la (JPG, qualité 80 %) avant de l'importer.</td></tr>
+    <tr><td>Le texte anglais n'a pas changé</td><td>Chaque langue se modifie séparément : Textes FR et Textes EN, ou les champs Français / Anglais d'une fiche.</td></tr>
+    <tr><td>J'ai supprimé un film par erreur</td><td>Avant d'enregistrer : flèche « annuler ». Après : Historique → Restaurer.</td></tr>
+    <tr><td>Une vidéo ne se lit pas</td><td>Vérifiez que le lien YouTube ou Vimeo est public. Les liens Netflix s'ouvrent toujours dans un nouvel onglet.</td></tr>
+    <tr><td>L'ordre d'affichage</td><td>Celui de la liste dans l'admin : glissez avec la poignée ⋮⋮.</td></tr>
+  </table>
+  <div class="tip" style="margin-top:10mm"><span class="mono">À retenir</span><b>Modifier → Aperçu → Enregistrer.</b> Tant que vous n'avez pas enregistré, le site public ne change pas. Et l'historique garde toujours vos 10 dernières versions.</div>
+  <div class="foot mono"><span>Outsiders Production · Mode d'emploi</span><span>18</span></div>
+</section>
+
+</body>
+</html>

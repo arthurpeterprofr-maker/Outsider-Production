@@ -58,6 +58,11 @@ User choices: bilingue FR/EN avec bouton de langue; formulaire = enregistrement 
 - Vraies photos des fondateurs (public/images/founder1.jpg = Hicham, founder2.jpg = Nadia) ; les galeries d'artistes n'utilisent plus ces photos.
 - Logos officiels détourés en blanc : logo-mark.png (nav, intro, admin), logo-full.png (footer), favicon.png + apple-touch-icon.png.
 
+## Implemented (2026-11-02, itération 11)
+- Logos modifiables dans l'admin (onglet « Images du site » : media.logoMark, media.logoFull) ; photos fondateurs via onglet « Fondateurs ».
+- Ouverture animée : logo entier découpé automatiquement lettre par lettre (LetterLogo.jsx + lib/logoSlices.js), fonctionne aussi avec un logo importé. Intro 3,8 s.
+- Nouvelle photo de Nadia (founder2.jpg, portrait assis).
+
 
 ## Backlog
 - P0 : renseigner l'email de réception réel (CONTACT_NOTIFY_EMAIL), remplacer contenus/photos par ceux du client.

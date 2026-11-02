@@ -1,0 +1,40 @@
+{
+  "summary": "Frontend-only verification of (a) intro letter-by-letter logo animation with 'Crafting Dreams' and (b) admin CMS media/founders upload workflow (logo + founders) without redeploy. All critical flows pass end-to-end: intro splits logo-full into 34 animated pieces (all visible by ~3.3s, intro closes ~3.8s), nav/footer/favicon render correct assets, admin upload returns /api/media/<id> and the public home reflects it after save, restore brings site back to /logo-mark.png default. Mobile 390px intro fits width (304px width, equal 42.9px margins). No console errors.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "verified": {
+    "intro_pieces": 34,
+    "intro_all_visible_by_ms": 3300,
+    "intro_closed_by_ms": 3800,
+    "nav_logo_src_default": "/logo-mark.png",
+    "footer_logo_src_default": "/logo-full.png",
+    "favicon": "/favicon.png",
+    "cms_upload_media_logoMark_testid_present": true,
+    "cms_upload_media_logoFull_testid_present": true,
+    "cms_upload_people_0_img_testid_present": true,
+    "cms_upload_people_1_img_testid_present": true,
+    "upload_result_url_format": "/api/media/<id>",
+    "nav_logo_after_upload": "https://.../api/media/6ae8dff5a3a92991da0ad5d2",
+    "restore_success": true,
+    "mobile_intro_width_px": 304.19,
+    "mobile_intro_horizontal_margin_px": 42.9,
+    "console_errors": 0
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "LetterLogo.jsx uses canvas getImageData with crossOrigin=anonymous: when logoFull is served via /api/media/<id>, the backend must set Access-Control-Allow-Origin or canvas will taint and sliceLogo will throw (handled by fallback to plain motion.img — intro would still show but lose the letter-by-letter effect). Recommend verifying /api/media sets appropriate CORS headers so admin-uploaded logos keep the per-letter effect.",
+    "frontend/src/lib/intro.js evaluates SHOW_INTRO at module import time; works fine for session-storage first-visit scenario but could cause stale state in hot-reload dev scenarios (minor)."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "n/a", "frontend": "100%"},
+  "test_credentials": "admin@outsidersproduction.ma / Outsiders2026! (from /app/memory/test_credentials.md)",
+  "seed_data_creation": "None. Uploaded a transparent PNG (copy of /app/frontend/public/logo-mark.png) to test the logoMark upload, then restored the field back to /logo-mark.png and saved so client content is unchanged.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Intro + CMS upload/restore flows verified. If backend /api/media is updated, re-verify that admin-uploaded logo retains the letter-by-letter effect (needs CORS on image response so canvas can read pixels; otherwise LetterLogo falls back to a single <img> fade)."
+}

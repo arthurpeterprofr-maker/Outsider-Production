@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
-import { ChevronDown, ImageUp, Plus, Trash2 } from "lucide-react";
+import { ChevronDown, ChevronUp, GripVertical, ImageUp, Plus, Trash2 } from "lucide-react";
 import { asset } from "../../lib/i18n";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
@@ -19,7 +19,7 @@ const LABELS = {
   detail: "Détail", links: "Liens", form: "Formulaire", labels: "Libellés", location: "Adresse", eyebrow: "Sur-titre",
   scroll: "Texte défiler", text: "Texte", id: "Ancre (ne pas modifier)", projectTypes: "Types de projet", blurb: "Description",
   artists: "Artistes résidents", artistFilters: "Filtres", slug: "Identifiant d'URL (sans espaces)", tags: "Catégories (clés des filtres)",
-  photos: "Photos", film: "Film", link: "Lien vidéo (Netflix, Vimeo…)", key: "Clé", route: "Page (ne pas modifier)",
+  photos: "Photos", film: "Film", link: "Lien vidéo (YouTube, Vimeo ou fichier .mp4 — lu sur le site ; Netflix s'ouvre dans un nouvel onglet)", key: "Clé", route: "Page (ne pas modifier)",
 };
 const IMAGE_KEYS = ["img", "image", "poster", "hero", "about", "manifesto"];
 const LONG_KEYS = ["bio", "synopsis", "quote", "intro", "note", "blurb", "text", "paragraphs", "success"];
@@ -105,6 +105,17 @@ export const FieldEditor = ({ k, value, onChange, path, depth = 0 }) => {
 const ArrayEditor = ({ k, value, onChange, path, depth }) => {
   const template = value.length ? blank(value[value.length - 1]) : "";
   const set = (i, nv) => onChange(value.map((x, j) => (j === i ? nv : x)));
+  const [armed, setArmed] = useState(null);
+  const [dragFrom, setDragFrom] = useState(null);
+  const [over, setOver] = useState(null);
+  const move = (from, to) => {
+    if (from === to || to < 0 || to >= value.length) return;
+    const next = [...value];
+    const [item] = next.splice(from, 1);
+    next.splice(to, 0, item);
+    onChange(next);
+  };
+  const canReorder = value.length > 1;
   return (
     <div className={depth > 0 ? "border border-white/10 p-4" : ""}>
       <div className="mb-4 flex items-center justify-between">
@@ -115,7 +126,23 @@ const ArrayEditor = ({ k, value, onChange, path, depth }) => {
       </div>
       <div className="space-y-4">
         {value.map((item, i) => (
-          <div key={i} className="flex items-start gap-3">
+          <div
+            key={i}
+            draggable={armed === i}
+            onDragStart={(e) => { setDragFrom(i); e.dataTransfer.effectAllowed = "move"; }}
+            onDragOver={(e) => { if (dragFrom !== null) { e.preventDefault(); setOver(i); } }}
+            onDrop={(e) => { e.preventDefault(); if (dragFrom !== null) move(dragFrom, i); setDragFrom(null); setOver(null); setArmed(null); }}
+            onDragEnd={() => { setDragFrom(null); setOver(null); setArmed(null); }}
+            className={`flex items-start gap-3 transition-opacity ${dragFrom === i ? "opacity-40" : ""} ${over === i && dragFrom !== i ? "outline outline-1 outline-white/60" : ""}`}
+            data-testid={`cms-item-${path}.${i}`}
+          >
+            {canReorder && (
+              <div className="mt-5 flex flex-col items-center text-zinc-500">
+                <button type="button" onClick={() => move(i, i - 1)} disabled={i === 0} className="hover:text-white disabled:opacity-20" aria-label="monter" data-testid={`cms-up-${path}.${i}`}><ChevronUp className="h-3.5 w-3.5" /></button>
+                <span onMouseDown={() => setArmed(i)} onMouseUp={() => setArmed(null)} onTouchStart={() => setArmed(i)} className="cursor-grab py-1 hover:text-white active:cursor-grabbing" title="Glisser pour réordonner" data-testid={`cms-drag-${path}.${i}`}><GripVertical className="h-4 w-4" /></span>
+                <button type="button" onClick={() => move(i, i + 1)} disabled={i === value.length - 1} className="hover:text-white disabled:opacity-20" aria-label="descendre" data-testid={`cms-down-${path}.${i}`}><ChevronDown className="h-3.5 w-3.5" /></button>
+              </div>
+            )}
             <div className="flex-1">
               <FieldEditor k={i} value={item} path={`${path}.${i}`} depth={depth + 1} onChange={(nv) => set(i, nv)} />
             </div>

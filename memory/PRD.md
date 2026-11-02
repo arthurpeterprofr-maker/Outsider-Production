@@ -50,6 +50,10 @@ User choices: bilingue FR/EN avec bouton de langue; formulaire = enregistrement 
 - Artistes résidents : entrée de menu (route /artistes), page liste avec filtres (métier / secteur / zone, noms non concernés atténués, aperçu photo au survol), fiche /artistes/:slug (nom, catégories, bio FR/EN, précédent/suivant, onglets Film (image + lien vidéo) / Photo (mosaïque)). 8 artistes placeholders, éditables dans l'admin (onglets « Artistes » et « Filtres artistes »).
 - Navigation inter-pages (hook useGoTo), intro jouée une seule fois, menu desktop à partir de 1280 px.
 
+## Implemented (2026-11-02, itération 9)
+- Lecteur vidéo plein écran (YouTube, Vimeo, .mp4) sur la fiche artiste ; Netflix/autres liens s'ouvrent dans un nouvel onglet.
+- Admin : réordonnancement par glisser-déposer (poignée) + flèches haut/bas sur toutes les listes (artistes, films, pubs…).
+
 ## Backlog
 - P0 : renseigner l'email de réception réel (CONTACT_NOTIFY_EMAIL), remplacer contenus/photos par ceux du client.
 - P1 : section projets/filmographie, vrais liens réseaux sociaux, SEO (OG, sitemap).

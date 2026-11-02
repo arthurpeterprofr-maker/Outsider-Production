@@ -1,18 +1,23 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, Play } from "lucide-react";
 import { useLang, asset } from "../lib/i18n";
+import { VideoPlayer, toPlayable } from "../components/VideoPlayer";
 import { SmoothScroll } from "../lib/smooth";
 import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
 import { MaskLines, Reveal, EASE } from "../components/motion";
 
 const FilmBlock = ({ film, a, name }) => {
-  const Tag = film?.link ? "a" : "div";
-  const props = film?.link ? { href: film.link, target: "_blank", rel: "noreferrer" } : {};
+  const [playing, setPlaying] = useState(false);
+  const media = toPlayable(film?.link ? asset(film.link) : "");
+  const external = film?.link && !media;
+  const Tag = external ? "a" : media ? "button" : "div";
+  const props = external ? { href: film.link, target: "_blank", rel: "noreferrer" } : media ? { type: "button", onClick: () => setPlaying(true) } : {};
   return (
-    <Tag {...props} className="group relative block aspect-video w-full overflow-hidden bg-zinc-900 sm:aspect-[21/9]" data-testid="artist-film">
+    <>
+    <Tag {...props} className="group relative block aspect-video w-full overflow-hidden bg-zinc-900 text-left sm:aspect-[21/9]" data-testid="artist-film">
       {film?.image && <img src={asset(film.image)} alt={name} className="h-full w-full object-cover transition-transform duration-[1.6s] group-hover:scale-105" />}
       <div className="absolute inset-0 bg-black/30" />
       {film?.link && (
@@ -22,6 +27,10 @@ const FilmBlock = ({ film, a, name }) => {
         </span>
       )}
     </Tag>
+    <AnimatePresence>
+      {playing && media && <VideoPlayer media={media} title={name} onClose={() => setPlaying(false)} />}
+    </AnimatePresence>
+    </>
   );
 };
 

@@ -1,0 +1,170 @@
+{
+  "project_title": "Outsiders Production - Moroccan Cinematic Film Production House",
+  "theme": "Black & White High-Contrast Editorial Cinematic",
+  "design_archetype": "ARCHETYPE 5: LUXURY & SWISS BRUTALIST HYBRID (Cinematic Depth, Didone Typography, Tactical B&W Minimal)",
+  "language_support": {
+    "languages": ["FR", "EN"],
+    "default": "FR",
+    "toggle_position": "Sticky Nav Right & Mobile Menu"
+  },
+  "typography": {
+    "heading_font": "Playfair Display, Bodoni Moda, Cormorant Garamond, serif",
+    "body_font": "Plus Jakarta Sans, Inter, sans-serif",
+    "accent_mono_font": "JetBrains Mono, monospace",
+    "scale": {
+      "hero_title": "text-5xl sm:text-7xl lg:text-8xl tracking-tight font-serif uppercase leading-none font-black",
+      "h2_section": "text-3xl sm:text-5xl lg:text-6xl tracking-tight font-serif uppercase leading-tight font-bold",
+      "h3_card": "text-xl sm:text-3xl font-serif font-semibold tracking-normal",
+      "label_overline": "text-xs sm:text-sm font-mono uppercase tracking-[0.3em] text-neutral-400 font-medium",
+      "body": "text-base sm:text-lg text-neutral-300 leading-relaxed font-light"
+    }
+  },
+  "colors": {
+    "background_primary": "#050505",
+    "background_secondary": "#0D0D0D",
+    "background_card": "#121212",
+    "text_primary": "#F5F5F7",
+    "text_secondary": "#A1A1AA",
+    "border_subtle": "#27272A",
+    "border_bright": "#52525B",
+    "accent_spotlight": "#FFFFFF",
+    "status_success": "#22C55E",
+    "status_error": "#EF4444"
+  },
+  "layout_and_spacing": {
+    "container_max_width": "max-w-7xl mx-auto px-4 sm:px-8 lg:px-12",
+    "section_padding": "py-20 sm:py-32 lg:py-40",
+    "grid_bento": "grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-10",
+    "card_padding": "p-8 sm:p-12"
+  },
+  "sections_breakdown": [
+    {
+      "id": "nav",
+      "title": "Sticky Navigation Header",
+      "items": ["HOME", "ABOUT", "FOUNDERS", "EXPERTISE", "MANIFESTO", "CONTACT", "ADMIN"],
+      "features": ["Bilingual Language Toggle (FR / EN)", "Glassmorphism dark background backdrop-blur-md", "Mobile sliding sheet menu", "data-testid attributes"]
+    },
+    {
+      "id": "hero",
+      "title": "Cinematic Hero",
+      "headline": "WE ARE OUTSIDERS.",
+      "sublines": [
+        "We challenge conventions.",
+        "We hack narratives.",
+        "We create meaning."
+      ],
+      "bg_image": "https://images.pexels.com/photos/9369182/pexels-photo-9369182.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "motion": "Staggered line-by-line kinetic reveal + smooth desert backdrop zoom with subtle grain texture layer."
+    },
+    {
+      "id": "marquee",
+      "title": "Editorial Kinetic Ribbon",
+      "text": "OUTSIDERS PRODUCTION — CASABLANCA — CINEMATIC CINEMA — AUTEUR VOICES — GLOBAL IMPACT",
+      "style": "Infinite horizontal scroll, text-outline mixed with solid B&W typography, low-speed float."
+    },
+    {
+      "id": "about",
+      "title": "Crafting Dreams (A propos)",
+      "layout": "Split 2-column editorial bento with spotlight film set background",
+      "bg_image": "https://images.unsplash.com/photo-1556912300-3017f3de2aa6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTN8MHwxfHNlYXJjaHwyfHxmaWxtJTIwcHJvZHVjdGlvbiUyMHNldCUyMGRpcmVjdG9yJTIwc3BvdGxpZ2h0JTIwYmxhY2slMjB3aGl0ZXxlbnwwfHx8fDE3OTM2MzEwOTV8MA&ixlib=rb-4.1.0&q=85",
+      "content_fr": "Basees a Casablanca, nous transformons des visions audacieuses en oeuvres cinematographiques marquantes. Notre studio combine l'heritage culturel marocain avec une esthetique narrative internationale sans concession.",
+      "content_en": "Based in Casablanca, we transform bold visions into striking cinematic masterpieces. Our studio merges Moroccan cultural heritage with uncompromised international narrative aesthetics."
+    },
+    {
+      "id": "founders",
+      "title": "The Outsiders (Fondateurs)",
+      "cards": [
+        {
+          "name": "Hicham Lasri",
+          "role": "Filmmaker / Writer / Producer",
+          "bio_fr": "Realisateur avant-gardiste et ecrivain renomme, connu pour recadrer le cinema maghrebin avec un style visuel provocateur et poetique.",
+          "bio_en": "Avant-garde filmmaker and renowned writer, celebrated for reframing Maghrebi cinema through poetic and provocative visual storytelling.",
+          "image": "https://images.unsplash.com/photo-1594751684241-bcef815d5a57?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNTl8MHwxfHNlYXJjaHwxfHxtYW4lMjBwb3J0cmFpdCUyMGRpcmVjdG9yJTIwYmxhY2slMjB3aGl0ZXxlbnwwfHx8fDE3OTM2MzExMDF8MA&ixlib=rb-4.1.0&q=85"
+        },
+        {
+          "name": "Nadia Assad",
+          "role": "Creative Strategist / Brand Architect / Producer",
+          "bio_fr": "Pionniere du developpement creatif et du financement international, connectant les voix d'auteurs marocaines aux marches mondiaux.",
+          "bio_en": "Pioneer in creative development and international co-production, bridging Moroccan auteur voices with global markets.",
+          "image": "https://images.unsplash.com/photo-1620122303020-87ec826cf70d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDR8MHwxfHNlYXJjaHwyfHx3b21hbiUyMHBvcnRyYWl0JTIwY3JlYXRpdmUlMjBwcm9kdWNlciUyMGJsYWNrJTIwd2hpdGV8ZW58MHx8fHwxNzkzNjMxMTAxfDA&ixlib=rb-4.1.0&q=85"
+        }
+      ]
+    },
+    {
+      "id": "manifesto",
+      "title": "Wild & Free (Le Manifeste)",
+      "values": [
+        {"num": "01", "title_fr": "Independant", "title_en": "Independent", "desc_fr": "Liberte artistique absolue sans compromis institutionnel.", "desc_en": "Uncompromising artistic freedom beyond commercial conventions."},
+        {"num": "02", "title_fr": "Audacieux", "title_en": "Bold", "desc_fr": "Bousculer les narratives traditionnelles et explorer de nouveaux territoires.", "desc_en": "Challenging traditional storytelling to forge uncharted visual spaces."},
+        {"num": "03", "title_fr": "Creatif", "title_en": "Creative", "desc_fr": "Chaque plan est concu comme une oeuvre d'art visuelle et sonore.", "desc_en": "Every frame engineered with meticulous visual and acoustic precision."},
+        {"num": "04", "title_fr": "International", "title_en": "International", "desc_fr": "Penser local, rayonner sur les festivals et ecrans du monde entier.", "desc_en": "Rooted in Casablanca, resonating across global cinema festivals."},
+        {"num": "05", "title_fr": "Cinema d'Auteur", "title_en": "Auteur-Driven", "desc_fr": "Accompagner les voix fortes et singulieres.", "desc_en": "Championing distinctive directorial voices with deep artistic integrity."}
+      ]
+    },
+    {
+      "id": "vision",
+      "title": "Vision Quote",
+      "quote_fr": "« Nous developpons des histoires originales, des voix audacieuses et des projets visuellement ambitieux concus pour voyager au-dela des frontieres. »",
+      "quote_en": "“We develop original stories, bold voices and visually ambitious projects designed to travel beyond borders.”"
+    },
+    {
+      "id": "expertise",
+      "title": "What We Do (Notre Expertise)",
+      "columns": [
+        {
+          "title_fr": "Developpement",
+          "title_en": "Development",
+          "points_fr": ["Ecriture de scenari", "Script Doctoring & Direction Artistique", "Recherche de Financement & Fonds D'Aide"],
+          "points_en": ["Screenwriting & Narrative Design", "Script Doctoring & Artistic Direction", "Development Financing & Co-Production Grants"]
+        },
+        {
+          "title_fr": "Production",
+          "title_en": "Production",
+          "points_fr": ["Tournage au Maroc & International", "Direction de Casting & Equipes Techniques", "Post-Production Image & Sound Design"],
+          "points_en": ["Full Feature & Short Film Shoot", "Casting & Technical Crew Management", "Color Grading & Master Sound Design"]
+        },
+        {
+          "title_fr": "Strategie Internationale",
+          "title_en": "International Strategy",
+          "points_fr": ["Circuits des Festivals de Cinema", "Distribution & Ventes Internationales", "Partenariats Marque & Synergy"],
+          "points_en": ["A-List Festival Circuit & World Premieres", "Global Distribution & Sales Strategy", "Cultural & Brand Partnerships"]
+        }
+      ]
+    },
+    {
+      "id": "contact",
+      "title": "Contact & Location",
+      "headline_fr": "Creons quelque chose d'inoubliable.",
+      "headline_en": "Let's create something unforgettable.",
+      "form_fields": ["name", "email", "company", "project_type", "message"],
+      "details": {
+        "location": "Casablanca, Morocco",
+        "email": "contact@outsidersproduction.ma",
+        "phone": "+212 5 22 00 11 22",
+        "map": "Grayscale Casablanca Map Embed View with pin animation"
+      }
+    },
+    {
+      "id": "admin",
+      "title": "Admin Messages Portal",
+      "access": "Header button / Footer secret trigger modal",
+      "features": ["Password-protected auth view (default key: 'outsiders2026')", "Stored contact submission table with timestamp, status, delete and filter", "REST backend simulation / storage via FastAPI server endpoint"]
+    }
+  ],
+  "image_urls": {
+    "hero_landscape": "https://images.pexels.com/photos/9369182/pexels-photo-9369182.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "spotlight_set": "https://images.unsplash.com/photo-1556912300-3017f3de2aa6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA5NTN8MHwxfHNlYXJjaHwyfHxmaWxtJTIwcHJvZHVjdGlvbiUyMHNldCUyMGRpcmVjdG9yJTIwc3BvdGxpZ2h0JTIwYmxhY2slMjB3aGl0ZXxlbnwwfHx8fDE3OTM2MzEwOTV8MA&ixlib=rb-4.1.0&q=85",
+    "camera_gear": "https://images.unsplash.com/photo-1649583501954-c2dcf50e0553?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTN8MHwxfHNlYXJjaHwzfHxmaWxtJTIwcHJvZHVjdGlvbiUyMHNldCUyMGRpcmVjdG9yJTIwc3BvdGxpZ2h0JTIwYmxhY2slMjB3aGl0ZXxlbnwwfHx8fDE3OTM2MzEwOTV8MA&ixlib=rb-4.1.0&q=85",
+    "hicham_lasri": "https://images.unsplash.com/photo-1594751684241-bcef815d5a57?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNTl8MHwxfHNlYXJjaHwxfHxtYW4lMjBwb3J0cmFpdCUyMGRpcmVjdG9yJTIwYmxhY2slMjB3aGl0ZXxlbnwwfHx8fDE3OTM2MzExMDF8MA&ixlib=rb-4.1.0&q=85",
+    "nadia_assad": "https://images.unsplash.com/photo-1620122303020-87ec826cf70d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDR8MHwxfHNlYXJjaHwyfHx3b21hbiUyMHBvcnRyYWl0JTIwY3JlYXRpdmUlMjBwcm9kdWNlciUyMGJsYWNrJTIwd2hpdGV8ZW58MHx8fHwxNzkzNjMxMTAxfDA&ixlib=rb-4.1.0&q=85"
+  },
+  "instructions_to_main_agent": [
+    "Use JavaScript (.js / .jsx) for React components.",
+    "Ensure Lenis smooth scrolling and Framer Motion transitions create an unforgettable Awwwards cinematic vibe.",
+    "Implement bilingual state toggle (FR / EN) globally using React Context or local state.",
+    "Add explicit data-testid attributes to all buttons, links, inputs, forms, and interactive cards.",
+    "Connect contact form to FastAPI endpoint /api/contact or store in local state with backend synchronization.",
+    "Build the Admin Messages modal/page with password authorization to review submitted leads.",
+    "Ensure contrast compliance for B&W theme (white text on dark backgrounds, dark text on white accent cards)."
+  ]
+}

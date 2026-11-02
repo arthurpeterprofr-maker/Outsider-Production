@@ -1,7 +1,7 @@
-FROM node:20-alpine AS build
+FROM node:22-slim AS build
 WORKDIR /app
 COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile --network-timeout 600000
+RUN yarn install --frozen-lockfile --ignore-engines --network-timeout 600000
 COPY . .
 ENV REACT_APP_BACKEND_URL="" GENERATE_SOURCEMAP=false
 RUN yarn build

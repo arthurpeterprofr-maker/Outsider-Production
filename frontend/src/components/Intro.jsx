@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { SHOW_INTRO, markIntroSeen } from "../lib/intro";
+import { introPending, markIntroSeen, markIntroPlayed } from "../lib/intro";
 
 const CURTAIN = [0.76, 0, 0.24, 1];
 
@@ -14,13 +14,14 @@ const Counter = () => {
 };
 
 export const Intro = () => {
-  const [visible, setVisible] = useState(SHOW_INTRO);
+  const [show] = useState(introPending);
+  const [visible, setVisible] = useState(show);
   useEffect(() => {
-    if (!SHOW_INTRO) return undefined;
+    if (!show) return undefined;
     markIntroSeen();
-    const t = setTimeout(() => setVisible(false), 1900);
+    const t = setTimeout(() => { setVisible(false); markIntroPlayed(); }, 1900);
     return () => clearTimeout(t);
-  }, []);
+  }, [show]);
 
   return (
     <AnimatePresence>

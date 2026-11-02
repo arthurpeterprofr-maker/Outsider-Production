@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
-import { SHOW_INTRO, INTRO_DELAY } from "./intro";
+import { getIntroDelay } from "./intro";
 
 let lenisInstance = null;
 
@@ -18,7 +18,7 @@ export const lockScroll = (locked) => {
   else lenisInstance.start();
 };
 
-export const SmoothScroll = () => {
+export const SmoothScroll = ({ intro = false }) => {
   useEffect(() => {
     const lenis = new Lenis({ duration: 1.25, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
     lenisInstance = lenis;
@@ -29,9 +29,10 @@ export const SmoothScroll = () => {
     };
     raf = requestAnimationFrame(loop);
     let unlock;
-    if (SHOW_INTRO) {
+    const introDelay = intro ? getIntroDelay() : 0;
+    if (introDelay) {
       lockScroll(true);
-      unlock = setTimeout(() => lockScroll(false), (INTRO_DELAY - 0.4) * 1000);
+      unlock = setTimeout(() => lockScroll(false), (introDelay - 0.4) * 1000);
     }
     return () => {
       clearTimeout(unlock);
@@ -39,6 +40,6 @@ export const SmoothScroll = () => {
       lenis.destroy();
       lenisInstance = null;
     };
-  }, []);
+  }, [intro]);
   return null;
 };

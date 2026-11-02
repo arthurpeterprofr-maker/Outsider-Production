@@ -15,6 +15,8 @@ const SECTIONS = [
   { key: "en", label: "Textes EN" },
   { key: "films", label: "Cinéma" },
   { key: "commercials", label: "Publicités" },
+  { key: "artists", label: "Artistes" },
+  { key: "artistFilters", label: "Filtres artistes" },
   { key: "people", label: "Fondateurs" },
   { key: "laurels", label: "Lauriers" },
   { key: "contact", label: "Coordonnées" },

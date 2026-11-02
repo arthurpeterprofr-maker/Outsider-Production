@@ -8,6 +8,6 @@ export const LogoMark = ({ className = "h-7 w-7" }) => (
 export const Logo = ({ onClick }) => (
   <button onClick={onClick} data-testid="nav-logo" className="group flex items-center gap-3 text-white" aria-label="Outsiders Production">
     <LogoMark className="h-7 w-7 transition-transform duration-700 group-hover:rotate-[-25deg]" />
-    <span className="op-label !text-[11px] !tracking-[0.35em] text-white">Outsiders<span className="hidden sm:inline"> Production</span></span>
+    <span className="op-label whitespace-nowrap !text-[11px] !tracking-[0.35em] text-white">Outsiders<span className="hidden sm:inline"> Production</span></span>
   </button>
 );

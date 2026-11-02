@@ -5,6 +5,7 @@ export const content = {
       { id: "about", label: "À propos" },
       { id: "films", label: "Cinéma" },
       { id: "commercials", label: "Publicités" },
+      { id: "artists", label: "Artistes résidents", route: "/artistes" },
       { id: "contact", label: "Contact" },
     ],
     hero: {
@@ -54,6 +55,10 @@ export const content = {
       intro: "Des campagnes pensées comme du cinéma : des images fortes qui révèlent l'ADN d'une marque.",
       watch: "Regarder sur Netflix",
       soon: "Bientôt disponible",
+    },
+    artists: {
+      label: "Artistes résidents", intro: "Réalisateurs et photographes qui façonnent avec nous des images singulières.",
+      all: "Tous", previous: "Précédent", next: "Suivant", film: "Film", photo: "Photo", back: "Tous les artistes", watch: "Regarder le film", none: "Aucun artiste dans cette catégorie.",
     },
     press: {
       label: "Sélections & presse",
@@ -114,6 +119,7 @@ export const content = {
       { id: "about", label: "About" },
       { id: "films", label: "Cinema" },
       { id: "commercials", label: "Commercials" },
+      { id: "artists", label: "Resident Artists", route: "/artistes" },
       { id: "contact", label: "Contact" },
     ],
     hero: {
@@ -163,6 +169,10 @@ export const content = {
       intro: "Campaigns crafted like cinema: striking images that reveal the true DNA of a brand.",
       watch: "Watch on Netflix",
       soon: "Coming soon",
+    },
+    artists: {
+      label: "Resident Artists", intro: "Directors and photographers crafting singular images with us.",
+      all: "All", previous: "Previous", next: "Next", film: "Film", photo: "Photo", back: "All artists", watch: "Watch the film", none: "No artist in this category.",
     },
     press: {
       label: "Selections & press",
@@ -271,6 +281,31 @@ export const contactInfo = {
   linkedin: "https://linkedin.com/",
 };
 
+// Resident artists: tags must match the filter keys below. Replace placeholders with real artists.
+export const artistFilters = [
+  [{ key: "directors", fr: "Réalisateurs", en: "Directors" }, { key: "photographers", fr: "Photographes", en: "Photographers" }],
+  [{ key: "luxury", fr: "Luxe", en: "Luxury" }, { key: "beauty", fr: "Beauté", en: "Beauty" }, { key: "commercial", fr: "Publicité", en: "Commercial" }, { key: "music", fr: "Musique", en: "Music" }],
+  [{ key: "morocco", fr: "Maroc", en: "Morocco" }, { key: "international", fr: "International", en: "International" }],
+];
+
+const artist = (n, tags, film, photos) => ({
+  slug: `artiste-${n}`, name: `Artiste ${n}`, tags,
+  bio: { fr: `[Biographie de l'artiste ${n} à compléter : parcours, style, publications et collaborations marquantes.]`, en: `[Artist ${n} biography to come: background, style, publications and key collaborations.]` },
+  film: { image: film, link: "" },
+  photos,
+});
+
+export const artistItems = [
+  artist("01", ["directors", "luxury", "morocco"], "/images/ad1.jpg", ["/images/poster1.jpg", "/images/ad3.jpg", "/images/founder2.jpg", "/images/street.jpg", "/images/poster4.jpg"]),
+  artist("02", ["photographers", "beauty", "international"], "/images/ad3.jpg", ["/images/founder2.jpg", "/images/poster1.jpg", "/images/ad1.jpg", "/images/eye.jpg"]),
+  artist("03", ["directors", "commercial", "morocco"], "/images/ad2.jpg", ["/images/poster2.jpg", "/images/hero.jpg", "/images/ad2.jpg", "/images/street.jpg"]),
+  artist("04", ["photographers", "music", "international"], "/images/street.jpg", ["/images/poster3.jpg", "/images/street.jpg", "/images/set.jpg", "/images/poster4.jpg"]),
+  artist("05", ["directors", "music", "international"], "/images/set.jpg", ["/images/set.jpg", "/images/eye.jpg", "/images/poster2.jpg", "/images/ad4.jpg"]),
+  artist("06", ["photographers", "luxury", "morocco"], "/images/ad4.jpg", ["/images/ad4.jpg", "/images/poster3.jpg", "/images/ad1.jpg", "/images/founder1.jpg"]),
+  artist("07", ["directors", "beauty", "morocco"], "/images/poster1.jpg", ["/images/poster1.jpg", "/images/ad3.jpg", "/images/eye.jpg", "/images/hero.jpg"]),
+  artist("08", ["directors", "photographers", "commercial", "international"], "/images/hero.jpg", ["/images/hero.jpg", "/images/ad2.jpg", "/images/poster4.jpg", "/images/street.jpg"]),
+];
+
 export const defaultContent = {
   ...content,
   people: [
@@ -279,6 +314,8 @@ export const defaultContent = {
   ],
   films: filmItems,
   commercials: commercialItems,
+  artistFilters,
+  artists: artistItems,
   laurels,
   contact: contactInfo,
   media: { hero: "/images/hero.jpg", about: "/images/set.jpg", manifesto: "/images/eye.jpg" },

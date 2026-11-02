@@ -1,13 +1,14 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { useLang, asset } from "../lib/i18n";
 import { scrollToId } from "../lib/smooth";
 import { MaskLines, EASE } from "./motion";
-import { INTRO_DELAY as D } from "../lib/intro";
+import { getIntroDelay } from "../lib/intro";
 
 export const Hero = () => {
   const { t, lang, site } = useLang();
+  const [D] = useState(getIntroDelay);
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);

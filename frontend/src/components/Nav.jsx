@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useLang } from "../lib/i18n";
-import { scrollToId } from "../lib/smooth";
+import { useGoTo } from "../lib/nav";
+import { useLocation } from "react-router-dom";
 import { Logo } from "./Logo";
-import { INTRO_DELAY } from "../lib/intro";
+import { getIntroDelay } from "../lib/intro";
 
 const LangToggle = ({ testId }) => {
   const { lang, setLang } = useLang();
@@ -26,6 +27,9 @@ const LangToggle = ({ testId }) => {
 
 export const Nav = () => {
   const { t } = useLang();
+  const goTo = useGoTo();
+  const { pathname } = useLocation();
+  const [delay] = useState(() => (pathname === "/" ? getIntroDelay() : 0));
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -38,7 +42,7 @@ export const Nav = () => {
 
   const go = (id) => {
     setOpen(false);
-    scrollToId(id);
+    goTo(id);
   };
 
   return (
@@ -46,13 +50,13 @@ export const Nav = () => {
       <motion.header
         initial={{ y: -40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 1, delay: INTRO_DELAY + 0.9, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 1, delay: delay + 0.9, ease: [0.22, 1, 0.36, 1] }}
         className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,padding] duration-500 ${scrolled ? "border-b border-white/10 bg-black/60 py-3 backdrop-blur-xl" : "border-b border-transparent py-5"}`}
         data-testid="site-nav"
       >
         <div className="mx-auto flex max-w-[1500px] items-center justify-between px-5 sm:px-10">
           <Logo onClick={() => go("home")} />
-          <nav className="hidden items-center gap-7 lg:flex xl:gap-9">
+          <nav className="hidden items-center gap-7 xl:flex 2xl:gap-9">
             {t.nav.map((n) => (
               <button key={n.id} onClick={() => go(n.id)} data-testid={`nav-link-${n.id}`} className="op-navlink">
                 {n.label}
@@ -61,7 +65,7 @@ export const Nav = () => {
           </nav>
           <div className="flex items-center gap-3">
             <LangToggle testId="lang-toggle" />
-            <button className="text-white lg:hidden" onClick={() => setOpen(true)} data-testid="mobile-menu-open" aria-label="Menu">
+            <button className="text-white xl:hidden" onClick={() => setOpen(true)} data-testid="mobile-menu-open" aria-label="Menu">
               <Menu className="h-6 w-6" />
             </button>
           </div>
@@ -71,7 +75,7 @@ export const Nav = () => {
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-[60] flex flex-col bg-[#050505] px-6 py-6 lg:hidden"
+            className="fixed inset-0 z-[60] flex flex-col bg-[#050505] px-6 py-6 xl:hidden"
             initial={{ clipPath: "inset(0 0 100% 0)" }}
             animate={{ clipPath: "inset(0 0 0% 0)" }}
             exit={{ clipPath: "inset(0 0 100% 0)" }}

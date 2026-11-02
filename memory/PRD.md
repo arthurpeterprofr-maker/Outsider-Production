@@ -46,6 +46,10 @@ User choices: bilingue FR/EN avec bouton de langue; formulaire = enregistrement 
 - Export Google Cloud : EMAIL_PROVIDER (managed par défaut | resend avec RESEND_API_KEY + EMAIL_FROM, SDK resend async), Dockerfiles backend (Cloud Run) et frontend (build CRA + nginx qui relaie /api → même domaine, cookies OK), .env.example, guide pas à pas /app/DEPLOY_GCP.md.
 - Frontend : REACT_APP_BACKEND_URL vide ⇒ appels relatifs /api.
 
+## Implemented (2026-11-02, itération 8)
+- Artistes résidents : entrée de menu (route /artistes), page liste avec filtres (métier / secteur / zone, noms non concernés atténués, aperçu photo au survol), fiche /artistes/:slug (nom, catégories, bio FR/EN, précédent/suivant, onglets Film (image + lien vidéo) / Photo (mosaïque)). 8 artistes placeholders, éditables dans l'admin (onglets « Artistes » et « Filtres artistes »).
+- Navigation inter-pages (hook useGoTo), intro jouée une seule fois, menu desktop à partir de 1280 px.
+
 ## Backlog
 - P0 : renseigner l'email de réception réel (CONTACT_NOTIFY_EMAIL), remplacer contenus/photos par ceux du client.
 - P1 : section projets/filmographie, vrais liens réseaux sociaux, SEO (OG, sitemap).

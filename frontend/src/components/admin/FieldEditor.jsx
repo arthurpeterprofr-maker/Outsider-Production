@@ -18,6 +18,8 @@ const LABELS = {
   footer: "Pied de page", marquee: "Bandeau défilant", people: "Personnes", quotes: "Citations", source: "Source",
   detail: "Détail", links: "Liens", form: "Formulaire", labels: "Libellés", location: "Adresse", eyebrow: "Sur-titre",
   scroll: "Texte défiler", text: "Texte", id: "Ancre (ne pas modifier)", projectTypes: "Types de projet", blurb: "Description",
+  artists: "Artistes résidents", artistFilters: "Filtres", slug: "Identifiant d'URL (sans espaces)", tags: "Catégories (clés des filtres)",
+  photos: "Photos", film: "Film", link: "Lien vidéo (Netflix, Vimeo…)", key: "Clé", route: "Page (ne pas modifier)",
 };
 const IMAGE_KEYS = ["img", "image", "poster", "hero", "about", "manifesto"];
 const LONG_KEYS = ["bio", "synopsis", "quote", "intro", "note", "blurb", "text", "paragraphs", "success"];
@@ -71,9 +73,9 @@ export const FieldEditor = ({ k, value, onChange, path, depth = 0 }) => {
       <label className="block">
         <span className="op-label !text-[10px] !tracking-[0.2em]">{labelOf(k)}</span>
         <div className="mt-2">
-          {IMAGE_KEYS.includes(key) ? <ImageField value={value} onChange={onChange} path={path} />
+          {IMAGE_KEYS.includes(key) || /\.photos\.\d+$/.test(path) ? <ImageField value={value} onChange={onChange} path={path} />
             : long ? <textarea rows={3} className="op-admin-input" value={value} onChange={(e) => onChange(e.target.value)} data-testid={`cms-${path}`} />
-            : <input className="op-admin-input" value={value} onChange={(e) => onChange(e.target.value)} readOnly={key === "id"} data-testid={`cms-${path}`} />}
+            : <input className="op-admin-input" value={value} onChange={(e) => onChange(e.target.value)} readOnly={key === "id" || key === "route"} data-testid={`cms-${path}`} />}
         </div>
       </label>
     );

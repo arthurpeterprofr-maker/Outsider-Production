@@ -1,10 +1,11 @@
 import { Instagram, Linkedin, Mail } from "lucide-react";
 import { useLang } from "../lib/i18n";
-import { scrollToId } from "../lib/smooth";
+import { useGoTo } from "../lib/nav";
 import { LogoMark } from "./Logo";
 
 export const Footer = () => {
   const { t, site } = useLang();
+  const scrollToId = useGoTo();
   const contactInfo = site.contact;
   return (
     <footer className="relative overflow-hidden bg-[#050505] pt-20" data-testid="site-footer">

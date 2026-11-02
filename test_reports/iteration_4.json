@@ -1,0 +1,91 @@
+{
+  "summary": "Frontend-only verification of the Cinema/Commercials refactor: scroll-jacked horizontal rail replaced by poster grid + full-screen modal, with /cinema and /publicites dedicated pages. All items in the review request passed with no critical or minor issues.",
+  "backend_issues": { "critical": [], "minor": [] },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "verified": {
+    "home_films": {
+      "films-section_present": true,
+      "no_pinned_horizontal_scroll": true,
+      "films-grid_present": true,
+      "film_cards_count_home": 4,
+      "home_cols_1440": 3,
+      "mobile_390_cols": 2,
+      "mobile_horizontal_overflow": false,
+      "play_bubble_mobile_display": "none (lg-only)"
+    },
+    "film_modal": {
+      "opens_on_card_click": true,
+      "film-modal-title_present": true,
+      "escape_closes": true,
+      "close_button_closes": true,
+      "backdrop_click_closes": true,
+      "scroll_lock_restored_after_close": true,
+      "page_scrolls_after_close": "delta=500px verified",
+      "scroll_lock_counter_works": true
+    },
+    "cinema_page": {
+      "route_/cinema_renders": true,
+      "cinema-page_testid": true,
+      "h1_present": true,
+      "film-filter-all_present": true,
+      "chips_derived_from_type_first_part": ["Long métrage", "Documentaire", "Court métrage"],
+      "clicking_film-filter-0_filters_grid": "4 -> 2 cards",
+      "clicking_Tous_restores_all": "4 cards",
+      "cinema_cols_1440": 4,
+      "card_click_opens_modal_on_cinema": true
+    },
+    "home_commercials": {
+      "commercials-section_present": true,
+      "commercials-grid_present": true,
+      "commercial_cards_count_home": 4,
+      "card_click_opens_commercial-modal": true,
+      "commercial-modal-play_disabled_when_no_link": true,
+      "commercials-see-all_navigates_to_/publicites": true
+    },
+    "commercials_page": {
+      "commercials-page_testid": true,
+      "commercial_filter_chips_rendered": 0,
+      "note": "All items default to [Marque] -> only 1 distinct client, chips hidden as expected"
+    },
+    "youtube_preview_flow": {
+      "preview_draft_injected_via_localStorage": true,
+      "commercial-modal-play_disabled_null_when_link_present": true,
+      "video-player_opens_on_play": true,
+      "video-close-btn_present": true,
+      "closing_video-player_keeps_commercial-modal_open": true,
+      "video-player_removed_after_close": true,
+      "closing_commercial-modal_restores_overflow": true
+    },
+    "i18n_toggle": {
+      "films-see-all_FR": "Voir tous les films",
+      "chips_filter_FR": ["Tous","Long métrage","Documentaire","Court métrage"]
+    },
+    "nav_regression": {
+      "nav-link-films_scrolls_to_films_section_on_home": true,
+      "scrollY_after_click": 3725,
+      "films-section_viewport_top": "~60 (header offset)",
+      "stayed_on_/": true
+    },
+    "console_errors": 0
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "lockScroll counter in /app/frontend/src/lib/smooth.js correctly uses a counter so nested modals (commercial modal + video player) both increment/decrement without clobbering overflow; verified by opening video-player over commercial-modal and getting overflow='' only after both close.",
+    "FilmGrid/AdGrid: card index 'n = films.indexOf(f)' is derived from the ORIGINAL (unfiltered) list — good: data-testid film-card-N is stable across filtering, which keeps automation deterministic.",
+    "Chips.jsx: hides when keys.length < 2; good UX — avoids a lone chip. Verified on /publicites with 1 client.",
+    "FilmModal keydown listener uses stale onClose captured in effect; since onClose is recreated every parent render, effect dependency [onClose] re-binds correctly. OK.",
+    "SeeAll uses onClick={() => window.scrollTo(0,0)} but Link navigates asynchronously; the scrollTo fires before route change — relies on fresh page starting at top anyway. Minor: a useEffect(() => window.scrollTo(0,0), []) at the page level would be more robust, but current flow works."
+  ],
+  "updated_files": [],
+  "success_rate": { "backend": "n/a", "frontend": "100%" },
+  "test_credentials": "admin@outsidersproduction.ma / Outsiders2026! (not used — frontend-only, no admin interaction)",
+  "seed_data_creation": "Transient localStorage 'op-preview-draft' injected to simulate a commercial with a YouTube link for video-player test. Cleared after test. No admin PUT performed; no persisted content changes.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "All 7 review items passed. Films grid replaces horizontal rail (no more pinned scroll-jack), /cinema has 3 FR chips (Long métrage/Documentaire/Court métrage) plus Tous, /publicites has no chips (single [Marque] client). Scroll lock counter in lib/smooth.js handles nested modals correctly (video-player over commercial-modal). Mobile 390 shows 2 columns and no horizontal overflow; desktop 1440 shows 3 cols on home and 4 on /cinema. nav-link-films still scrolls to #films on home."
+}

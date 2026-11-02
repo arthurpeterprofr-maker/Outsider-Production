@@ -72,6 +72,13 @@ User choices: bilingue FR/EN avec bouton de langue; formulaire = enregistrement 
 - Vidéos : liens YouTube/Vimeo/.mp4 → aperçu muet en boucle (VideoTile/LoopMedia) + lecteur plein écran au clic. Admin : onglets « AI Studio — vidéos » et « Voice Room — vidéos » (cover + projets/capsules). Images d'ambiance stock en attendant (public/images/ai*.jpg, voice*.jpg). Titres projets = placeholders [Projet IA 0x], Capsule 0x.
 - Le guide PDF ne couvre pas encore ces deux pages.
 
+## Implemented (2026-11-02, itérations 14-15)
+- Accueil : bandeaux « À découvrir » (Discover.jsx) vers AI Studio / Voice Room (textes fr/en.discover, médias = covers des pages).
+- Voice Room : partenaires engagés (voiceRoomMedia.partners : name, logo, url), nom affiché si pas de logo. Placeholders [Partenaire 0x] + WE4SHE.
+- Guide PDF : 21 pages, section 12 vidéos AI Studio / Voice Room / partenaires / bandeaux.
+- Cinéma & Publicités : défilement horizontal bloquant remplacé par grille + fiche au clic (FilmGrid.jsx, AdGrid.jsx, Chips.jsx). Accueil = 6 premiers + bouton ; pages /cinema (filtres par type) et /publicites (filtres par client si ≥2). Pub avec lien YouTube/Vimeo lue sur le site. lockScroll = compteur (overlays imbriqués).
+- Admin : en-têtes de fiches affichent le titre FR quand titre bilingue.
+
 
 ## Backlog
 - P0 : renseigner l'email de réception réel (CONTACT_NOTIFY_EMAIL), remplacer contenus/photos par ceux du client.

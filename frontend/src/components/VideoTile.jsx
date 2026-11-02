@@ -32,7 +32,7 @@ export const VideoTile = ({ image, video, title, watch, className = "", testId, 
   const media = toPlayable(asset(video));
   return (
     <>
-      <button type="button" onClick={() => media && setOpen(true)} disabled={!media} data-testid={testId}
+      <button type="button" onClick={() => media && setOpen(true)} disabled={!media} data-testid={testId} aria-label={media ? `${watch} — ${title || ""}` : undefined}
         className={`group relative block w-full overflow-hidden text-left ${media ? "cursor-pointer" : "cursor-default"} ${className}`}>
         <LoopMedia image={image} video={video} className="transition-transform duration-[1.6s] group-hover:scale-[1.04]" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />

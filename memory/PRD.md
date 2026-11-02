@@ -67,6 +67,11 @@ User choices: bilingue FR/EN avec bouton de langue; formulaire = enregistrement 
 - Mode d'emploi PDF de l'admin (18 pages, captures réelles) : source /app/docs/guide/guide.html + shots/, PDF publié dans frontend/public/guide-admin-outsiders.pdf (régénérer : google-chrome --headless --print-to-pdf). Lien « Mode d'emploi (PDF) » dans l'en-tête de l'admin.
 - Libellés admin ajoutés : « Lauriers (festivals) », « Mention sous les lauriers ».
 
+## Implemented (2026-11-02, itération 13)
+- Nouvelles pages /ai-studio (Outsiders AI Studio) et /voice-room (The Voice Room, collaboration WE4SHE), textes client EN + traduction FR, liens dans le menu (ajoutés automatiquement aux menus déjà enregistrés via withNewPages dans i18n.js).
+- Vidéos : liens YouTube/Vimeo/.mp4 → aperçu muet en boucle (VideoTile/LoopMedia) + lecteur plein écran au clic. Admin : onglets « AI Studio — vidéos » et « Voice Room — vidéos » (cover + projets/capsules). Images d'ambiance stock en attendant (public/images/ai*.jpg, voice*.jpg). Titres projets = placeholders [Projet IA 0x], Capsule 0x.
+- Le guide PDF ne couvre pas encore ces deux pages.
+
 
 ## Backlog
 - P0 : renseigner l'email de réception réel (CONTACT_NOTIFY_EMAIL), remplacer contenus/photos par ceux du client.

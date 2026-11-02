@@ -1,4 +1,4 @@
-import { useLang } from "../lib/i18n";
+import { useLang, asset } from "../lib/i18n";
 import { PageShell, PageHero, PageCta, usePageTitle } from "../components/PageParts";
 import { VideoTile } from "../components/VideoTile";
 import { MaskLines, Reveal, Label } from "../components/motion";
@@ -18,7 +18,28 @@ const Manifesto = ({ s }) => {
   );
 };
 
-const Featured = ({ f, capsules, lang, watch }) => (
+const Partners = ({ label, partners }) => (
+  <div className="mt-24" data-testid="voice-partners">
+    <Reveal><Label>{label}</Label></Reveal>
+    <div className="mt-10 grid grid-cols-2 border-l border-t border-white/10 md:grid-cols-4">
+      {partners.map((p, i) => {
+        const Tag = p.url ? "a" : "div";
+        const link = p.url ? { href: p.url, target: "_blank", rel: "noreferrer" } : {};
+        return (
+          <Reveal key={i} delay={(i % 4) * 0.08} className="border-b border-r border-white/10">
+            <Tag {...link} className="group flex h-32 items-center justify-center px-6 sm:h-40" data-testid={`voice-partner-${i}`}>
+              {p.logo
+                ? <img src={asset(p.logo)} alt={p.name} className="max-h-14 max-w-[80%] object-contain opacity-70 grayscale transition-opacity duration-500 group-hover:opacity-100" />
+                : <span className="text-center font-display text-xl text-zinc-300 transition-colors duration-500 group-hover:text-white sm:text-2xl">{p.name}</span>}
+            </Tag>
+          </Reveal>
+        );
+      })}
+    </div>
+  </div>
+);
+
+const Featured = ({ f, capsules, partners, partnersLabel, lang, watch }) => (
   <section className="border-t border-white/10" data-testid="voice-featured">
     <div className="mx-auto max-w-[1500px] px-5 py-24 sm:px-10 sm:py-32">
       <Reveal><Label>{f.label}</Label></Reveal>
@@ -41,6 +62,7 @@ const Featured = ({ f, capsules, lang, watch }) => (
           </Reveal>
         ))}
       </div>
+      {partners.length > 0 && <Partners label={partnersLabel} partners={partners} />}
     </div>
   </section>
 );
@@ -54,7 +76,7 @@ export default function VoiceRoom() {
     <PageShell testId="voice-room-page">
       <PageHero cover={m.cover} label={s.label} title={s.title} watch={s.watch} testId="voice-hero" />
       <Manifesto s={s} />
-      <Featured f={s.featured || {}} capsules={arr(m.capsules)} lang={lang} watch={s.watch} />
+      <Featured f={s.featured || {}} capsules={arr(m.capsules)} partners={arr(m.partners)} partnersLabel={s.partnersLabel} lang={lang} watch={s.watch} />
       <PageCta label={s.cta} testId="voice-cta" />
     </PageShell>
   );

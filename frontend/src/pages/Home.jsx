@@ -18,6 +18,7 @@ import { Intro } from "../components/Intro";
 import { Press } from "../components/Press";
 import { Commercials } from "../components/Commercials";
 import { PreviewBanner } from "../components/PreviewBanner";
+import { Discover } from "../components/Discover";
 
 export default function Home() {
   const { state } = useLocation();
@@ -42,6 +43,7 @@ export default function Home() {
       <Manifesto />
       <Vision />
       <Expertise />
+      <Discover />
       <Contact />
       <Footer />
       <PreviewBanner />

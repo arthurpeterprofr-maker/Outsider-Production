@@ -92,7 +92,15 @@ export const content = {
         capsules: "Les capsules",
       },
       watch: "Voir la vidéo",
+      partnersLabel: "Partenaires engagés",
       cta: "Défendre une cause avec nous",
+    },
+    discover: {
+      label: "À découvrir",
+      items: [
+        { title: "Outsiders AI Studio", text: "Nouvelles technologies. Imagination illimitée.", cta: "Découvrir le studio", route: "/ai-studio" },
+        { title: "The Voice Room", text: "Chaque voix mérite d'être entendue.", cta: "Entrer dans The Voice Room", route: "/voice-room" },
+      ],
     },
     press: {
       label: "Sélections & presse",
@@ -240,7 +248,15 @@ export const content = {
         capsules: "The capsules",
       },
       watch: "Watch the video",
+      partnersLabel: "Committed partners",
       cta: "Champion a cause with us",
+    },
+    discover: {
+      label: "Discover",
+      items: [
+        { title: "Outsiders AI Studio", text: "New technologies. Unlimited imagination.", cta: "Discover the studio", route: "/ai-studio" },
+        { title: "The Voice Room", text: "Every voice deserves to be heard.", cta: "Enter The Voice Room", route: "/voice-room" },
+      ],
     },
     press: {
       label: "Selections & press",
@@ -401,6 +417,12 @@ export const defaultContent = {
       { title: { fr: "Capsule 01", en: "Capsule 01" }, image: "/images/voice2.jpg", video: "" },
       { title: { fr: "Capsule 02", en: "Capsule 02" }, image: "/images/voice1.jpg", video: "" },
       { title: { fr: "Capsule 03", en: "Capsule 03" }, image: "/images/voice4.jpg", video: "" },
+    ],
+    partners: [
+      { name: "WE4SHE", logo: "", url: "" },
+      { name: "[Partenaire 02]", logo: "", url: "" },
+      { name: "[Partenaire 03]", logo: "", url: "" },
+      { name: "[Partenaire 04]", logo: "", url: "" },
     ],
   },
 };

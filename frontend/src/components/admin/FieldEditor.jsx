@@ -25,9 +25,11 @@ const LABELS = {
   lead: "Accroche", servicesLabel: "Titre « Ce que nous créons »", services: "Prestations", worksLabel: "Titre de la sélection", watch: "Bouton vidéo", cta: "Appel à l'action (vers le contact)",
   featured: "Collaboration à la une", creditsLabel: "Intitulé des crédits", credits: "Crédits", capsules: "Capsules",
   cover: "Vidéo d'ouverture (plein écran)", works: "Projets", category: "Catégorie",
+  partners: "Partenaires", url: "Site web (optionnel)", partnersLabel: "Titre des partenaires", logo: "Logo (PNG transparent, idéalement blanc ; sans logo, le nom s'affiche)",
+  discover: "Bandeaux « À découvrir » (accueil)",
   video: "Vidéo (lien YouTube, Vimeo ou .mp4 — aperçu muet en boucle, plein écran au clic)", photos: "Photos", film: "Film", link: "Lien vidéo (YouTube, Vimeo ou fichier .mp4 — lu sur le site ; Netflix s'ouvre dans un nouvel onglet)", key: "Clé", route: "Page (ne pas modifier)",
 };
-const IMAGE_KEYS = ["img", "image", "poster", "hero", "about", "manifesto", "logoMark", "logoFull"];
+const IMAGE_KEYS = ["img", "image", "poster", "hero", "about", "manifesto", "logoMark", "logoFull", "logo"];
 const LONG_KEYS = ["bio", "synopsis", "quote", "intro", "note", "blurb", "text", "paragraphs", "success"];
 
 const labelOf = (k) => (typeof k === "number" ? `#${k + 1}` : LABELS[k] || k);
@@ -96,10 +98,12 @@ export const FieldEditor = ({ k, value, onChange, path, depth = 0 }) => {
       </div>
     );
     if (depth === 0) return body;
+    const raw = value.title || value.name || value.label;
+    const name = typeof raw === "object" ? raw?.fr || raw?.en : raw;
     return (
       <details className="group border border-white/10 bg-white/[0.02]" open={depth > 1}>
         <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 font-display text-lg text-white">
-          {labelOf(k)}{typeof k === "number" && (value.title || value.name || value.label) ? ` — ${value.title || value.name || value.label}` : ""}<ChevronDown className="h-4 w-4 text-zinc-400 transition-transform group-open:rotate-180" />
+          {labelOf(k)}{typeof k === "number" && name ? ` — ${name}` : ""}<ChevronDown className="h-4 w-4 text-zinc-400 transition-transform group-open:rotate-180" />
         </summary>
         <div className="border-t border-white/10 p-4">{body}</div>
       </details>

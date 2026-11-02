@@ -25,6 +25,11 @@ gcloud services enable run.googleapis.com cloudbuild.googleapis.com artifactregi
 PROJECT_NUMBER=$(gcloud projects describe "$PROJECT_ID" --format='value(projectNumber)')
 SA="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com"
 
+# Droits nécessaires à la construction depuis les sources (projets récents)
+for role in roles/run.builder roles/storage.objectViewer roles/artifactregistry.writer roles/logging.logWriter; do
+  gcloud projects add-iam-policy-binding "$PROJECT_ID" --member="$SA" --role="$role" --condition=None >/dev/null
+done
+
 ensure_secret() {
   local name="$1" prompt="$2" value
   if gcloud secrets describe "$name" >/dev/null 2>&1; then

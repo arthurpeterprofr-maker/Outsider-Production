@@ -7,6 +7,8 @@ import Admin from "./pages/Admin";
 import ResetPassword from "./pages/ResetPassword";
 import Artists from "./pages/Artists";
 import ArtistDetail from "./pages/ArtistDetail";
+import AiStudio from "./pages/AiStudio";
+import VoiceRoom from "./pages/VoiceRoom";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
           <Route path="/admin/reset" element={<ResetPassword />} />
           <Route path="/artistes" element={<Artists />} />
           <Route path="/artistes/:slug" element={<ArtistDetail />} />
+          <Route path="/ai-studio" element={<AiStudio />} />
+          <Route path="/voice-room" element={<VoiceRoom />} />
         </Routes>
       </BrowserRouter>
       <Toaster theme="dark" position="bottom-right" />

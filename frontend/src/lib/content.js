@@ -6,6 +6,8 @@ export const content = {
       { id: "films", label: "Cinéma" },
       { id: "commercials", label: "Publicités" },
       { id: "artists", label: "Artistes résidents", route: "/artistes" },
+      { id: "ai-studio", label: "AI Studio", route: "/ai-studio" },
+      { id: "voice-room", label: "The Voice Room", route: "/voice-room" },
       { id: "contact", label: "Contact" },
     ],
     hero: {
@@ -59,6 +61,38 @@ export const content = {
     artists: {
       label: "Artistes résidents", intro: "Réalisateurs et photographes qui façonnent avec nous des images singulières.",
       all: "Tous", previous: "Précédent", next: "Suivant", film: "Film", photo: "Photo", back: "Tous les artistes", watch: "Regarder le film", none: "Aucun artiste dans cette catégorie.",
+    },
+    aiStudio: {
+      label: "Outsiders AI Studio",
+      title: ["Nouvelles technologies.", "Imagination illimitée."],
+      lead: "Nous transformons les idées audacieuses en expériences visuelles extraordinaires.",
+      text: "Des campagnes publicitaires créées avec l'IA aux films originaux et contenus de marque, nous associons créativité, storytelling et intelligence artificielle pour repousser les limites de la production audiovisuelle.",
+      servicesLabel: "Ce que nous créons",
+      services: ["Campagnes publicitaires IA", "Films et courts métrages IA", "Contenus de marque IA", "Expériences visuelles créatives", "Développement de concepts et direction IA"],
+      worksLabel: "Sélection",
+      watch: "Voir la vidéo",
+      cta: "Parlons de votre projet",
+    },
+    voiceRoom: {
+      label: "The Voice Room",
+      title: ["Chaque voix", "mérite d'être entendue."],
+      paragraphs: [
+        "Chez Outsiders, nous croyons que certaines voix ont besoin de plus d'espace, que certaines histoires doivent être racontées et que certaines causes méritent d'être défendues.",
+        "The Voice Room est notre espace d'engagement, d'émancipation et de collaborations porteuses de sens.",
+        "De l'émancipation des femmes à l'égalité, en passant par la liberté, les droits humains et le changement social, nous soutenons les initiatives qui bousculent les regards et inspirent l'action.",
+      ],
+      closing: ["Parce que chaque voix compte.", "Chaque histoire compte."],
+      featured: {
+        label: "Collaboration à la une",
+        title: "WE4SHE × OUTSIDERS PRODUCTION",
+        text: "Une campagne dédiée à l'émancipation des femmes et à l'égalité des chances, conçue et développée à travers une série de capsules créatives originales.",
+        role: "Outsiders Production a mené le développement créatif, la création du concept et l'écriture du scénario de la campagne, donnant vie à sa vision par le storytelling et la production audiovisuelle.",
+        creditsLabel: "Concept créatif, développement de la campagne, scénario, production & réalisation",
+        credits: "Outsiders Production",
+        capsules: "Les capsules",
+      },
+      watch: "Voir la vidéo",
+      cta: "Défendre une cause avec nous",
     },
     press: {
       label: "Sélections & presse",
@@ -120,6 +154,8 @@ export const content = {
       { id: "films", label: "Cinema" },
       { id: "commercials", label: "Commercials" },
       { id: "artists", label: "Resident Artists", route: "/artistes" },
+      { id: "ai-studio", label: "AI Studio", route: "/ai-studio" },
+      { id: "voice-room", label: "The Voice Room", route: "/voice-room" },
       { id: "contact", label: "Contact" },
     ],
     hero: {
@@ -173,6 +209,38 @@ export const content = {
     artists: {
       label: "Resident Artists", intro: "Directors and photographers crafting singular images with us.",
       all: "All", previous: "Previous", next: "Next", film: "Film", photo: "Photo", back: "All artists", watch: "Watch the film", none: "No artist in this category.",
+    },
+    aiStudio: {
+      label: "Outsiders AI Studio",
+      title: ["New technologies.", "Unlimited imagination."],
+      lead: "We turn bold ideas into extraordinary visual experiences.",
+      text: "From AI-powered advertising campaigns to original films and branded content, we combine creativity, storytelling and artificial intelligence to push the boundaries of audiovisual production.",
+      servicesLabel: "What we create",
+      services: ["AI Advertising Campaigns", "AI Films & Short Films", "AI Branded Content", "Creative Visual Experiences", "AI Concept Development & Direction"],
+      worksLabel: "Selected work",
+      watch: "Watch the video",
+      cta: "Let's talk about your project",
+    },
+    voiceRoom: {
+      label: "The Voice Room",
+      title: ["Every voice", "deserves to be heard."],
+      paragraphs: [
+        "At Outsiders, we believe that some voices need more space, some stories need to be told, and some causes deserve to be defended.",
+        "The Voice Room is our space for engagement, empowerment and meaningful collaborations.",
+        "From women's emancipation to equality, freedom, human rights and social change, we support initiatives that challenge perspectives and inspire action.",
+      ],
+      closing: ["Because every voice matters.", "Every story counts."],
+      featured: {
+        label: "Featured collaboration",
+        title: "WE4SHE × OUTSIDERS PRODUCTION",
+        text: "A campaign dedicated to women's empowerment and equal opportunities, conceived and developed through a series of original creative capsules.",
+        role: "Outsiders Production led the creative development, concept creation and scriptwriting of the campaign, bringing its vision to life through storytelling and audiovisual production.",
+        creditsLabel: "Creative Concept, Campaign Development, Scriptwriting, Production & Direction",
+        credits: "Outsiders Production",
+        capsules: "The capsules",
+      },
+      watch: "Watch the video",
+      cta: "Champion a cause with us",
     },
     press: {
       label: "Selections & press",
@@ -319,4 +387,20 @@ export const defaultContent = {
   laurels,
   contact: contactInfo,
   media: { logoMark: "/logo-mark.png", logoFull: "/logo-full.png", hero: "/images/hero.jpg", about: "/images/set.jpg", manifesto: "/images/eye.jpg" },
+  aiStudioMedia: {
+    cover: { image: "/images/ai1.jpg", video: "" },
+    works: [
+      { title: { fr: "[Projet IA 01]", en: "[AI project 01]" }, category: { fr: "Campagne publicitaire IA", en: "AI Advertising Campaign" }, image: "/images/ai2.jpg", video: "" },
+      { title: { fr: "[Projet IA 02]", en: "[AI project 02]" }, category: { fr: "Court métrage IA", en: "AI Short Film" }, image: "/images/ai3.jpg", video: "" },
+      { title: { fr: "[Projet IA 03]", en: "[AI project 03]" }, category: { fr: "Contenu de marque IA", en: "AI Branded Content" }, image: "/images/ai4.jpg", video: "" },
+    ],
+  },
+  voiceRoomMedia: {
+    cover: { image: "/images/voice3.jpg", video: "" },
+    capsules: [
+      { title: { fr: "Capsule 01", en: "Capsule 01" }, image: "/images/voice2.jpg", video: "" },
+      { title: { fr: "Capsule 02", en: "Capsule 02" }, image: "/images/voice1.jpg", video: "" },
+      { title: { fr: "Capsule 03", en: "Capsule 03" }, image: "/images/voice4.jpg", video: "" },
+    ],
+  },
 };

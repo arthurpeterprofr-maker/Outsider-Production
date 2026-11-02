@@ -16,6 +16,21 @@ export const deepMerge = (base, over) => {
 
 export const asset = (url) => (url && url.startsWith("/api/") ? `${BACKEND}${url}` : url);
 
+// Saved menus predate new pages: insert any default page link that is missing, before "contact".
+const withNewPages = (site) => {
+  ["fr", "en"].forEach((l) => {
+    const nav = Array.isArray(site[l]?.nav) ? [...site[l].nav] : null;
+    if (!nav) return;
+    (defaultContent[l].nav || []).filter((d) => d.route && !nav.some((n) => n.id === d.id)).forEach((d) => {
+      const at = nav.findIndex((n) => n.id === "contact");
+      nav.splice(at < 0 ? nav.length : at, 0, d);
+    });
+    site[l] = { ...site[l], nav };
+  });
+  return site;
+};
+const build = (over) => withNewPages(deepMerge(defaultContent, over));
+
 export const LangProvider = ({ children }) => {
   const [lang, setLang] = useState(() => localStorage.getItem("op-lang") || "fr");
   const [site, setSite] = useState(defaultContent);
@@ -23,11 +38,11 @@ export const LangProvider = ({ children }) => {
   const reload = useCallback(async () => {
     if (isPreview()) {
       const draft = readPreview();
-      if (isObj(draft)) { setSite(deepMerge(defaultContent, draft)); return; }
+      if (isObj(draft)) { setSite(build(draft)); return; }
     }
     try {
       const { data } = await axios.get(`${BACKEND}/api/content`);
-      if (isObj(data?.content)) setSite(deepMerge(defaultContent, data.content));
+      if (isObj(data?.content)) setSite(build(data.content));
     } catch {
       setSite(defaultContent);
     }

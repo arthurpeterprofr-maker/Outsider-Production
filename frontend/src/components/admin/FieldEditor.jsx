@@ -20,7 +20,12 @@ const LABELS = {
   scroll: "Texte défiler", text: "Texte", id: "Ancre (ne pas modifier)", projectTypes: "Types de projet", blurb: "Description",
   artists: "Artistes résidents", artistFilters: "Filtres", slug: "Identifiant d'URL (sans espaces)", tags: "Catégories (clés des filtres)",
   logoMark: "Logo miniature — menu, admin (PNG blanc sur fond transparent)", logoFull: "Logo entier — ouverture animée et pied de page (PNG blanc sur fond transparent)",
-  laurels: "Lauriers (festivals)", laurelTag: "Mention sous les lauriers", photos: "Photos", film: "Film", link: "Lien vidéo (YouTube, Vimeo ou fichier .mp4 — lu sur le site ; Netflix s'ouvre dans un nouvel onglet)", key: "Clé", route: "Page (ne pas modifier)",
+  laurels: "Lauriers (festivals)", laurelTag: "Mention sous les lauriers",
+  aiStudio: "AI Studio", voiceRoom: "The Voice Room", aiStudioMedia: "AI Studio — vidéos", voiceRoomMedia: "Voice Room — vidéos",
+  lead: "Accroche", servicesLabel: "Titre « Ce que nous créons »", services: "Prestations", worksLabel: "Titre de la sélection", watch: "Bouton vidéo", cta: "Appel à l'action (vers le contact)",
+  featured: "Collaboration à la une", creditsLabel: "Intitulé des crédits", credits: "Crédits", capsules: "Capsules",
+  cover: "Vidéo d'ouverture (plein écran)", works: "Projets", category: "Catégorie",
+  video: "Vidéo (lien YouTube, Vimeo ou .mp4 — aperçu muet en boucle, plein écran au clic)", photos: "Photos", film: "Film", link: "Lien vidéo (YouTube, Vimeo ou fichier .mp4 — lu sur le site ; Netflix s'ouvre dans un nouvel onglet)", key: "Clé", route: "Page (ne pas modifier)",
 };
 const IMAGE_KEYS = ["img", "image", "poster", "hero", "about", "manifesto", "logoMark", "logoFull"];
 const LONG_KEYS = ["bio", "synopsis", "quote", "intro", "note", "blurb", "text", "paragraphs", "success"];

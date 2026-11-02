@@ -56,7 +56,7 @@ export const Nav = () => {
       >
         <div className="mx-auto flex max-w-[1500px] items-center justify-between px-5 sm:px-10">
           <Logo onClick={() => go("home")} />
-          <nav className="hidden items-center gap-7 xl:flex 2xl:gap-9">
+          <nav className="hidden items-center gap-5 xl:flex 2xl:gap-9">
             {t.nav.map((n) => (
               <button key={n.id} onClick={() => go(n.id)} data-testid={`nav-link-${n.id}`} className="op-navlink">
                 {n.label}

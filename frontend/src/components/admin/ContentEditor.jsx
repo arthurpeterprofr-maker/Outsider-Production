@@ -17,6 +17,8 @@ const SECTIONS = [
   { key: "commercials", label: "Publicités" },
   { key: "artists", label: "Artistes" },
   { key: "artistFilters", label: "Filtres artistes" },
+  { key: "aiStudioMedia", label: "AI Studio — vidéos" },
+  { key: "voiceRoomMedia", label: "Voice Room — vidéos" },
   { key: "people", label: "Fondateurs" },
   { key: "laurels", label: "Lauriers" },
   { key: "contact", label: "Coordonnées" },

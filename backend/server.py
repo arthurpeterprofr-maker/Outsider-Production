@@ -7,6 +7,7 @@ load_dotenv(ROOT_DIR / '.env')
 import os
 import logging
 import json
+import re
 from datetime import datetime, timezone, timedelta
 from typing import Annotated, Optional, List, Any, Dict
 
@@ -448,7 +449,13 @@ async def startup():
     await db.password_reset_tokens.create_index("token_hash")
     await db.password_reset_tokens.create_index("expires_at", expireAfterSeconds=0)
     admin_email = os.environ["ADMIN_EMAIL"].lower()
-    if not await db.users.find_one({"email": admin_email}):
+    existing = await db.users.find_one({"email": admin_email})
+    if existing and os.environ.get("ADMIN_FORCE_RESET") == "1":
+        await db.users.update_one({"_id": existing["_id"]}, {"$set": {
+            "password_hash": hash_password(os.environ["ADMIN_PASSWORD"]), "role": "admin"}})
+        await db.login_attempts.delete_many({"identifier": {"$regex": f":{re.escape(admin_email)}$"}})
+        logger.info("Admin password reset from ADMIN_PASSWORD")
+    if not existing:
         await db.users.insert_one({"email": admin_email, "password_hash": hash_password(os.environ["ADMIN_PASSWORD"]),
                                    "name": "Admin", "role": "admin",
                                    "created_at": datetime.now(timezone.utc).isoformat()})

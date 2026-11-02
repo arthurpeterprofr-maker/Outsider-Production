@@ -3,7 +3,7 @@ import axios from "axios";
 import { defaultContent } from "./content";
 import { PREVIEW_KEY, isPreview, readPreview } from "./preview";
 
-const BACKEND = process.env.REACT_APP_BACKEND_URL;
+const BACKEND = process.env.REACT_APP_BACKEND_URL ?? "";
 const LangContext = createContext(null);
 
 const isObj = (v) => v && typeof v === "object" && !Array.isArray(v);
@@ -25,7 +25,6 @@ export const LangProvider = ({ children }) => {
       const draft = readPreview();
       if (isObj(draft)) { setSite(deepMerge(defaultContent, draft)); return; }
     }
-    if (!BACKEND) return;
     try {
       const { data } = await axios.get(`${BACKEND}/api/content`);
       if (isObj(data?.content)) setSite(deepMerge(defaultContent, data.content));

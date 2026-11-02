@@ -3,6 +3,8 @@ import re
 import ipaddress
 import logging
 import httpx
+import resend
+import secrets
 from html import escape
 from html.parser import HTMLParser
 from urllib.parse import urlparse
@@ -10,7 +12,7 @@ from urllib.parse import urlparse
 logger = logging.getLogger(__name__)
 
 EMAIL_BASE_URL = "https://integrations.emergentagent.com"
-EMAIL_KEY = os.environ["EMERGENT_EMAIL_KEY"]
+EMAIL_PROVIDER = os.environ.get("EMAIL_PROVIDER", "managed").lower()
 EMAIL_FROM_NAME = os.environ["EMAIL_FROM_NAME"]
 EMAIL_REPLY_TO = os.environ.get("EMAIL_REPLY_TO")
 
@@ -89,12 +91,37 @@ def _assert_safe_email(subject: str, html: str) -> None:
 
 async def send_email(*, to: str, subject: str, html: str) -> str:
     _assert_safe_email(subject, html)
+    if EMAIL_PROVIDER == "resend":
+        return await _send_resend(to=to, subject=subject, html=html)
+    return await _send_managed(to=to, subject=subject, html=html)
+
+
+async def _send_resend(*, to: str, subject: str, html: str) -> str:
+    resend.api_key = os.environ["RESEND_API_KEY"]
+    params = {
+        "from": os.environ["EMAIL_FROM"],
+        "to": [to],
+        "subject": subject,
+        "html": html,
+        "text": re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", html)).strip(),
+    }
+    if EMAIL_REPLY_TO:
+        params["reply_to"] = [EMAIL_REPLY_TO]
+    try:
+        result = await resend.Emails.send_async(params, {"idempotency_key": secrets.token_hex(16)})
+    except resend.exceptions.ResendError as e:
+        logger.warning(f"Resend refused: {type(e).__name__}")
+        raise RuntimeError("resend_error")
+    return result["id"]
+
+
+async def _send_managed(*, to: str, subject: str, html: str) -> str:
     payload = {"to": [to], "subject": subject, "html": html, "from_name": EMAIL_FROM_NAME}
     if EMAIL_REPLY_TO:
         payload["contact_email"] = EMAIL_REPLY_TO
     async with httpx.AsyncClient(timeout=30) as client:
         resp = await client.post(f"{EMAIL_BASE_URL}/api/v1/email/send",
-                                 headers={"X-Email-Key": EMAIL_KEY}, json=payload)
+                                 headers={"X-Email-Key": os.environ["EMERGENT_EMAIL_KEY"]}, json=payload)
     if resp.status_code >= 400:
         try:
             info = resp.json()

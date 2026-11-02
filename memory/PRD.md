@@ -42,6 +42,10 @@ User choices: bilingue FR/EN avec bouton de langue; formulaire = enregistrement 
 - Mot de passe oublié : /admin → lien « Mot de passe oublié ? », email (Resend managé) avec lien /admin/reset?token= (1 h, usage unique, 3 demandes/h max, token hashé). FRONTEND_URL dans backend/.env sert à construire le lien (à mettre à jour avec le domaine final).
 - Historique : chaque enregistrement crée une version (10 dernières gardées), restauration en un clic (admin et éditeurs).
 
+## Implemented (2026-11-02, itération 7)
+- Export Google Cloud : EMAIL_PROVIDER (managed par défaut | resend avec RESEND_API_KEY + EMAIL_FROM, SDK resend async), Dockerfiles backend (Cloud Run) et frontend (build CRA + nginx qui relaie /api → même domaine, cookies OK), .env.example, guide pas à pas /app/DEPLOY_GCP.md.
+- Frontend : REACT_APP_BACKEND_URL vide ⇒ appels relatifs /api.
+
 ## Backlog
 - P0 : renseigner l'email de réception réel (CONTACT_NOTIFY_EMAIL), remplacer contenus/photos par ceux du client.
 - P1 : section projets/filmographie, vrais liens réseaux sociaux, SEO (OG, sitemap).

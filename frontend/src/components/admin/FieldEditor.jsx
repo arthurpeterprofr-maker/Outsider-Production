@@ -25,6 +25,7 @@ const LABELS = {
   lead: "Accroche", servicesLabel: "Titre « Ce que nous créons »", services: "Prestations", worksLabel: "Titre de la sélection", watch: "Bouton vidéo", cta: "Appel à l'action (vers le contact)",
   featured: "Collaboration à la une", creditsLabel: "Intitulé des crédits", credits: "Crédits", capsules: "Capsules",
   cover: "Vidéo d'ouverture (plein écran)", works: "Projets", category: "Catégorie",
+  trailer: "Bande-annonce (lien YouTube, Vimeo ou .mp4 — lue dans la fiche du film)",
   partners: "Partenaires", url: "Site web (optionnel)", partnersLabel: "Titre des partenaires", logo: "Logo (PNG transparent, idéalement blanc ; sans logo, le nom s'affiche)",
   discover: "Bandeaux « À découvrir » (accueil)",
   video: "Vidéo (lien YouTube, Vimeo ou .mp4 — aperçu muet en boucle, plein écran au clic)", photos: "Photos", film: "Film", link: "Lien vidéo (YouTube, Vimeo ou fichier .mp4 — lu sur le site ; Netflix s'ouvre dans un nouvel onglet)", key: "Clé", route: "Page (ne pas modifier)",

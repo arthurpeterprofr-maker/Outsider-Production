@@ -27,6 +27,8 @@ const withNewPages = (site) => {
     });
     site[l] = { ...site[l], nav };
   });
+  // Films saved before the trailer field existed: add it so the admin shows it.
+  if (Array.isArray(site.films)) site.films = site.films.map((f) => (f && typeof f === "object" && !("trailer" in f) ? { ...f, trailer: "" } : f));
   return site;
 };
 const build = (over) => withNewPages(deepMerge(defaultContent, over));

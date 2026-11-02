@@ -52,6 +52,12 @@ export const content = {
       moreCta: "Parlons de votre projet",
       all: "Tous",
       viewAll: "Voir tous les films",
+      search: "Rechercher un titre ou un réalisateur",
+      noResult: "Aucun film ne correspond à votre recherche.",
+      sortDefault: "Sélection",
+      sortNew: "Plus récents",
+      sortOld: "Plus anciens",
+      trailer: "Bande-annonce",
     },
     commercials: {
       label: "Publicités",
@@ -213,6 +219,12 @@ export const content = {
       moreCta: "Tell us about your project",
       all: "All",
       viewAll: "See all films",
+      search: "Search a title or a director",
+      noResult: "No film matches your search.",
+      sortDefault: "Selection",
+      sortNew: "Newest",
+      sortOld: "Oldest",
+      trailer: "Trailer",
     },
     commercials: {
       label: "Commercials",
@@ -326,25 +338,25 @@ export const content = {
 // Sample projects: replace titles, synopses, festivals and Netflix links with the client's real films.
 export const filmItems = [
   {
-    title: "Titre du film 01", year: "2026", director: "Hicham Lasri", poster: "/images/poster1.jpg", netflix: "",
+    title: "Titre du film 01", year: "2026", director: "Hicham Lasri", poster: "/images/poster1.jpg", trailer: "", netflix: "",
     type: { fr: "Long métrage · Fiction", en: "Feature · Fiction" },
     synopsis: { fr: "[Synopsis à compléter] Une femme face à ses ombres, dans une ville qui ne dort jamais.", en: "[Synopsis to come] A woman facing her shadows, in a city that never sleeps." },
     festivals: ["[Festival] · Sélection officielle", "[Festival] · Compétition"],
   },
   {
-    title: "Titre du film 02", year: "2025", director: "Hicham Lasri", poster: "/images/poster2.jpg", netflix: "",
+    title: "Titre du film 02", year: "2025", director: "Hicham Lasri", poster: "/images/poster2.jpg", trailer: "", netflix: "",
     type: { fr: "Long métrage · Road movie", en: "Feature · Road movie" },
     synopsis: { fr: "[Synopsis à compléter] Une nuit, une route, une fuite vers le sud.", en: "[Synopsis to come] One night, one road, a flight to the south." },
     festivals: ["[Festival] · Panorama"],
   },
   {
-    title: "Titre du film 03", year: "2024", director: "Hicham Lasri", poster: "/images/poster3.jpg", netflix: "",
+    title: "Titre du film 03", year: "2024", director: "Hicham Lasri", poster: "/images/poster3.jpg", trailer: "", netflix: "",
     type: { fr: "Documentaire", en: "Documentary" },
     synopsis: { fr: "[Synopsis à compléter] Les toits de Casablanca racontés par ceux qui y grandissent.", en: "[Synopsis to come] Casablanca's rooftops told by those who grow up there." },
     festivals: ["[Festival] · Prix du public", "[Festival] · Sélection"],
   },
   {
-    title: "Titre du film 04", year: "2023", director: "Hicham Lasri", poster: "/images/poster4.jpg", netflix: "",
+    title: "Titre du film 04", year: "2023", director: "Hicham Lasri", poster: "/images/poster4.jpg", trailer: "", netflix: "",
     type: { fr: "Court métrage · Expérimental", en: "Short · Experimental" },
     synopsis: { fr: "[Synopsis à compléter] Un geste, une lumière, une déchirure.", en: "[Synopsis to come] A gesture, a light, a tear." },
     festivals: ["[Festival] · Courts métrages"],

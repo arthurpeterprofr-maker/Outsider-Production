@@ -5,6 +5,8 @@ import { useLang, asset } from "../lib/i18n";
 import { NetflixLink } from "./NetflixLink";
 import { lockScroll } from "../lib/smooth";
 import { Chips, useChips } from "./Chips";
+import { FilmToolbar, useFilmQuery } from "./FilmToolbar";
+import { toPlayable } from "./VideoPlayer";
 import { EASE } from "./motion";
 
 const FilmCard = ({ f, n, onOpen, lang, t }) => (
@@ -23,6 +25,32 @@ const FilmCard = ({ f, n, onOpen, lang, t }) => (
     <h3 className="mt-2 font-display text-2xl leading-tight text-white transition-transform duration-500 group-hover:translate-x-1 sm:text-3xl">{f.title}</h3>
   </motion.button>
 );
+
+const Trailer = ({ f, t }) => {
+  const [on, setOn] = useState(false);
+  const media = toPlayable(asset(f.trailer));
+  if (!media) return null;
+  return (
+    <div className="mt-10" data-testid="film-trailer">
+      <p className="op-label !text-[10px]">{t.trailer}</p>
+      <div className="relative mt-4 aspect-video w-full overflow-hidden bg-zinc-900">
+        {on ? (
+          media.kind === "iframe"
+            ? <iframe title={`${f.title} — ${t.trailer}`} src={media.src} className="h-full w-full border-0" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowFullScreen data-testid="film-trailer-iframe" />
+            : <video src={media.src} className="h-full w-full" controls autoPlay playsInline data-testid="film-trailer-video" />
+        ) : (
+          <button type="button" onClick={() => setOn(true)} className="group absolute inset-0" data-testid="film-trailer-play" aria-label={t.trailer}>
+            <img src={asset(f.poster)} alt="" className="h-full w-full scale-110 object-cover opacity-60 blur-sm transition-transform duration-[1.4s] group-hover:scale-[1.15]" />
+            <span className="absolute inset-0 flex items-center justify-center gap-4 font-mono text-[11px] uppercase tracking-[0.3em] text-white">
+              <span className="flex h-16 w-16 items-center justify-center rounded-full bg-white text-black transition-transform duration-500 group-hover:scale-110"><Play className="ml-1 h-5 w-5 fill-current" /></span>
+              {t.trailer}
+            </span>
+          </button>
+        )}
+      </div>
+    </div>
+  );
+};
 
 const FilmModal = ({ f, onClose, lang, t }) => {
   useEffect(() => {
@@ -51,6 +79,7 @@ const FilmModal = ({ f, onClose, lang, t }) => {
               </ul>
             </div>
           )}
+          <Trailer f={f} t={t} />
           <div className="mt-10"><NetflixLink href={f.netflix} label={t.watch} soon={t.soon} testId="film-netflix-link" /></div>
         </div>
       </motion.div>
@@ -65,11 +94,18 @@ export const FilmGrid = ({ films, filters = false, cols = "lg:grid-cols-3" }) =>
   const { t, lang } = useLang();
   const [active, setActive] = useState(null);
   const keyOf = useCallback((f) => filmCategory(lang)(f), [lang]);
+  const query = useFilmQuery(films);
   const chips = useChips(films, keyOf);
-  const list = filters ? chips.shown : films;
+  const list = filters ? query.list.filter((f) => chips.active === "all" || keyOf(f) === chips.active) : films;
   return (
     <>
-      {filters && <div className="mb-12"><Chips keys={chips.keys} active={chips.active} onPick={chips.setActive} allLabel={t.films.all} testId="film-filter" /></div>}
+      {filters && (
+        <div className="mb-12 space-y-8">
+          <FilmToolbar {...query} t={t.films} />
+          <Chips keys={chips.keys} active={chips.active} onPick={chips.setActive} allLabel={t.films.all} testId="film-filter" />
+        </div>
+      )}
+      {filters && list.length === 0 && <p className="py-16 font-body text-base text-zinc-400" data-testid="film-no-result">{t.films.noResult}</p>}
       <motion.div layout className={`grid grid-cols-2 gap-x-4 gap-y-12 sm:gap-x-8 md:grid-cols-3 ${cols}`} data-testid="films-grid">
         <AnimatePresence initial={false}>
           {list.map((f) => {

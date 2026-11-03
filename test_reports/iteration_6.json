@@ -1,0 +1,81 @@
+{
+  "summary": "Frontend-only verification of compact home strips, nav/see-all routing changes, section reorder, mobile 390 overflow, and /cinema + /publicites regression. All 6 review items pass with 0 console errors.",
+  "backend_issues": { "critical": [], "minor": [] },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "verified": {
+    "strips_present": {
+      "films-strip": true,
+      "commercials-strip": true,
+      "home-section-heights_1440": { "films": 776, "commercials": 665, "within_650_800_spec": true }
+    },
+    "arrows_behavior": {
+      "films_arrows_hidden_at_1440_with_4_items": true,
+      "commercials_arrows_hidden_at_1440_with_4_items": false,
+      "commercials_arrows_visible_at_900": true,
+      "prev_disabled_at_start": true,
+      "next_click_scrolls_strip_scrollLeft_0_to_692": true,
+      "prev_enabled_after_scroll": true,
+      "note": "At 1440 with 4 ad cards (sm:w=360px lg:w=400px), AdGrid tiles overflow slightly so commercials-section-arrows ARE visible at 1440; films arrows correctly hidden. This matches 'arrows hidden entirely when everything fits' spec (films fits, commercials does not at 1440 with 4 items)."
+    },
+    "see_all_buttons": {
+      "films-see-all -> /cinema": "URL=/cinema, scrollY=0",
+      "commercials-see-all -> /publicites": "URL=/publicites, scrollY=0"
+    },
+    "nav_routing": {
+      "nav-link-films -> /cinema top": true,
+      "nav-link-commercials -> /publicites top": true,
+      "home nav-link-contact scrolls (URL stays /, scrollY=10115)": true,
+      "/cinema -> nav-link-contact goes home + scrolls to contact (scrollY=10115)": true
+    },
+    "section_order_home": [
+      {"id": "films-section", "top": 3785},
+      {"id": "commercials-section", "top": 4562},
+      {"id": "manifesto-section", "top": 5226},
+      {"id": "vision-section", "top": 6344},
+      {"id": "expertise-section", "top": 7156},
+      {"id": "discover-section", "top": 8070},
+      {"id": "press-section", "top": 9156},
+      {"id": "contact-section", "top": 10175}
+    ],
+    "section_order_correct": "films -> commercials -> dna(manifesto) -> vision -> expertise -> discover -> press -> contact : ORDERED=true",
+    "no_scroll_jack": "Vertical wheel over films-strip: window.scrollY 10115 -> 10615 (page scrolls, strip does not capture)",
+    "card_modals": {
+      "film-card-0 opens film-modal and closes cleanly": true,
+      "commercial-card-0 opens commercial-modal and closes cleanly": true
+    },
+    "mobile_390": {
+      "page_horizontal_overflow_px": 0,
+      "films_section_overflow": "sw=390, cw=390 (no overflow)",
+      "films_arrows_visible_at_390": true,
+      "commercials_arrows_visible_at_390": true,
+      "strip_manually_scrollable": "films-strip scrollLeft 0 -> 188 via scrollBy"
+    },
+    "regression": {
+      "/cinema film-sort-new present": true,
+      "/cinema film-filter-0 present": true,
+      "/publicites commercials-grid present": true,
+      "console_errors": 0
+    }
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Strip.jsx: StripArrows correctly hides when (edges.start && edges.end); ResizeObserver re-evaluates on viewport change. Clean and native (no wheel capture) — vertical scrolling is preserved.",
+    "Films.jsx HomeStrip puts title + arrows + see-all on one row (sm:flex-row sm:items-end sm:justify-between). On 390 it stacks (flex-col), confirmed no overflow.",
+    "lib/nav.js useGoTo prefers t.nav[].route and calls navigate+scrollTo(0,0); otherwise navigates to '/' with state.scrollTo for cross-page scroll — matches 'cinema -> contact goes to home contact section' spec.",
+    "i18n.withNewPages() backfills missing route on saved nav items by looking up defaultContent.nav by id, so Cinema/Publicites menu entries route correctly even for legacy saved menus.",
+    "Home.jsx renders in exact spec order: Films, Commercials, Manifesto(dna), Vision, Expertise, Discover, Press, Contact — Press now above Contact, DNA/vision/expertise above Press.",
+    "AdGrid home strip card width (sm:w-[360px] lg:w-[400px] * 4 = ~1600px) exceeds max-w-[1500px] inner container at 1440, so commercials arrows legitimately appear at 1440. If the client's intent was 'arrows hidden at 1440 for 4 items' for commercials too, consider shrinking lg:w-[400px] to ~340px. For 1500+ widths they would hide. Minor UX nit, not a bug."
+  ],
+  "updated_files": [],
+  "success_rate": { "backend": "n/a (skipped)", "frontend": "100%" },
+  "test_credentials": "n/a",
+  "seed_data_creation": "none; no persistence changes.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "All 6 review items pass. Testids used: films-section, commercials-section, films-strip, commercials-strip, films-section-arrows[-prev/-next], commercials-section-arrows[-prev/-next], films-see-all, commercials-see-all, nav-link-films/-commercials/-contact, mobile-nav-link-*, film-card-N, commercial-card-N. Section testids for order: manifesto-section (id='dna'), vision-section, expertise-section, discover-section, press-section, contact-section. Only observation: at 1440 commercials arrows are visible because 4 ad cards (lg:w-400px) exceed the 1500px max container; this is consistent with 'hide when everything fits' logic (it does not fit)."
+}

@@ -84,6 +84,11 @@ User choices: bilingue FR/EN avec bouton de langue; formulaire = enregistrement 
 - Fiche film : bande-annonce YouTube/Vimeo/.mp4 lue dans la fiche (champ films[].trailer, ajouté automatiquement aux films déjà enregistrés).
 - Guide PDF pas encore mis à jour pour le champ Bande-annonce.
 
+## Implemented (2026-11-03, itération 17)
+- Accueil : Cinéma et Publicités en bandes horizontales compactes (Strip.jsx : défilement natif au doigt/trackpad + flèches, sans bloquer la page), 6 max, bouton « Voir tous » dans l'en-tête.
+- Menu/pied de page : Cinéma → /cinema, Publicités → /publicites (routes ajoutées aussi aux menus déjà enregistrés).
+- Ordre accueil : … Cinéma, Publicités, ADN, Vision, Savoir-faire, À découvrir, Presse, Contact.
+
 
 ## Backlog
 - P0 : renseigner l'email de réception réel (CONTACT_NOTIFY_EMAIL), remplacer contenus/photos par ceux du client.

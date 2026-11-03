@@ -19,7 +19,10 @@ export const asset = (url) => (url && url.startsWith("/api/") ? `${BACKEND}${url
 // Saved menus predate new pages: insert any default page link that is missing, before "contact".
 const withNewPages = (site) => {
   ["fr", "en"].forEach((l) => {
-    const nav = Array.isArray(site[l]?.nav) ? [...site[l].nav] : null;
+    const nav = Array.isArray(site[l]?.nav) ? site[l].nav.map((n) => {
+      const d = (defaultContent[l].nav || []).find((x) => x.id === n?.id);
+      return d?.route && !n.route ? { ...n, route: d.route } : n;
+    }) : null;
     if (!nav) return;
     (defaultContent[l].nav || []).filter((d) => d.route && !nav.some((n) => n.id === d.id)).forEach((d) => {
       const at = nav.findIndex((n) => n.id === "contact");

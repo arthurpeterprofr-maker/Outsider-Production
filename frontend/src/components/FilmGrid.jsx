@@ -7,12 +7,13 @@ import { lockScroll } from "../lib/smooth";
 import { Chips, useChips } from "./Chips";
 import { FilmToolbar, useFilmQuery } from "./FilmToolbar";
 import { toPlayable } from "./VideoPlayer";
+import { StripRow } from "./Strip";
 import { EASE } from "./motion";
 
-const FilmCard = ({ f, n, onOpen, lang, t }) => (
+const FilmCard = ({ f, n, onOpen, lang, t, className = "" }) => (
   <motion.button layout type="button" onClick={onOpen} data-testid={`film-card-${n}`}
     initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.1 }} exit={{ opacity: 0, scale: 0.96 }}
-    transition={{ duration: 0.7, ease: EASE }} className="group block text-left">
+    transition={{ duration: 0.7, ease: EASE }} className={`group block text-left ${className}`}>
     <div className="relative aspect-[2/3] overflow-hidden bg-zinc-900">
       <img src={asset(f.poster)} alt={f.title} loading="lazy" className="h-full w-full object-cover grayscale transition-[transform,filter] duration-[1.2s] ease-out group-hover:scale-[1.05] group-hover:grayscale-0" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
@@ -90,7 +91,7 @@ const FilmModal = ({ f, onClose, lang, t }) => {
 // First part of the "type" field ("Long métrage · Fiction" -> "Long métrage") is the filter category.
 export const filmCategory = (lang) => (f) => (f.type?.[lang] || "").split("·")[0].trim();
 
-export const FilmGrid = ({ films, filters = false, cols = "lg:grid-cols-3" }) => {
+export const FilmGrid = ({ films, filters = false, cols = "lg:grid-cols-3", strip = null }) => {
   const { t, lang } = useLang();
   const [active, setActive] = useState(null);
   const keyOf = useCallback((f) => filmCategory(lang)(f), [lang]);
@@ -106,6 +107,11 @@ export const FilmGrid = ({ films, filters = false, cols = "lg:grid-cols-3" }) =>
         </div>
       )}
       {filters && list.length === 0 && <p className="py-16 font-body text-base text-zinc-400" data-testid="film-no-result">{t.films.noResult}</p>}
+      {strip ? (
+        <StripRow strip={strip} testId="films-strip">
+          {films.map((f, n) => <FilmCard key={`${f.title}-${n}`} f={f} n={n} lang={lang} t={t.films} onOpen={() => setActive(f)} className="w-[44vw] shrink-0 snap-start sm:w-[210px] lg:w-[230px]" />)}
+        </StripRow>
+      ) : (
       <motion.div layout className={`grid grid-cols-2 gap-x-4 gap-y-12 sm:gap-x-8 md:grid-cols-3 ${cols}`} data-testid="films-grid">
         <AnimatePresence initial={false}>
           {list.map((f) => {
@@ -114,6 +120,7 @@ export const FilmGrid = ({ films, filters = false, cols = "lg:grid-cols-3" }) =>
           })}
         </AnimatePresence>
       </motion.div>
+      )}
       <AnimatePresence>{active && <FilmModal f={active} lang={lang} t={t.films} onClose={() => setActive(null)} />}</AnimatePresence>
     </>
   );

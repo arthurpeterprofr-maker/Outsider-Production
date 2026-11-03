@@ -39,11 +39,11 @@ export default function Home() {
       <Founders />
       <Films />
       <Commercials />
-      <Press />
       <Manifesto />
       <Vision />
       <Expertise />
       <Discover />
+      <Press />
       <Contact />
       <Footer />
       <PreviewBanner />

@@ -3,8 +3,8 @@ export const content = {
     nav: [
       { id: "home", label: "Accueil" },
       { id: "about", label: "À propos" },
-      { id: "films", label: "Cinéma" },
-      { id: "commercials", label: "Publicités" },
+      { id: "films", label: "Cinéma", route: "/cinema" },
+      { id: "commercials", label: "Publicités", route: "/publicites" },
       { id: "artists", label: "Artistes résidents", route: "/artistes" },
       { id: "ai-studio", label: "AI Studio", route: "/ai-studio" },
       { id: "voice-room", label: "The Voice Room", route: "/voice-room" },
@@ -170,8 +170,8 @@ export const content = {
     nav: [
       { id: "home", label: "Home" },
       { id: "about", label: "About" },
-      { id: "films", label: "Cinema" },
-      { id: "commercials", label: "Commercials" },
+      { id: "films", label: "Cinema", route: "/cinema" },
+      { id: "commercials", label: "Commercials", route: "/publicites" },
       { id: "artists", label: "Resident Artists", route: "/artistes" },
       { id: "ai-studio", label: "AI Studio", route: "/ai-studio" },
       { id: "voice-room", label: "The Voice Room", route: "/voice-room" },

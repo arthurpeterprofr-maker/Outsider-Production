@@ -7,11 +7,12 @@ import { VideoPlayer, toPlayable } from "./VideoPlayer";
 import { lockScroll } from "../lib/smooth";
 import { Chips, useChips } from "./Chips";
 import { EASE } from "./motion";
+import { StripRow } from "./Strip";
 
-const AdCard = ({ c, n, onOpen }) => (
+const AdCard = ({ c, n, onOpen, className = "" }) => (
   <motion.button layout type="button" onClick={onOpen} data-testid={`commercial-card-${n}`}
     initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.1 }} exit={{ opacity: 0, scale: 0.96 }}
-    transition={{ duration: 0.7, ease: EASE }} className="group block text-left">
+    transition={{ duration: 0.7, ease: EASE }} className={`group block text-left ${className}`}>
     <div className="relative aspect-[16/10] overflow-hidden bg-zinc-900">
       <img src={asset(c.image)} alt={c.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-105" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
@@ -56,7 +57,7 @@ const AdModal = ({ c, onClose, t }) => {
   );
 };
 
-export const AdGrid = ({ items, filters = false, cols = "lg:grid-cols-2" }) => {
+export const AdGrid = ({ items, filters = false, cols = "lg:grid-cols-2", strip = null }) => {
   const { t } = useLang();
   const c = t.commercials;
   const [active, setActive] = useState(null);
@@ -66,6 +67,11 @@ export const AdGrid = ({ items, filters = false, cols = "lg:grid-cols-2" }) => {
   return (
     <>
       {filters && <div className="mb-12"><Chips keys={chips.keys} active={chips.active} onPick={chips.setActive} allLabel={c.all} testId="commercial-filter" /></div>}
+      {strip ? (
+        <StripRow strip={strip} testId="commercials-strip">
+          {items.map((it, n) => <AdCard key={`${it.title}-${n}`} c={it} n={n} onOpen={() => setActive(it)} className="w-[78vw] shrink-0 snap-start sm:w-[360px] lg:w-[400px]" />)}
+        </StripRow>
+      ) : (
       <motion.div layout className={`grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 ${cols}`} data-testid="commercials-grid">
         <AnimatePresence initial={false}>
           {list.map((it) => {
@@ -74,6 +80,7 @@ export const AdGrid = ({ items, filters = false, cols = "lg:grid-cols-2" }) => {
           })}
         </AnimatePresence>
       </motion.div>
+      )}
       <AnimatePresence>{active && <AdModal c={active} t={c} onClose={() => setActive(null)} />}</AnimatePresence>
     </>
   );

@@ -88,7 +88,8 @@
     <li><span>10 — Historique des versions</span><span>p. 15</span></li>
     <li><span>11 — Messages, comptes éditeurs, mot de passe</span><span>p. 16</span></li>
     <li><span>12 — Procédure : vidéos AI Studio et The Voice Room</span><span>p. 18</span></li>
-    <li><span>13 — Bonnes pratiques et questions fréquentes</span><span>p. 21</span></li>
+    <li><span>13 — Ordre de l'accueil, bande-annonce, recherche Cinéma</span><span>p. 21</span></li>
+    <li><span>14 — Bonnes pratiques et questions fréquentes</span><span>p. 23</span></li>
   </ul>
   <div class="foot mono"><span>Outsiders Production</span><span>02</span></div>
 </section>
@@ -170,7 +171,7 @@
 
 <section class="page">
   <div class="head mono"><span>04 · Les champs d'un film</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
-  <figure style="margin-top:0"><img src="shots/05_film_detail.jpg" alt="" style="max-height:72mm" /><figcaption>Fiche d'un film existant : affiche, lien, type, synopsis.</figcaption></figure>
+  <figure style="margin-top:0"><img src="shots/05_film_detail.jpg" alt="" style="max-height:62mm" /><figcaption>Fiche d'un film existant : affiche, lien, type, synopsis.</figcaption></figure>
   <table>
     <tr><th>Champ</th><th>À saisir</th></tr>
     <tr><td>Titre · Année · Réalisation</td><td>Le titre tel qu'il doit apparaître, l'année de sortie, le ou les réalisateurs.</td></tr>
@@ -179,6 +180,7 @@
     <tr><td>Type FR / EN</td><td>Ex. « Long métrage · Fiction » et « Feature · Fiction ».</td></tr>
     <tr><td>Synopsis FR / EN</td><td>2 à 4 phrases dans chaque langue.</td></tr>
     <tr><td>Festivals</td><td>Une ligne par sélection, ex. « Berlinale · Panorama ». + Ajouter pour une ligne de plus.</td></tr>
+    <tr><td>Bande-annonce</td><td>Lien YouTube, Vimeo ou .mp4, lu directement dans la fiche du film (voir p. 22).</td></tr>
   </table>
   <figure><img src="shots/22_site_films.jpg" alt="" style="max-height:58mm" /><figcaption>La page Cinéma : grille d'affiches filtrée par type (début du champ « Type »). L'accueil montre les 6 premiers films + « Voir tous les films ». Publicités : même principe, filtrées par client.</figcaption></figure>
   <div class="foot mono"><span>Outsiders Production · Mode d'emploi</span><span>07</span></div>
@@ -380,10 +382,45 @@
   <div class="foot mono"><span>Outsiders Production · Mode d'emploi</span><span>20</span></div>
 </section>
 
-<!-- 13 FAQ -->
+<!-- 13 NOUVEAUTES -->
 <section class="page">
-  <div class="head mono"><span>13 · Bonnes pratiques</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <div class="head mono"><span>13 · Ordre de l'accueil</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
   <span class="num">13</span>
+  <h1>Ordre<br /><em>de l'accueil</em></h1>
+  <p class="lead">Choisissez l'ordre des sections de la page d'accueil et masquez celles que vous ne voulez pas montrer pour le moment.</p>
+  <ol class="steps">
+    <li>Onglet <span class="kbd">Ordre de l'accueil</span>.</li>
+    <li>Glissez une ligne vers le haut ou le bas (ou utilisez les flèches ⌃ ⌄).</li>
+    <li>Cliquez sur l'<b>œil</b> pour masquer une section : elle apparaît barrée et disparaît du site, sans rien perdre de son contenu. Recliquez pour la réafficher.</li>
+    <li>Aperçu, puis Enregistrer.</li>
+  </ol>
+  <figure><img src="shots/30_home_order.jpg" alt="" /><figcaption>Ici, « Fondateurs » est masqué et « Sélections &amp; presse » est remonté avant « À découvrir ».</figcaption></figure>
+  <div class="warn">L'ouverture (titre et bandeau défilant) reste toujours en haut, et le Contact ne peut pas être masqué. Si vous masquez une section reliée au menu (ex. À propos), pensez à l'éviter dans le menu.</div>
+  <div class="foot mono"><span>Outsiders Production · Mode d'emploi</span><span>21</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>13 · Bande-annonce et recherche</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <h2 style="margin-top:0">Ajouter la bande-annonce d'un film</h2>
+  <ol class="steps">
+    <li>Onglet <span class="kbd">Cinéma</span>, ouvrez la fiche du film.</li>
+    <li>Collez le lien YouTube, Vimeo ou .mp4 dans <b>Bande-annonce</b> (en bas de la fiche), puis Enregistrer.</li>
+    <li>Sur le site, la fiche du film affiche un bloc « Bande-annonce » au-dessus du lien Netflix ; elle se lit sur place. Sans lien, le bloc n'apparaît pas.</li>
+  </ol>
+  <div class="two">
+    <figure><img src="shots/31_trailer_admin.jpg" alt="" /><figcaption>Le champ Bande-annonce dans l'admin.</figcaption></figure>
+    <figure><img src="shots/33_film_trailer.jpg" alt="" /><figcaption>La bande-annonce dans la fiche du film.</figcaption></figure>
+  </div>
+  <h2>La recherche et le tri de la page Cinéma</h2>
+  <p>Rien à régler : les visiteurs cherchent un <b>titre</b> ou un <b>réalisateur</b> (accents et majuscules ignorés) et trient par <b>Sélection</b> (votre ordre dans l'admin), <b>Plus récents</b> ou <b>Plus anciens</b> (champ Année). Les filtres par type se créent à partir du début du champ « Type » : écrivez-le toujours de la même façon (ex. « Long métrage · … »).</p>
+  <figure><img src="shots/32_cinema_search.jpg" alt="" style="max-height:62mm" /><figcaption>Recherche, tri et filtres sur la page Cinéma.</figcaption></figure>
+  <div class="foot mono"><span>Outsiders Production · Mode d'emploi</span><span>22</span></div>
+</section>
+
+<!-- 14 FAQ -->
+<section class="page">
+  <div class="head mono"><span>14 · Bonnes pratiques</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">14</span>
   <h1>Bonnes pratiques</h1>
   <table style="margin-top:8mm">
     <tr><th>Question</th><th>Réponse</th></tr>
@@ -392,10 +429,10 @@
     <tr><td>Le texte anglais n'a pas changé</td><td>Chaque langue se modifie séparément : Textes FR et Textes EN, ou les champs Français / Anglais d'une fiche.</td></tr>
     <tr><td>J'ai supprimé un film par erreur</td><td>Avant d'enregistrer : flèche « annuler ». Après : Historique → Restaurer.</td></tr>
     <tr><td>Une vidéo ne se lit pas</td><td>Vérifiez que le lien YouTube ou Vimeo est public (ou non répertorié) et que l'intégration est autorisée. Les liens Netflix s'ouvrent toujours dans un nouvel onglet.</td></tr>
-    <tr><td>L'ordre d'affichage</td><td>Celui de la liste dans l'admin : glissez avec la poignée ⋮⋮.</td></tr>
+    <tr><td>L'ordre d'affichage</td><td>Dans chaque liste : celui de l'admin (poignée ⋮⋮). Pour les sections de l'accueil : onglet « Ordre de l'accueil ».</td></tr>
   </table>
   <div class="tip" style="margin-top:10mm"><span class="mono">À retenir</span><b>Modifier → Aperçu → Enregistrer.</b> Tant que vous n'avez pas enregistré, le site public ne change pas. Et l'historique garde toujours vos 10 dernières versions.</div>
-  <div class="foot mono"><span>Outsiders Production · Mode d'emploi</span><span>21</span></div>
+  <div class="foot mono"><span>Outsiders Production · Mode d'emploi</span><span>23</span></div>
 </section>
 
 </body>

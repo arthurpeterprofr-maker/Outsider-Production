@@ -3,6 +3,8 @@ import axios from "axios";
 import { toast } from "sonner";
 import { ChevronDown, ChevronUp, GripVertical, ImageUp, Plus, Trash2 } from "lucide-react";
 import { asset } from "../../lib/i18n";
+import { useAdminLang, useAT } from "../../lib/adminI18n";
+import { LABELS_EN } from "../../lib/adminLabels";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -33,7 +35,7 @@ const LABELS = {
 const IMAGE_KEYS = ["img", "image", "poster", "hero", "about", "manifesto", "logoMark", "logoFull", "logo"];
 const LONG_KEYS = ["bio", "synopsis", "quote", "intro", "note", "blurb", "text", "paragraphs", "success"];
 
-const labelOf = (k) => (typeof k === "number" ? `#${k + 1}` : LABELS[k] || k);
+const labelOf = (k, lang = "fr") => (typeof k === "number" ? `#${k + 1}` : (lang === "en" ? LABELS_EN[k] : LABELS[k]) || LABELS[k] || k);
 
 const blank = (v) => {
   if (typeof v === "string") return "";
@@ -44,6 +46,7 @@ const blank = (v) => {
 
 const ImageField = ({ value, onChange, path }) => {
   const ref = useRef(null);
+  const a = useAT();
   const [busy, setBusy] = useState(false);
   const upload = async (e) => {
     const file = e.target.files?.[0];
@@ -54,9 +57,9 @@ const ImageField = ({ value, onChange, path }) => {
       fd.append("file", file);
       const { data } = await axios.post(`${API}/admin/media`, fd, { withCredentials: true });
       onChange(data.url);
-      toast.success("Image importée — pensez à enregistrer");
+      toast.success(a.imgUploaded);
     } catch (err) {
-      toast.error(err?.response?.data?.detail || "Échec de l'import");
+      toast.error(err?.response?.data?.detail || a.uploadFailed);
     } finally {
       setBusy(false);
       e.target.value = "";
@@ -75,12 +78,13 @@ const ImageField = ({ value, onChange, path }) => {
 };
 
 export const FieldEditor = ({ k, value, onChange, path, depth = 0 }) => {
+  const lang = useAdminLang();
   const key = typeof k === "number" ? "" : k;
   if (typeof value === "string") {
     const long = LONG_KEYS.includes(key) || value.length > 90 || LONG_KEYS.some((l) => path.includes(`${l}.`));
     return (
       <label className="block">
-        <span className="op-label !text-[10px] !tracking-[0.2em]">{labelOf(k)}</span>
+        <span className="op-label !text-[10px] !tracking-[0.2em]">{labelOf(k, lang)}</span>
         <div className="mt-2">
           {IMAGE_KEYS.includes(key) || /\.photos\.\d+$/.test(path) ? <ImageField value={value} onChange={onChange} path={path} />
             : long ? <textarea rows={3} className="op-admin-input" value={value} onChange={(e) => onChange(e.target.value)} data-testid={`cms-${path}`} />
@@ -100,11 +104,11 @@ export const FieldEditor = ({ k, value, onChange, path, depth = 0 }) => {
     );
     if (depth === 0) return body;
     const raw = value.title || value.name || value.label;
-    const name = typeof raw === "object" ? raw?.fr || raw?.en : raw;
+    const name = typeof raw === "object" ? raw?.[lang] || raw?.fr || raw?.en : raw;
     return (
       <details className="group border border-white/10 bg-white/[0.02]" open={depth > 1}>
         <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 font-display text-lg text-white">
-          {labelOf(k)}{typeof k === "number" && name ? ` — ${name}` : ""}<ChevronDown className="h-4 w-4 text-zinc-400 transition-transform group-open:rotate-180" />
+          {labelOf(k, lang)}{typeof k === "number" && name ? ` — ${name}` : ""}<ChevronDown className="h-4 w-4 text-zinc-400 transition-transform group-open:rotate-180" />
         </summary>
         <div className="border-t border-white/10 p-4">{body}</div>
       </details>
@@ -127,12 +131,14 @@ const ArrayEditor = ({ k, value, onChange, path, depth }) => {
     onChange(next);
   };
   const canReorder = value.length > 1;
+  const lang = useAdminLang();
+  const a = useAT();
   return (
     <div className={depth > 0 ? "border border-white/10 p-4" : ""}>
       <div className="mb-4 flex items-center justify-between">
-        <span className="font-display text-lg text-white">{labelOf(k)}</span>
+        <span className="font-display text-lg text-white">{labelOf(k, lang)}</span>
         <button type="button" onClick={() => onChange([...value, template])} className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-300 hover:text-white" data-testid={`cms-add-${path}`}>
-          <Plus className="h-3.5 w-3.5" />Ajouter
+          <Plus className="h-3.5 w-3.5" />{a.add}
         </button>
       </div>
       <div className="space-y-4">
@@ -150,7 +156,7 @@ const ArrayEditor = ({ k, value, onChange, path, depth }) => {
             {canReorder && (
               <div className="mt-5 flex flex-col items-center text-zinc-500">
                 <button type="button" onClick={() => move(i, i - 1)} disabled={i === 0} className="hover:text-white disabled:opacity-20" aria-label="monter" data-testid={`cms-up-${path}.${i}`}><ChevronUp className="h-3.5 w-3.5" /></button>
-                <span onMouseDown={() => setArmed(i)} onMouseUp={() => setArmed(null)} onTouchStart={() => setArmed(i)} className="cursor-grab py-1 hover:text-white active:cursor-grabbing" title="Glisser pour réordonner" data-testid={`cms-drag-${path}.${i}`}><GripVertical className="h-4 w-4" /></span>
+                <span onMouseDown={() => setArmed(i)} onMouseUp={() => setArmed(null)} onTouchStart={() => setArmed(i)} className="cursor-grab py-1 hover:text-white active:cursor-grabbing" title={a.dragHint} data-testid={`cms-drag-${path}.${i}`}><GripVertical className="h-4 w-4" /></span>
                 <button type="button" onClick={() => move(i, i + 1)} disabled={i === value.length - 1} className="hover:text-white disabled:opacity-20" aria-label="descendre" data-testid={`cms-down-${path}.${i}`}><ChevronDown className="h-3.5 w-3.5" /></button>
               </div>
             )}

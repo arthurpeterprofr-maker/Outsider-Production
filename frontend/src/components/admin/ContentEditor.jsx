@@ -8,6 +8,8 @@ import { Versions } from "./Versions";
 import { PREVIEW_KEY } from "../../lib/preview";
 import { FieldEditor } from "./FieldEditor";
 import { HomeOrderEditor } from "./HomeOrderEditor";
+import { useAdminLang, useAT } from "../../lib/adminI18n";
+import { TABS_EN } from "../../lib/adminLabels";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -34,6 +36,8 @@ export const ContentEditor = () => {
   const [busy, setBusy] = useState(false);
   const [showVersions, setShowVersions] = useState(false);
   const [versionsKey, setVersionsKey] = useState(0);
+  const lang = useAdminLang();
+  const a = useAT();
   const dirty = draft !== site;
 
   useEffect(() => { setDraft(site); }, [site]);
@@ -53,9 +57,9 @@ export const ContentEditor = () => {
       await axios.put(`${API}/admin/content`, { content: draft }, { withCredentials: true });
       setSite(draft);
       setVersionsKey((k) => k + 1);
-      toast.success("Contenu enregistré — le site est à jour");
+      toast.success(a.saved);
     } catch (e) {
-      toast.error(e?.response?.data?.detail || "Échec de l'enregistrement");
+      toast.error(e?.response?.data?.detail || a.saveFailed);
     } finally {
       setBusy(false);
     }
@@ -68,18 +72,18 @@ export const ContentEditor = () => {
           {SECTIONS.map((s) => (
             <button key={s.key} onClick={() => setTab(s.key)} data-testid={`cms-tab-${s.key}`}
               className={`shrink-0 whitespace-nowrap rounded-full px-4 py-2 font-mono text-[11px] uppercase tracking-[0.2em] transition-colors ${tab === s.key ? "bg-white text-black" : "border border-white/15 text-zinc-300 hover:text-white"}`}>
-              {s.label}
+              {lang === "en" ? TABS_EN[s.key] || s.label : s.label}
             </button>
           ))}
         </div>
         <div className="flex flex-wrap items-center gap-3">
           {dirty && <button onClick={() => setDraft(site)} className="op-icon-btn" aria-label="annuler" data-testid="cms-reset-btn"><RotateCcw className="h-4 w-4" /></button>}
           <button onClick={() => setShowVersions((s) => !s)} className="op-icon-btn" aria-label="historique" data-testid="cms-history-btn"><History className="h-4 w-4" /></button>
-          <button onClick={openPreview} className="op-btn !py-3" data-testid="cms-preview-btn"><Eye className="h-4 w-4" /><span>Aperçu</span></button>
-          <button onClick={save} disabled={busy || !dirty} className="op-btn !py-3" data-testid="cms-save-btn"><Save className="h-4 w-4" /><span>{busy ? "…" : "Enregistrer"}</span></button>
+          <button onClick={openPreview} className="op-btn !py-3" data-testid="cms-preview-btn"><Eye className="h-4 w-4" /><span>{a.preview}</span></button>
+          <button onClick={save} disabled={busy || !dirty} className="op-btn !py-3" data-testid="cms-save-btn"><Save className="h-4 w-4" /><span>{busy ? "…" : a.save}</span></button>
         </div>
       </div>
-      <p className="mt-6 font-body text-sm text-zinc-400">Les modifications ne sont visibles par le public qu'après « Enregistrer ». Le bouton « Aperçu » ouvre le site avec vos changements non publiés (mis à jour en direct). Pour les images, importez un fichier (max 6 Mo) ou collez un lien.</p>
+      <p className="mt-6 font-body text-sm text-zinc-400">{a.editorHelp}</p>
       {showVersions && (
         <Versions
           key={versionsKey}

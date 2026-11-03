@@ -8,18 +8,20 @@ import { ContentEditor } from "../components/admin/ContentEditor";
 import { Accounts } from "../components/admin/Accounts";
 import { PasswordForm } from "../components/admin/PasswordForm";
 import { ForgotForm } from "./ResetPassword";
+import { useAT, useAdminLang, AdminLangToggle } from "../lib/adminI18n";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 const http = axios.create({ baseURL: API, withCredentials: true });
 
-const errText = (e) => {
+const errText = (e, fallback) => {
   const d = e?.response?.data?.detail;
   if (typeof d === "string") return d;
   if (Array.isArray(d)) return d.map((x) => x?.msg).filter(Boolean).join(" ");
-  return "Erreur / Error";
+  return fallback;
 };
 
 const Login = ({ onDone }) => {
+  const a = useAT();
   const [forgot, setForgot] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,7 +35,7 @@ const Login = ({ onDone }) => {
       const { data } = await http.post("/auth/login", { email, password });
       onDone(data);
     } catch (err) {
-      setError(errText(err));
+      setError(errText(err, a.error));
     } finally {
       setBusy(false);
     }
@@ -44,18 +46,19 @@ const Login = ({ onDone }) => {
       <h1 className="font-display text-5xl text-white">Admin</h1>
       <label className="op-field"><span className="op-label !text-[10px] !text-zinc-400">Email</span>
         <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required data-testid="admin-email-input" /></label>
-      <label className="op-field"><span className="op-label !text-[10px] !text-zinc-400">Mot de passe / Password</span>
+      <label className="op-field"><span className="op-label !text-[10px] !text-zinc-400">{a.password}</span>
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required data-testid="admin-password-input" /></label>
       {error && <p className="font-body text-sm text-red-400" data-testid="admin-login-error">{error}</p>}
-      <button type="submit" disabled={busy} className="op-btn" data-testid="admin-login-submit">{busy ? "…" : "Connexion / Sign in"}</button>
-      <button type="button" onClick={() => setForgot(true)} className="op-underline block font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-400" data-testid="admin-forgot-link">Mot de passe oublié ?</button>
+      <button type="submit" disabled={busy} className="op-btn" data-testid="admin-login-submit">{busy ? "…" : a.signIn}</button>
+      <button type="button" onClick={() => setForgot(true)} className="op-underline block font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-400" data-testid="admin-forgot-link">{a.forgot}</button>
     </form>
   );
 };
 
-const statusLabel = { sent: "email envoyé", failed: "email échoué", skipped: "email non configuré", pending: "email en cours" };
-
-const MessageRow = ({ m, onToggle, onDelete }) => (
+const MessageRow = ({ m, onToggle, onDelete }) => {
+  const a = useAT();
+  const lang = useAdminLang();
+  return (
   <article className={`border-t border-white/10 py-6 ${m.read ? "opacity-60" : ""}`} data-testid={`admin-message-${m.id}`}>
     <div className="flex flex-wrap items-start justify-between gap-4">
       <div>
@@ -65,7 +68,7 @@ const MessageRow = ({ m, onToggle, onDelete }) => (
         </p>
       </div>
       <div className="flex items-center gap-2">
-        <span className="font-mono text-xs text-zinc-400">{new Date(m.created_at).toLocaleString()} · {statusLabel[m.email_status] || m.email_status}</span>
+        <span className="font-mono text-xs text-zinc-400">{new Date(m.created_at).toLocaleString(lang === "en" ? "en-GB" : "fr-FR")} · {a.emailStatus[m.email_status] || m.email_status}</span>
         <button onClick={() => onToggle(m)} className="op-icon-btn" aria-label="toggle read" data-testid={`admin-toggle-read-${m.id}`}>
           {m.read ? <Mail className="h-4 w-4" /> : <MailOpen className="h-4 w-4" />}
         </button>
@@ -76,13 +79,16 @@ const MessageRow = ({ m, onToggle, onDelete }) => (
     </div>
     <p className="mt-4 whitespace-pre-line font-body text-sm leading-relaxed text-zinc-200">{m.message}</p>
   </article>
-);
+  );
+};
 
 export default function Admin() {
   const [user, setUser] = useState(null);
   const [messages, setMessages] = useState([]);
   const [view, setView] = useState(null);
   const isAdmin = user?.role === "admin";
+  const a = useAT();
+  const lang = useAdminLang();
   const load = useCallback(async () => {
     try {
       const { data } = await http.get("/admin/messages");
@@ -107,10 +113,10 @@ export default function Admin() {
     setMessages((list) => list.map((x) => (x.id === m.id ? data : x)));
   };
   const remove = async (m) => {
-    if (!window.confirm("Supprimer ce message ? / Delete this message?")) return;
+    if (!window.confirm(a.confirmDeleteMsg)) return;
     await http.delete(`/admin/messages/${m.id}`);
     setMessages((list) => list.filter((x) => x.id !== m.id));
-    toast.success("Message supprimé");
+    toast.success(a.msgDeleted);
   };
   const logout = async () => {
     await http.post("/auth/logout");
@@ -121,8 +127,8 @@ export default function Admin() {
 
   const unread = messages.filter((m) => !m.read).length;
   const tabs = isAdmin
-    ? [["messages", `Messages (${unread})`], ["content", "Contenu du site"], ["accounts", "Comptes éditeurs"], ["password", "Mot de passe"]]
-    : [["content", "Contenu du site"], ["password", "Mot de passe"]];
+    ? [["messages", `${a.tabMessages} (${unread})`], ["content", a.tabContent], ["accounts", a.tabAccounts], ["password", a.tabPassword]]
+    : [["content", a.tabContent], ["password", a.tabPassword]];
 
   return (
     <main className="min-h-screen bg-[#050505] px-5 py-8 text-white sm:px-10" data-testid="admin-page">
@@ -130,7 +136,10 @@ export default function Admin() {
         <Link to="/" className="flex items-center gap-3 text-zinc-300 hover:text-white" data-testid="admin-back-link">
           <ArrowLeft className="h-4 w-4" /><LogoMark className="h-5" /><span className="op-label !text-white">Outsiders</span>
         </Link>
-        {user && <button onClick={logout} className="op-icon-btn" aria-label="logout" data-testid="admin-logout-btn"><LogOut className="h-4 w-4" /></button>}
+        <div className="flex items-center gap-4">
+          <AdminLangToggle />
+          {user && <button onClick={logout} className="op-icon-btn" aria-label="logout" data-testid="admin-logout-btn"><LogOut className="h-4 w-4" /></button>}
+        </div>
       </header>
       {user === null && <p className="mt-24 text-center font-mono text-xs text-zinc-400">…</p>}
       {user === false && <Login onDone={setUser} />}
@@ -141,9 +150,8 @@ export default function Admin() {
               className={`rounded-full px-5 py-2 font-mono text-[11px] uppercase tracking-[0.2em] ${view === k ? "bg-white text-black" : "border border-white/15 text-zinc-300 hover:text-white"}`}>{l}</button>
           ))}
           <div className="ml-auto flex flex-wrap items-center gap-5">
-            <a href="/guide-admin-outsiders.pdf" target="_blank" rel="noreferrer" className="op-underline font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-300 hover:text-white" data-testid="admin-guide-link">Mode d'emploi (PDF)</a>
-            <a href="/admin-guide-outsiders-en.pdf" target="_blank" rel="noreferrer" className="op-underline font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-300 hover:text-white" data-testid="admin-guide-en-link">Guide (EN)</a>
-            <span className="font-mono text-[11px] text-zinc-400" data-testid="admin-current-user">{user.email} · {isAdmin ? "admin" : "éditeur"}</span>
+            <a href={lang === "en" ? "/admin-guide-outsiders-en.pdf" : "/guide-admin-outsiders.pdf"} target="_blank" rel="noreferrer" className="op-underline font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-300 hover:text-white" data-testid="admin-guide-link">{a.guide}</a>
+            <span className="font-mono text-[11px] text-zinc-400" data-testid="admin-current-user">{user.email} · {isAdmin ? a.roleAdmin : a.roleEditor}</span>
           </div>
         </nav>
       )}
@@ -154,10 +162,10 @@ export default function Admin() {
         <section className="mx-auto mt-16 max-w-5xl">
           <div className="flex items-end justify-between">
             <h1 className="font-display text-5xl sm:text-6xl">Messages</h1>
-            <p className="font-mono text-xs text-zinc-400" data-testid="admin-unread-count">{unread} non lu(s) · {messages.length} total</p>
+            <p className="font-mono text-xs text-zinc-400" data-testid="admin-unread-count">{a.unread(unread, messages.length)}</p>
           </div>
           <div className="mt-10" data-testid="admin-messages-list">
-            {messages.length === 0 && <p className="border-t border-white/10 py-10 font-body text-zinc-400">Aucun message pour le moment.</p>}
+            {messages.length === 0 && <p className="border-t border-white/10 py-10 font-body text-zinc-400">{a.noMessages}</p>}
             {messages.map((m) => <MessageRow key={m.id} m={m} onToggle={toggle} onDelete={remove} />)}
           </div>
         </section>

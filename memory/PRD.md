@@ -99,6 +99,9 @@ User choices: bilingue FR/EN avec bouton de langue; formulaire = enregistrement 
 ## Implemented (2026-11-03, itération 20)
 - Guide anglais : /app/docs/guide/guide_en.html (+ guide.css) → frontend/public/admin-guide-outsiders-en.pdf (23 pages, mêmes captures, libellés admin FR + traduction EN). Lien « Guide (EN) » dans l'en-tête admin.
 
+## Implemented (2026-11-03, itération 21)
+- Admin bilingue FR/EN : sélecteur FR/EN dans l'en-tête (connexion, admin, page /admin/reset), mémorisé par navigateur (localStorage op-admin-lang), indépendant de la langue du site. Textes dans lib/adminI18n.js, libellés des champs/onglets/sections en anglais dans lib/adminLabels.js. Le lien du guide ouvre le PDF de la langue choisie.
+
 
 ## Backlog
 - P0 : renseigner l'email de réception réel (CONTACT_NOTIFY_EMAIL), remplacer contenus/photos par ceux du client.

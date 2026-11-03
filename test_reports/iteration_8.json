@@ -1,0 +1,24 @@
+{
+  "summary": "Verified admin FR/EN language toggle (frontend only). Login screen EN labels (Password, Sign in, Forgot password?), forgot form (Forgot password, Send the link, Back to sign in), wrong password shows 'Invalid email or password'. Logged in with admin@outsidersproduction.ma, tabs render in EN (Messages, Site content, Editor accounts, Password), guide link text 'User guide (PDF)' with href /admin-guide-outsiders-en.pdf, role 'admin'. Site content: all 13 content sub-tabs render in EN; Preview/Save buttons present; Home page order sections in EN (About, Founders, Cinema, Commercials, DNA (manifesto), Vision, Expertise, ...); History panel (cms-history-btn) EN: 'History (last 10 versions)', 'live', 'Restore'. Editor accounts EN: 'Accounts', intro, placeholders 'Name' + 'Password (8 characters min.)', 'Create editor access'. Password tab EN: Current/New/Confirm/Change password labels; mismatch triggers 'The two passwords do not match.' (not actually submitted). Switching back to FR is instant without reload; FR choice persists after reload. Reset page is at /admin/reset?token= (not /reset-password); toggle present and translates New password/Confirm/Save. Public site unaffected (op-admin-lang separate from op-lang). Mobile 390 header fits (bodyW=390, no horizontal overflow). No content changes were saved.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [
+    "Doc nit: review request mentions /reset-password?token=x but actual route is /admin/reset?token=x — update briefing or add an alias route if the external email uses /reset-password."
+  ],
+  "critical_code_review_comments": [
+    "adminI18n.js centralises strings cleanly; useSyncExternalStore implementation is correct and triggers re-renders across components.",
+    "AdminLangToggle has data-testid for toggle and both buttons.",
+    "ResetPassword route path (/admin/reset) differs from the briefing-stated /reset-password; verify email templates match the actual route."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "n/a", "frontend": "100%"},
+  "seed_data_creation": "none",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Admin lang key: localStorage 'op-admin-lang' (fr|en). Public key is 'op-lang'. Reset-password route is /admin/reset?token=... Cinema/film field labels only render after expanding a film row (list collapsed by default) — case-insensitive innerText match needed since labels use CSS uppercase."
+}

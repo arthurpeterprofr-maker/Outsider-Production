@@ -142,6 +142,7 @@ export default function Admin() {
           ))}
           <div className="ml-auto flex flex-wrap items-center gap-5">
             <a href="/guide-admin-outsiders.pdf" target="_blank" rel="noreferrer" className="op-underline font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-300 hover:text-white" data-testid="admin-guide-link">Mode d'emploi (PDF)</a>
+            <a href="/admin-guide-outsiders-en.pdf" target="_blank" rel="noreferrer" className="op-underline font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-300 hover:text-white" data-testid="admin-guide-en-link">Guide (EN)</a>
             <span className="font-mono text-[11px] text-zinc-400" data-testid="admin-current-user">{user.email} · {isAdmin ? "admin" : "éditeur"}</span>
           </div>
         </nav>

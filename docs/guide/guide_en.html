@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Outsiders Production — Admin user guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link href="guide.css" rel="stylesheet" />
+</head>
+<body>
+
+<section class="page dark cover">
+  <div class="bg"></div><div class="veil"></div>
+  <div class="mono" style="color:#9a9a9a">Internal guide · Admin area</div>
+  <div>
+    <img class="logo" src="../../frontend/public/logo-full.png" alt="Outsiders Production" />
+    <h1 style="margin-top:16mm">Admin<br /><em>user guide</em></h1>
+    <p class="lead" style="color:#bdbdbd">Edit texts, add a film, publish a festival selection, present an artist: everything is done from your browser, with no developer and no redeployment.</p>
+  </div>
+  <div style="display:flex;justify-content:space-between" class="mono"><span style="color:#9a9a9a">your-site/admin</span><span style="color:#9a9a9a">November 2026 edition</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>Contents</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <h1>What you can<br /><em>do on your own</em></h1>
+  <div class="tip"><span class="mono">Good to know</span>The admin interface is in French. In this guide, buttons and tabs are written <b>exactly as they appear on screen</b>, followed by their English meaning, e.g. <span class="kbd">Enregistrer</span> <span class="fr">(Save)</span>.</div>
+  <ul class="toc tight">
+    <li><span>01 — Signing in, roles and security</span><span>p. 3</span></li>
+    <li><span>02 — The content editor at a glance</span><span>p. 4</span></li>
+    <li><span>03 — The golden rule: edit, preview, publish</span><span>p. 5</span></li>
+    <li><span>04 — How to add a new film</span><span>p. 6</span></li>
+    <li><span>05 — How to update press and festivals</span><span>p. 8</span></li>
+    <li><span>06 — Commercials</span><span>p. 10</span></li>
+    <li><span>07 — Resident artists</span><span>p. 11</span></li>
+    <li><span>08 — Founders, logos and site images</span><span>p. 13</span></li>
+    <li><span>09 — Contact details and site texts</span><span>p. 14</span></li>
+    <li><span>10 — Version history</span><span>p. 15</span></li>
+    <li><span>11 — Messages, editor accounts, password</span><span>p. 16</span></li>
+    <li><span>12 — How to manage AI Studio and Voice Room videos</span><span>p. 18</span></li>
+    <li><span>13 — Home page order, trailers, Cinema search</span><span>p. 21</span></li>
+    <li><span>14 — Best practices and FAQ</span><span>p. 23</span></li>
+  </ul>
+  <div class="foot mono"><span>Outsiders Production</span><span>02</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>01 · Signing in</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">01</span>
+  <h1>Signing in</h1>
+  <p class="lead">The admin area is your site address followed by <b>/admin</b>, for example <b>www.outsidersproduction.ma/admin</b>.</p>
+  <figure><img src="shots/01_login.jpg" alt="" /><figcaption>Sign-in screen: email, password, then « Connexion » (Sign in).</figcaption></figure>
+  <div class="roles">
+    <div><span class="mono">Role</span><b>Administrator</b>Reads contact form messages, edits all content, creates or removes editor accounts, changes their own password.</div>
+    <div><span class="mono">Role</span><b>Editor</b>Edits the site content and their own password. Cannot see messages or manage accounts.</div>
+  </div>
+  <div class="tip"><span class="mono">Forgotten password</span>Click <b>« Mot de passe oublié ? »</b> (Forgot password?) under the form: a reset link is sent by email. After several failed attempts, sign-in is blocked for a few minutes for security.</div>
+  <div class="foot mono"><span>Outsiders Production · Admin guide</span><span>03</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>02 · The editor</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">02</span>
+  <h1>The editor<br /><em>at a glance</em></h1>
+  <p class="lead">Tab <span class="kbd">Contenu du site</span> <span class="fr">(Site content)</span>: each part of the site has its own tab. Texts exist in French and English.</p>
+  <figure><img src="shots/03_contenu.jpg" alt="" /><figcaption>Content tabs, the action bar and the fields to fill in.</figcaption></figure>
+  <table>
+    <tr><th>Tab</th><th>What it contains</th></tr>
+    <tr><td>Textes FR / EN</td><td>All site texts in French / English: menu, home, about, founders (role, bio), press, contact, footer.</td></tr>
+    <tr><td>Cinéma · Publicités</td><td>Films and commercials, with poster, details and video link.</td></tr>
+    <tr><td>Artistes · Filtres</td><td>The "Resident artists" page and its filter categories.</td></tr>
+    <tr><td>AI Studio · Voice Room — vidéos</td><td>Opening videos, projects, capsules and partners of both pages.</td></tr>
+    <tr><td>Fondateurs · Lauriers</td><td>Founders' names and photos (Founders), festival laurels (Laurels).</td></tr>
+    <tr><td>Coordonnées · Images</td><td>Email, phone, social links (Contact details); logos and large site images.</td></tr>
+  </table>
+  <div class="foot mono"><span>Outsiders Production · Admin guide</span><span>04</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>03 · Publishing</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">03</span>
+  <h1>The golden rule</h1>
+  <p class="lead">Nothing is visible to the public until you click <b>« Enregistrer »</b> (Save). You can experiment safely.</p>
+  <div class="flow">
+    <div><span class="mono">Step 1</span><b>Edit</b>Change the fields in the tab you need.</div>
+    <div><span class="mono">Step 2</span><b>Aperçu</b>(Preview) opens the site with your unpublished changes, updated live.</div>
+    <div><span class="mono">Step 3</span><b>Enregistrer</b>(Save) publishes immediately and creates a version in the history.</div>
+  </div>
+  <figure><img src="shots/07_save_bar.jpg" alt="" /><figcaption>Action bar: undo (arrow), history (clock), Aperçu (Preview), Enregistrer (Save).</figcaption></figure>
+  <h2>Gestures common to every list</h2>
+  <table>
+    <tr><th>Gesture</th><th>Effect</th></tr>
+    <tr><td>+ Ajouter (Add)</td><td>Creates a new empty item at the bottom of the list.</td></tr>
+    <tr><td>Handle ⋮⋮ (drag)</td><td>Drag and drop to change the order. The up/down arrows do the same, one step at a time.</td></tr>
+    <tr><td>Bin</td><td>Deletes the item. Before saving, the undo arrow brings it back; after saving, restore a version.</td></tr>
+    <tr><td>Image button</td><td>Uploads an image from your computer (6 MB max). You can also paste a link.</td></tr>
+    <tr><td>Undo arrow</td><td>Discards all unsaved changes.</td></tr>
+  </table>
+  <div class="foot mono"><span>Outsiders Production · Admin guide</span><span>05</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>04 · How to</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">04</span>
+  <h1>Add<br /><em>a new film</em></h1>
+  <ol class="steps">
+    <li>Sign in, open <span class="kbd">Contenu du site</span> then the <span class="kbd">Cinéma</span> tab.</li>
+    <li>Click <b>+ Ajouter</b> (Add) at the top right of the list: an empty sheet appears at the bottom.</li>
+    <li>Open the sheet by clicking its title, then fill in the fields (see the table on the next page).</li>
+    <li>For the poster, click the image button next to the <b>Affiche</b> (Poster) field and choose the file.</li>
+    <li>Move the film to the right position with the ⋮⋮ handle: the first in the list is the first displayed.</li>
+    <li>Click <b>Aperçu</b> (Preview) to check, then <b>Enregistrer</b> (Save).</li>
+  </ol>
+  <figure><img src="shots/06_film_new.jpg" alt="" /><figcaption>A new film sheet being filled in.</figcaption></figure>
+  <div class="foot mono"><span>Outsiders Production · Admin guide</span><span>06</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>04 · Film fields</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <figure style="margin-top:0"><img src="shots/05_film_detail.jpg" alt="" style="max-height:62mm" /><figcaption>An existing film sheet: poster, link, type, synopsis.</figcaption></figure>
+  <table>
+    <tr><th>Field</th><th>What to enter</th></tr>
+    <tr><td>Titre · Année · Réalisation</td><td>Title as it should appear, release year, director(s).</td></tr>
+    <tr><td>Affiche (Poster)</td><td>Portrait image, ideally 1200 × 1800 px (2:3), JPG.</td></tr>
+    <tr><td>Lien Netflix</td><td>Link to the film (Netflix, YouTube, Vimeo…). Opens in a new tab. Left empty, the site shows "Coming soon".</td></tr>
+    <tr><td>Type FR / EN</td><td>E.g. « Long métrage · Fiction » and « Feature · Fiction ».</td></tr>
+    <tr><td>Synopsis FR / EN</td><td>2 to 4 sentences in each language.</td></tr>
+    <tr><td>Festivals</td><td>One line per selection, e.g. « Berlinale · Panorama ». + Ajouter for another line.</td></tr>
+    <tr><td>Bande-annonce (Trailer)</td><td>YouTube, Vimeo or .mp4 link, played directly in the film sheet (see p. 22).</td></tr>
+  </table>
+  <figure><img src="shots/22_site_films.jpg" alt="" style="max-height:58mm" /><figcaption>The Cinema page: poster grid filtered by type (start of the "Type" field). The home page shows the first 6 films + "See all films". Commercials: same principle, filtered by client.</figcaption></figure>
+  <div class="foot mono"><span>Outsiders Production · Admin guide</span><span>07</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>05 · How to</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">05</span>
+  <h1>Update<br /><em>press &amp; festivals</em></h1>
+  <p class="lead">Studio news (press quotes, festival selections) lives in the "Selections &amp; press" section of the site.</p>
+  <h2>Add a press quote</h2>
+  <ol class="steps">
+    <li>Tab <span class="kbd">Textes FR</span>, open the <b>Sélections &amp; presse</b> block.</li>
+    <li>Under <b>Citations</b> (Quotes), click <b>+ Ajouter</b>, enter the <b>Texte</b> (quote) and the <b>Source</b> (media name).</li>
+    <li>Do the same in <span class="kbd">Textes EN</span> for the English version.</li>
+    <li>You can also change the title, the intro sentence and the line under the laurels.</li>
+    <li>Preview, then Save.</li>
+  </ol>
+  <figure><img src="shots/15b_presse_quotes.jpg" alt="" /><figcaption>The "Sélections &amp; presse" block and its quotes.</figcaption></figure>
+  <div class="foot mono"><span>Outsiders Production · Admin guide</span><span>08</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>05 · Laurels</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <h2 style="margin-top:0">Add a festival selection</h2>
+  <ol class="steps">
+    <li>Tab <span class="kbd">Lauriers</span> (Laurels), click <b>+ Ajouter</b>.</li>
+    <li><b>Nom</b> (Name): the festival (e.g. "Venice"). <b>Détail</b>: the section (e.g. "Orizzonti").</li>
+    <li>Drag the laurel to the right place, then Save.</li>
+  </ol>
+  <figure><img src="shots/11_lauriers.jpg" alt="" /><figcaption>The laurels list, reorderable by drag and drop.</figcaption></figure>
+  <div class="tip"><span class="mono">Tip</span>Also add the selection to the film sheet (<b>Festivals</b> field, Cinéma tab) so it appears with the film.</div>
+  <div class="foot mono"><span>Outsiders Production · Admin guide</span><span>09</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>06 · Commercials</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">06</span>
+  <h1>Commercials</h1>
+  <p class="lead">Same principle as films: tab <span class="kbd">Publicités</span>, + Ajouter, fill in the sheet, Save.</p>
+  <figure><img src="shots/08_pubs.jpg" alt="" /><figcaption>A campaign: title, client, year, image, video link.</figcaption></figure>
+  <table>
+    <tr><th>Field</th><th>What to enter</th></tr>
+    <tr><td>Titre · Client · Année</td><td>Campaign name, brand, year.</td></tr>
+    <tr><td>Image</td><td>Landscape image, ideally 1920 × 1080 px.</td></tr>
+    <tr><td>Lien (Link)</td><td>Video link. YouTube / Vimeo play directly on the site; empty: "Coming soon".</td></tr>
+  </table>
+  <div class="foot mono"><span>Outsiders Production · Admin guide</span><span>10</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>07 · Resident artists</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">07</span>
+  <h1>Resident<br /><em>artists</em></h1>
+  <ol class="steps">
+    <li>Tab <span class="kbd">Artistes</span>, + Ajouter, open the sheet.</li>
+    <li><b>Nom</b> (Name), then <b>Identifiant d'URL</b> (URL id): lowercase, no spaces or accents (e.g. "sara-benali"). It becomes the address of their page.</li>
+    <li><b>Catégories</b>: one line per filter, using exactly the <b>keys</b> from the Filtres artistes tab (e.g. "directors", "morocco").</li>
+    <li><b>Biographie</b> in French and English.</li>
+    <li><b>Film</b>: a cover image and a video link (YouTube, Vimeo or .mp4), played full screen on the site.</li>
+    <li><b>Photos</b>: + Ajouter for each gallery image, drag to reorder.</li>
+  </ol>
+  <figure><img src="shots/09_artistes.jpg" alt="" /><figcaption>An artist sheet, order adjustable by drag and drop.</figcaption></figure>
+  <div class="foot mono"><span>Outsiders Production · Admin guide</span><span>11</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>07 · Film, photos and filters</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <figure style="margin-top:0"><img src="shots/10_artiste_photos.jpg" alt="" /><figcaption>The film (image + video link) and the photo gallery.</figcaption></figure>
+  <div class="two">
+    <figure><img src="shots/10b_filtres.jpg" alt="" /><figcaption>Filtres artistes tab: the <b>key</b> is used in the sheets, the FR/EN labels are displayed.</figcaption></figure>
+    <figure><img src="shots/20_site_artiste_detail.jpg" alt="" /><figcaption>An artist page on the site.</figcaption></figure>
+  </div>
+  <div class="warn">Do not change the <b>key</b> of a filter already in use: artists using it would disappear from that filter. Create a new filter instead.</div>
+  <div class="foot mono"><span>Outsiders Production · Admin guide</span><span>12</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>08 · Visuals</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">08</span>
+  <h1>Founders,<br /><em>logos and images</em></h1>
+  <div class="two">
+    <figure><img src="shots/12_fondateurs.jpg" alt="" /><figcaption>Fondateurs tab: name and photo (portrait).</figcaption></figure>
+    <figure><img src="shots/13_images.jpg" alt="" /><figcaption>Images du site tab: logos, home, about and manifesto images.</figcaption></figure>
+  </div>
+  <table>
+    <tr><th>Visual</th><th>Recommendation</th></tr>
+    <tr><td>Founder photo</td><td>Portrait (3:4), at least 900 × 1200 px. Role and bio: Textes FR / EN tab, Fondateurs block.</td></tr>
+    <tr><td>Small logo</td><td>PNG, <b>white on transparent background</b>. Shown in the menu and admin.</td></tr>
+    <tr><td>Full logo</td><td>White PNG on transparent background, well-separated letters. It is split automatically letter by letter for the opening animation, and shown in the footer.</td></tr>
+    <tr><td>Home · About · Manifesto</td><td>Large landscape images, at least 2400 px wide, JPG.</td></tr>
+  </table>
+  <figure style="width:95mm"><img src="shots/21_intro_crop.jpg" alt="" /><figcaption>The opening animation: the logo appears letter by letter.</figcaption></figure>
+  <div class="foot mono"><span>Outsiders Production · Admin guide</span><span>13</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>09 · Contact details and texts</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">09</span>
+  <h1>Contact details<br /><em>and texts</em></h1>
+  <figure><img src="shots/14_contact.jpg" alt="" /><figcaption>Coordonnées tab: email, phone, Instagram and LinkedIn links.</figcaption></figure>
+  <figure><img src="shots/15_presse.jpg" alt="" style="max-height:72mm" /><figcaption>Textes FR tab: each block matches a section of the site.</figcaption></figure>
+  <div class="warn">The « Ancre » (Anchor) and « Page » fields are greyed out: they link the menu to the sections and must not be changed.</div>
+  <div class="foot mono"><span>Outsiders Production · Admin guide</span><span>14</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>10 · History</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">10</span>
+  <h1>Version<br /><em>history</em></h1>
+  <p class="lead">Every Save creates a version. The <b>last 10</b> are kept: if something goes wrong, go back in one click.</p>
+  <ol class="steps">
+    <li>Click the clock icon in the action bar.</li>
+    <li>Find the version by its date, time and author.</li>
+    <li>Click <b>Restaurer</b> (Restore) and confirm: that version is published immediately.</li>
+  </ol>
+  <figure><img src="shots/16_versions.jpg" alt="" /><figcaption>The history panel.</figcaption></figure>
+  <div class="foot mono"><span>Outsiders Production · Admin guide</span><span>15</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>11 · Administration</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">11</span>
+  <h1>Messages</h1>
+  <p class="lead">Administrator only. Every contact form message arrives here and is also sent by email.</p>
+  <figure><img src="shots/02_messages.jpg" alt="" /><figcaption>Messages tab: unread count, mark as read, delete.</figcaption></figure>
+  <div class="foot mono"><span>Outsiders Production · Admin guide</span><span>16</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>11 · Accounts and password</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <h2 style="margin-top:0">Create an editor account</h2>
+  <ol class="steps">
+    <li>Tab <span class="kbd">Comptes éditeurs</span> (Editor accounts): enter the name, email and a temporary password.</li>
+    <li>Send these details to the person: they can change their password in the <b>Mot de passe</b> (Password) tab.</li>
+    <li>To remove access, click the bin next to the account.</li>
+  </ol>
+  <figure><img src="shots/17_comptes.jpg" alt="" style="max-height:72mm" /><figcaption>Editor accounts.</figcaption></figure>
+  <figure><img src="shots/18_password.jpg" alt="" style="max-height:72mm" /><figcaption>Changing your password: current one, then the new one.</figcaption></figure>
+  <div class="foot mono"><span>Outsiders Production · Admin guide</span><span>17</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>12 · How to</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">12</span>
+  <h1>AI Studio videos<br /><em>&amp; The Voice Room</em></h1>
+  <p class="lead">Each page has a full-screen opening video and a series of videos (projects for AI Studio, capsules for The Voice Room). On the site they loop silently; one click opens them full screen with sound.</p>
+  <h2>Add or replace a video</h2>
+  <ol class="steps">
+    <li>Upload the video to <b>Vimeo</b> or <b>YouTube</b> (public or "unlisted") and copy its link.</li>
+    <li>Tab <span class="kbd">AI Studio — vidéos</span> or <span class="kbd">Voice Room — vidéos</span>.</li>
+    <li><b>Vidéo d'ouverture</b> (Opening video): paste the link in the <b>Vidéo</b> field; the <b>Image</b> shows while it loads.</li>
+    <li><b>Projets / Capsules</b>: open a sheet, fill in the FR / EN title, cover image and video link. <b>+ Ajouter</b> for another video, ⋮⋮ handle to reorder.</li>
+    <li>Preview, then Save.</li>
+  </ol>
+  <figure><img src="shots/24_ai_admin_work.jpg" alt="" /><figcaption>An AI Studio project sheet: category, cover image and Vimeo link.</figcaption></figure>
+  <div class="foot mono"><span>Outsiders Production · Admin guide</span><span>18</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>12 · Texts and result</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <div class="tip" style="margin-top:0"><span class="mono">Why a link rather than a file?</span>Videos are too heavy for the image upload (6 MB max). Vimeo and YouTube stream them fast and in high quality worldwide. A direct link to an <b>.mp4</b> file hosted elsewhere also works.</div>
+  <table>
+    <tr><th>Format</th><th>Recommendation</th></tr>
+    <tr><td>Opening video</td><td>Landscape 16:9, strong shot from the first seconds: that is what loops.</td></tr>
+    <tr><td>AI Studio projects</td><td>Landscape 16:9. The first project is shown large.</td></tr>
+    <tr><td>Voice Room capsules</td><td>Portrait 4:5 frame: vertical or square social formats fit well.</td></tr>
+  </table>
+  <h2>Edit the texts</h2>
+  <p>Tabs <span class="kbd">Textes FR</span> and <span class="kbd">Textes EN</span>, blocks <b>AI Studio</b> and <b>The Voice Room</b>: title, tagline, services, paragraphs, featured collaboration and credits.</p>
+  <figure><img src="shots/26_ai_textes.jpg" alt="" style="max-height:55mm; object-position: 50% 85%" /><figcaption>The AI Studio block in Textes FR.</figcaption></figure>
+  <figure><img src="shots/27_site_ai.jpg" alt="" style="max-height:58mm; object-position: 50% 90%" /><figcaption>The AI Studio page on the site.</figcaption></figure>
+  <div class="foot mono"><span>Outsiders Production · Admin guide</span><span>19</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>12 · Partners and home page</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <h2 style="margin-top:0">Committed partners (The Voice Room)</h2>
+  <ol class="steps">
+    <li>Tab <span class="kbd">Voice Room — vidéos</span>, <b>Partenaires</b> (Partners) list, <b>+ Ajouter</b>.</li>
+    <li><b>Nom</b> (Name) of the organisation or partner, <b>Logo</b> (transparent PNG, ideally white), optional <b>Site web</b> (Website).</li>
+    <li>Without a logo, the name is shown in full. Replace or delete the sample "[Partenaire 0x]" entries.</li>
+  </ol>
+  <div class="two">
+    <figure><img src="shots/25_voice_partners_admin.jpg" alt="" /><figcaption>A partner sheet.</figcaption></figure>
+    <figure><img src="shots/28_site_voice.jpg" alt="" /><figcaption>WE4SHE collaboration and capsules on the site.</figcaption></figure>
+  </div>
+  <h2>The "Discover" banners on the home page</h2>
+  <p>Two large banners lead to AI Studio and The Voice Room. They automatically reuse each page's opening image and video. Their texts are edited in <span class="kbd">Textes FR / EN</span>, block <b>Bandeaux « À découvrir »</b>.</p>
+  <figure><img src="shots/29_site_discover.jpg" alt="" style="max-height:70mm" /><figcaption>The two banners on the home page.</figcaption></figure>
+  <div class="foot mono"><span>Outsiders Production · Admin guide</span><span>20</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>13 · Home page order</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">13</span>
+  <h1>Home page<br /><em>order</em></h1>
+  <p class="lead">Choose the order of the home page sections and hide the ones you don't want to show for now.</p>
+  <ol class="steps">
+    <li>Tab <span class="kbd">Ordre de l'accueil</span> (Home page order).</li>
+    <li>Drag a row up or down (or use the ⌃ ⌄ arrows).</li>
+    <li>Click the <b>eye</b> to hide a section: it is struck through and disappears from the site, without losing any content. Click again to show it.</li>
+    <li>Preview, then Save.</li>
+  </ol>
+  <figure><img src="shots/30_home_order.jpg" alt="" /><figcaption>Here, "Fondateurs" is hidden and "Sélections &amp; presse" has been moved above "À découvrir".</figcaption></figure>
+  <div class="warn">The opening (title and scrolling banner) always stays at the top, and Contact cannot be hidden. If you hide a section linked from the menu (e.g. About), keep that in mind.</div>
+  <div class="foot mono"><span>Outsiders Production · Admin guide</span><span>21</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>13 · Trailer and search</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <h2 style="margin-top:0">Add a film trailer</h2>
+  <ol class="steps">
+    <li>Tab <span class="kbd">Cinéma</span>, open the film sheet.</li>
+    <li>Paste the YouTube, Vimeo or .mp4 link in <b>Bande-annonce</b> (Trailer, at the bottom of the sheet), then Save.</li>
+    <li>On the site, the film sheet shows a "Trailer" block above the Netflix link; it plays in place. Without a link, the block does not appear.</li>
+  </ol>
+  <div class="two">
+    <figure><img src="shots/31_trailer_admin.jpg" alt="" /><figcaption>The Bande-annonce field in the admin.</figcaption></figure>
+    <figure><img src="shots/33_film_trailer.jpg" alt="" /><figcaption>The trailer in the film sheet.</figcaption></figure>
+  </div>
+  <h2>Search and sorting on the Cinema page</h2>
+  <p>Nothing to set up: visitors search a <b>title</b> or a <b>director</b> (accents and capitals ignored) and sort by <b>Selection</b> (your admin order), <b>Newest</b> or <b>Oldest</b> (Year field). Type filters are created from the start of the "Type" field: always write it the same way (e.g. « Long métrage · … »).</p>
+  <figure><img src="shots/32_cinema_search.jpg" alt="" style="max-height:62mm" /><figcaption>Search, sorting and filters on the Cinema page.</figcaption></figure>
+  <div class="foot mono"><span>Outsiders Production · Admin guide</span><span>22</span></div>
+</section>
+
+<section class="page">
+  <div class="head mono"><span>14 · Best practices</span><img src="../../frontend/public/logo-mark.png" alt="" /></div>
+  <span class="num">14</span>
+  <h1>Best practices</h1>
+  <table style="margin-top:8mm">
+    <tr><th>Question</th><th>Answer</th></tr>
+    <tr><td>I can't see my changes</td><td>Did you click « Enregistrer » (Save)? The button is greyed out when there is nothing to publish.</td></tr>
+    <tr><td>My image won't upload</td><td>It is over 6 MB. Reduce it (JPG, 80 % quality) before uploading.</td></tr>
+    <tr><td>The English text didn't change</td><td>Each language is edited separately: Textes FR and Textes EN, or the Français / Anglais fields of a sheet.</td></tr>
+    <tr><td>I deleted a film by mistake</td><td>Before saving: undo arrow. After: History → Restaurer (Restore).</td></tr>
+    <tr><td>A video won't play</td><td>Check that the YouTube or Vimeo link is public (or unlisted) and that embedding is allowed. Netflix links always open in a new tab.</td></tr>
+    <tr><td>Display order</td><td>In every list: the admin order (⋮⋮ handle). For home page sections: « Ordre de l'accueil » tab.</td></tr>
+  </table>
+  <div class="tip" style="margin-top:10mm"><span class="mono">Remember</span><b>Edit → Preview → Save.</b> Until you save, the public site does not change. And the history always keeps your last 10 versions.</div>
+  <div class="foot mono"><span>Outsiders Production · Admin guide</span><span>23</span></div>
+</section>
+
+</body>
+</html>

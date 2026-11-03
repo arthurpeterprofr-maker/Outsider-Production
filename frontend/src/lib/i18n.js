@@ -32,6 +32,10 @@ const withNewPages = (site) => {
   });
   // Films saved before the trailer field existed: add it so the admin shows it.
   if (Array.isArray(site.films)) site.films = site.films.map((f) => (f && typeof f === "object" && !("trailer" in f) ? { ...f, trailer: "" } : f));
+  // Home order: keep saved order of known sections, append sections added since.
+  const known = defaultContent.homeSections.map((s) => s.id);
+  const saved = (Array.isArray(site.homeSections) ? site.homeSections : []).filter((s, i, a) => known.includes(s?.id) && a.findIndex((x) => x?.id === s.id) === i);
+  site.homeSections = [...saved, ...defaultContent.homeSections.filter((d) => !saved.some((s) => s.id === d.id))];
   return site;
 };
 const build = (over) => withNewPages(deepMerge(defaultContent, over));

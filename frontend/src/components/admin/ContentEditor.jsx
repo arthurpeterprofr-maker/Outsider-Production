@@ -7,12 +7,14 @@ import { defaultContent } from "../../lib/content";
 import { Versions } from "./Versions";
 import { PREVIEW_KEY } from "../../lib/preview";
 import { FieldEditor } from "./FieldEditor";
+import { HomeOrderEditor } from "./HomeOrderEditor";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
 const SECTIONS = [
   { key: "fr", label: "Textes FR" },
   { key: "en", label: "Textes EN" },
+  { key: "homeSections", label: "Ordre de l'accueil" },
   { key: "films", label: "Cinéma" },
   { key: "commercials", label: "Publicités" },
   { key: "artists", label: "Artistes" },
@@ -86,7 +88,9 @@ export const ContentEditor = () => {
         />
       )}
       <div className="mt-8 space-y-4 pb-24">
-        <FieldEditor k={tab} value={draft[tab]} path={tab} depth={0} onChange={(nv) => setDraft({ ...draft, [tab]: nv })} />
+        {tab === "homeSections"
+          ? <HomeOrderEditor value={draft.homeSections} onChange={(nv) => setDraft({ ...draft, homeSections: nv })} />
+          : <FieldEditor k={tab} value={draft[tab]} path={tab} depth={0} onChange={(nv) => setDraft({ ...draft, [tab]: nv })} />}
       </div>
     </div>
   );

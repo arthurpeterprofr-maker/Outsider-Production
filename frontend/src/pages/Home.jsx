@@ -19,9 +19,14 @@ import { Press } from "../components/Press";
 import { Commercials } from "../components/Commercials";
 import { PreviewBanner } from "../components/PreviewBanner";
 import { Discover } from "../components/Discover";
+import { useLang } from "../lib/i18n";
+
+const SECTIONS = { about: About, founders: Founders, films: Films, commercials: Commercials, dna: Manifesto, vision: Vision, expertise: Expertise, discover: Discover, press: Press, contact: Contact };
 
 export default function Home() {
   const { state } = useLocation();
+  const { site } = useLang();
+  const order = Array.isArray(site.homeSections) ? site.homeSections : [];
   if (state?.scrollTo) { markIntroSeen(); markIntroPlayed(); }
   useEffect(() => {
     if (!state?.scrollTo) return undefined;
@@ -35,16 +40,10 @@ export default function Home() {
       <Nav />
       <Hero />
       <Marquee />
-      <About />
-      <Founders />
-      <Films />
-      <Commercials />
-      <Manifesto />
-      <Vision />
-      <Expertise />
-      <Discover />
-      <Press />
-      <Contact />
+      {order.filter((s) => s.show !== false && SECTIONS[s.id]).map((s) => {
+        const Section = SECTIONS[s.id];
+        return <Section key={s.id} />;
+      })}
       <Footer />
       <PreviewBanner />
     </main>

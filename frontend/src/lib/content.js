@@ -425,6 +425,7 @@ export const defaultContent = {
   laurels,
   contact: contactInfo,
   media: { logoMark: "/logo-mark.png", logoFull: "/logo-full.png", hero: "/images/hero.jpg", about: "/images/set.jpg", manifesto: "/images/eye.jpg" },
+  homeSections: ["about", "founders", "films", "commercials", "dna", "vision", "expertise", "discover", "press", "contact"].map((id) => ({ id, show: true })),
   aiStudioMedia: {
     cover: { image: "/images/ai1.jpg", video: "" },
     works: [

@@ -89,6 +89,10 @@ User choices: bilingue FR/EN avec bouton de langue; formulaire = enregistrement 
 - Menu/pied de page : Cinéma → /cinema, Publicités → /publicites (routes ajoutées aussi aux menus déjà enregistrés).
 - Ordre accueil : … Cinéma, Publicités, ADN, Vision, Savoir-faire, À découvrir, Presse, Contact.
 
+## Implemented (2026-11-03, itération 18)
+- Admin « Ordre de l'accueil » (HomeOrderEditor.jsx) : glisser-déposer + flèches + œil pour masquer (contact toujours visible). Donnée site.homeSections [{id, show}], normalisée dans i18n.js (nouvelles sections ajoutées à la fin). Home.jsx rend les sections selon cet ordre (Hero + bandeau toujours en haut).
+- Admin mobile : onglets sur une ligne défilante, barre d'actions qui passe à la ligne (plus de débordement à 390 px).
+
 
 ## Backlog
 - P0 : renseigner l'email de réception réel (CONTACT_NOTIFY_EMAIL), remplacer contenus/photos par ceux du client.

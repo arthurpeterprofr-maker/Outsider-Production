@@ -1,0 +1,53 @@
+{
+  "summary": "Frontend-only verification of the new drag-and-drop Home sections ordering feature in the admin CMS (cms-tab-homeSections). All review items pass. Default order restored at the end on both the saved CMS content and the public home.",
+  "backend_issues": { "critical": [], "minor": [] },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Admin /admin at 390px", "issues": ["Sticky tab bar causes ~45px horizontal page overflow (document.scrollWidth - clientWidth = 45). All home-order-* buttons are still reachable within the 390 viewport (right edge ~353px). Minor; pre-existing in admin shell, not in review scope."]}
+    ]
+  },
+  "verified": {
+    "editor_present": {"home-order-editor": true, "rows_10": true, "ids": ["about","founders","films","commercials","dna","vision","expertise","discover","press","contact"]},
+    "controls_per_row": "home-order-up-{id}, home-order-down-{id}, home-order-toggle-{id} all present; toggle absent on contact (confirmed).",
+    "initial_order_matches_default": true,
+    "button_reorder_works": "After home-order-down-about x2: ['founders','films','about','commercials','dna','vision','expertise','discover','press','contact'] (matches expected).",
+    "hide_toggle_works": "After hiding 'press' and saving, public home sections render without press (9 sections). After unhiding and saving, press returns.",
+    "save_persists_to_public": "After save + reload /, public home ordering is ['founders','films','about','commercials','dna','vision','expertise','contact'] with discover+press hidden/absent — matches saved draft.",
+    "preview_flow": "localStorage op-preview-draft seeded by ContentEditor; /?preview=1 shows draft order ['films','about','founders','commercials','dna','vision','expertise','press','contact'] with discover hidden and the preview banner visible — before any save.",
+    "hero_marquee_stay_on_top": "Home.jsx renders Hero + Marquee before the order.filter().map(); confirmed visually at /?preview=1 (Hero on top, no section injected above).",
+    "nav_links_with_reorder": {
+      "nav-link-about scrolls into about-section": true,
+      "nav-link-contact scrolls into contact-section": true
+    },
+    "mobile_390_reachability": {
+      "home-order-up-about": {"right_edge": 289, "in_viewport": true},
+      "home-order-down-about": {"right_edge": 321, "in_viewport": true},
+      "home-order-toggle-about": {"right_edge": 353, "in_viewport": true},
+      "page_horizontal_overflow_px": 45
+    },
+    "restored_defaults": {
+      "editor_draft": ["about","founders","films","commercials","dna","vision","expertise","discover","press","contact"],
+      "saved_and_public_home": ["about","founders","films","commercials","dna","vision","expertise","discover","press","contact"],
+      "press_shown_contact_shown": true
+    },
+    "console_errors": "Only 401s from /api/auth/me before login (expected). No runtime errors during flow."
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "HomeOrderEditor.jsx: clean HTML5 drag-and-drop plus up/down buttons and eye toggle; contact row correctly omits the hide toggle (s.id !== 'contact').",
+    "ContentEditor.jsx: debounced write of draft to localStorage[PREVIEW_KEY] (300ms) powers live /?preview=1 preview; openPreview also writes synchronously before opening.",
+    "i18n.withNewPages() dedupes + filters saved homeSections to known ids and appends any missing default sections, so legacy saved content and future added sections remain safe.",
+    "Home.jsx renders Hero + Marquee before `order.filter(s => s.show !== false && SECTIONS[s.id]).map(...)` — hidden sections are simply not mounted (good), hero/marquee always on top (good).",
+    "Minor: at 390px admin shell has sticky toolbar overflow (~45px). Not caused by HomeOrderEditor (its rows are 390-safe). Could set `overflow-x-auto` only on the tab row, or wrap the whole page body in a scrollable container to kill the body-level horizontal scroll."
+  ],
+  "updated_files": [],
+  "success_rate": { "backend": "n/a (skipped)", "frontend": "100%" },
+  "test_credentials": "admin@outsidersproduction.ma / Outsiders2026! (from /app/memory/test_credentials.md)",
+  "seed_data_creation": "none; final CMS state restored to default order with all 10 sections visible.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Testids: home-order-editor, home-order-item-{id}, home-order-up-{id}, home-order-down-{id}, home-order-toggle-{id} (no toggle on contact). CMS tabs via cms-tab-{key} incl. cms-tab-homeSections. Save = cms-save-btn; Preview = cms-preview-btn (opens /?preview=1 which reads localStorage['op-preview-draft']). Public section testids used for order verification: about-section, founders-section, films-section, commercials-section, manifesto-section (dna), vision-section, expertise-section, discover-section, press-section, contact-section. Default order after this run is restored (saved to backend)."
+}

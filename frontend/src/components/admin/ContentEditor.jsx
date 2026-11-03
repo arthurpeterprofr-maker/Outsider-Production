@@ -64,15 +64,15 @@ export const ContentEditor = () => {
   return (
     <div data-testid="content-editor">
       <div className="sticky top-0 z-10 -mx-5 flex flex-wrap items-center justify-between gap-4 border-b border-white/10 bg-[#050505]/95 px-5 py-4 backdrop-blur sm:-mx-10 sm:px-10">
-        <div className="flex flex-wrap gap-2">
+        <div className="op-noscrollbar flex w-full gap-2 overflow-x-auto md:w-auto md:flex-wrap">
           {SECTIONS.map((s) => (
             <button key={s.key} onClick={() => setTab(s.key)} data-testid={`cms-tab-${s.key}`}
-              className={`rounded-full px-4 py-2 font-mono text-[11px] uppercase tracking-[0.2em] transition-colors ${tab === s.key ? "bg-white text-black" : "border border-white/15 text-zinc-300 hover:text-white"}`}>
+              className={`shrink-0 whitespace-nowrap rounded-full px-4 py-2 font-mono text-[11px] uppercase tracking-[0.2em] transition-colors ${tab === s.key ? "bg-white text-black" : "border border-white/15 text-zinc-300 hover:text-white"}`}>
               {s.label}
             </button>
           ))}
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           {dirty && <button onClick={() => setDraft(site)} className="op-icon-btn" aria-label="annuler" data-testid="cms-reset-btn"><RotateCcw className="h-4 w-4" /></button>}
           <button onClick={() => setShowVersions((s) => !s)} className="op-icon-btn" aria-label="historique" data-testid="cms-history-btn"><History className="h-4 w-4" /></button>
           <button onClick={openPreview} className="op-btn !py-3" data-testid="cms-preview-btn"><Eye className="h-4 w-4" /><span>Aperçu</span></button>

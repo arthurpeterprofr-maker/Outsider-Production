@@ -102,6 +102,10 @@ User choices: bilingue FR/EN avec bouton de langue; formulaire = enregistrement 
 ## Implemented (2026-11-03, itération 21)
 - Admin bilingue FR/EN : sélecteur FR/EN dans l'en-tête (connexion, admin, page /admin/reset), mémorisé par navigateur (localStorage op-admin-lang), indépendant de la langue du site. Textes dans lib/adminI18n.js, libellés des champs/onglets/sections en anglais dans lib/adminLabels.js. Le lien du guide ouvre le PDF de la langue choisie.
 
+## Implemented (2026-11-03, itération 22)
+- Artistes : plusieurs films par artiste (artists[].videos [{title, image, link}], ancien champ film migré automatiquement), interrupteurs showFilms / showPhotos (champ booléen générique dans FieldEditor). Page artiste : onglets affichés seulement s'ils sont activés et non vides ; 1er film en grand, les autres en grille 2 colonnes. Aperçu au survol de la liste : photo ou image du 1er film.
+- Guides PDF (FR/EN) : la page Artistes décrit encore l'ancien champ « Film » unique.
+
 
 ## Backlog
 - P0 : renseigner l'email de réception réel (CONTACT_NOTIFY_EMAIL), remplacer contenus/photos par ceux du client.

@@ -1,0 +1,23 @@
+{
+  "summary": "Frontend-only test of artist videos/photos toggles on /artistes/artiste-01 using preview draft (localStorage op-preview-draft + ?preview=1). All five scenarios pass: (a) 3 videos -> Film tab shows first large (artist-film-0) and others in 2-col grid (artist-film-1, artist-film-2); clicking the YouTube video (aqz-KE-bpKQ) opens the VideoPlayer; (b) showPhotos=false -> only artist-tab-film is present, no artist-tab-photo, no artist-photos block; (c) showFilms=false with photos -> only artist-tab-photo and artist-photos rendered, films block absent; (d) photos emptied with films on -> only Film tab; (e) both switches off -> no artist-tabs container, no films/photos blocks, page still renders (bio visible). Hover preview on /artistes for an artist whose photos are empty falls back to the first video image (/images/ad1.jpg) as cover. Regression: default (no draft) artist-01 still shows both tabs with Film default and film-0 rendered. Mobile 390 layout OK (scrollWidth=390, no horizontal overflow). No console errors besides a benign iframe allow/allowfullscreen warning from the YouTube embed. Admin FieldEditor code confirmed: boolean switch renders button role=switch with data-testid cms-artists.N.showFilms/showPhotos, add button cms-add-artists.N.videos, and FR/EN labels via LABELS/LABELS_EN (showFilms/showPhotos/videos). No content was persisted (preview draft only; draft cleared before regression check).",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "lib/i18n.js build() migration correctly moves legacy artist.film into videos[] and defaults showFilms/showPhotos to true for saved artists lacking them.",
+    "ArtistDetail.jsx correctly filters videos (v?.image || v?.link) and tabs (showFilms/showPhotos !== false && length>0); current tab falls back to first available tab when the stored tab becomes unavailable.",
+    "Artists.jsx Preview cover falls back to first video image when no photos — matches spec.",
+    "VideoPlayer iframe triggers a harmless console warning 'Allow attribute will take precedence over allowfullscreen' — low priority, could remove the redundant allowfullscreen attribute."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "n/a", "frontend": "100%"},
+  "seed_data_creation": "none — preview draft only in localStorage, cleared after tests",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Preview flow: set localStorage.op-preview-draft to a partial site object (must include artists array with the target slug) and open the page with ?preview=1. The i18n.js build() deep-merges the draft with defaultContent so unspecified keys stay defaulted. Public /api/content is 403 for anonymous — fetching current saved content for the draft baseline requires admin auth. Admin testids: cms-artists.N.showFilms, cms-artists.N.showPhotos (role=switch, aria-checked), cms-add-artists.N.videos."
+}

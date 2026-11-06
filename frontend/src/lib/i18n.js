@@ -32,6 +32,15 @@ const withNewPages = (site) => {
   });
   // Films saved before the trailer field existed: add it so the admin shows it.
   if (Array.isArray(site.films)) site.films = site.films.map((f) => (f && typeof f === "object" && !("trailer" in f) ? { ...f, trailer: "" } : f));
+  // Artists saved with a single "film": move it into the "videos" list and add the show/hide switches.
+  if (Array.isArray(site.artists)) {
+    site.artists = site.artists.map((ar) => {
+      if (!ar || typeof ar !== "object") return ar;
+      const { film, ...rest } = ar;
+      const videos = Array.isArray(ar.videos) ? ar.videos : film ? [{ title: "", image: film.image || "", link: film.link || "" }] : [];
+      return { ...rest, showFilms: ar.showFilms !== false, videos, showPhotos: ar.showPhotos !== false, photos: Array.isArray(ar.photos) ? ar.photos : [] };
+    });
+  }
   // Home order: keep saved order of known sections, append sections added since.
   const known = defaultContent.homeSections.map((s) => s.id);
   const saved = (Array.isArray(site.homeSections) ? site.homeSections : []).filter((s, i, a) => known.includes(s?.id) && a.findIndex((x) => x?.id === s.id) === i);

@@ -397,7 +397,9 @@ export const artistFilters = [
 const artist = (n, tags, film, photos) => ({
   slug: `artiste-${n}`, name: `Artiste ${n}`, tags,
   bio: { fr: `[Biographie de l'artiste ${n} à compléter : parcours, style, publications et collaborations marquantes.]`, en: `[Artist ${n} biography to come: background, style, publications and key collaborations.]` },
-  film: { image: film, link: "" },
+  showFilms: true,
+  videos: [{ title: "", image: film, link: "" }],
+  showPhotos: true,
   photos,
 });
 

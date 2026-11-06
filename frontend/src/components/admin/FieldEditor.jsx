@@ -30,6 +30,7 @@ const LABELS = {
   trailer: "Bande-annonce (lien YouTube, Vimeo ou .mp4 — lue dans la fiche du film)",
   partners: "Partenaires", url: "Site web (optionnel)", partnersLabel: "Titre des partenaires", logo: "Logo (PNG transparent, idéalement blanc ; sans logo, le nom s'affiche)",
   discover: "Bandeaux « À découvrir » (accueil)",
+  showFilms: "Afficher l'onglet Film", showPhotos: "Afficher l'onglet Photo", videos: "Films (vidéos)",
   video: "Vidéo (lien YouTube, Vimeo ou .mp4 — aperçu muet en boucle, plein écran au clic)", photos: "Photos", film: "Film", link: "Lien vidéo (YouTube, Vimeo ou fichier .mp4 — lu sur le site ; Netflix s'ouvre dans un nouvel onglet)", key: "Clé", route: "Page (ne pas modifier)",
 };
 const IMAGE_KEYS = ["img", "image", "poster", "hero", "about", "manifesto", "logoMark", "logoFull", "logo"];
@@ -80,6 +81,17 @@ const ImageField = ({ value, onChange, path }) => {
 export const FieldEditor = ({ k, value, onChange, path, depth = 0 }) => {
   const lang = useAdminLang();
   const key = typeof k === "number" ? "" : k;
+  if (typeof value === "boolean") {
+    return (
+      <button type="button" role="switch" aria-checked={value} onClick={() => onChange(!value)} data-testid={`cms-${path}`}
+        className="flex items-center gap-3 text-left">
+        <span className={`relative h-6 w-11 shrink-0 rounded-full transition-colors duration-300 ${value ? "bg-white" : "bg-white/15"}`}>
+          <span className={`absolute top-1 h-4 w-4 rounded-full transition-transform duration-300 ${value ? "translate-x-6 bg-black" : "translate-x-1 bg-zinc-400"}`} />
+        </span>
+        <span className="op-label !text-[10px] !tracking-[0.2em]">{labelOf(k, lang)}</span>
+      </button>
+    );
+  }
   if (typeof value === "string") {
     const long = LONG_KEYS.includes(key) || value.length > 90 || LONG_KEYS.some((l) => path.includes(`${l}.`));
     return (

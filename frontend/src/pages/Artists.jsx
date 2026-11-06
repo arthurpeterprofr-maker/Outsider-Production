@@ -18,12 +18,14 @@ const FilterRow = ({ items, active, onPick, lang, i }) => (
   </div>
 );
 
-const Preview = ({ artist, pos }) => (
+const Preview = ({ artist, pos }) => {
+  const cover = artist?.photos?.find(Boolean) || artist?.videos?.find((v) => v?.image)?.image;
+  return (
   <AnimatePresence>
-    {artist?.photos?.[0] && (
+    {cover && (
       <motion.img
         key={artist.slug}
-        src={asset(artist.photos[0])}
+        src={asset(cover)}
         alt=""
         className="pointer-events-none fixed z-40 hidden h-64 w-48 object-cover lg:block"
         style={{ left: pos.x + 24, top: pos.y - 128 }}
@@ -34,7 +36,8 @@ const Preview = ({ artist, pos }) => (
       />
     )}
   </AnimatePresence>
-);
+  );
+};
 
 export default function Artists() {
   const { t, lang, site } = useLang();

@@ -2,9 +2,20 @@ import { motion } from "framer-motion";
 import { useLang } from "../lib/i18n";
 import { PageShell, PageHero, PageCta, usePageTitle } from "../components/PageParts";
 import { VideoTile } from "../components/VideoTile";
+import { InlineVideo } from "../components/InlineVideo";
 import { Reveal, Label, EASE } from "../components/motion";
 
 const arr = (v) => (Array.isArray(v) ? v : []);
+
+const Presentation = ({ p, label }) => {
+  if (!p?.video) return null;
+  return (
+    <section className="mx-auto max-w-[1500px] px-5 pt-20 sm:px-10 sm:pt-28" data-testid="ai-presentation">
+      <Reveal><Label>{label}</Label></Reveal>
+      <Reveal delay={0.1} className="mt-8"><InlineVideo image={p.image} video={p.video} title={label} testId="ai-presentation-player" /></Reveal>
+    </section>
+  );
+};
 
 const Services = ({ s }) => (
   <section className="mx-auto max-w-[1500px] px-5 py-24 sm:px-10 sm:py-32" data-testid="ai-services">
@@ -53,6 +64,7 @@ export default function AiStudio() {
         <Reveal className="lg:col-span-7"><p className="font-display text-3xl leading-tight text-white sm:text-5xl" data-testid="ai-lead">{s.lead}</p></Reveal>
         <Reveal delay={0.15} className="lg:col-span-4 lg:col-start-9 lg:pt-3"><p className="font-body text-base leading-[1.9] text-zinc-300" data-testid="ai-text">{s.text}</p></Reveal>
       </section>
+      <Presentation p={m.presentation} label={s.presentationLabel} />
       <Services s={s} />
       <Works works={arr(m.works)} s={s} lang={lang} />
       <PageCta label={s.cta} testId="ai-cta" />

@@ -81,6 +81,7 @@ export const content = {
       servicesLabel: "Ce que nous créons",
       services: ["Campagnes publicitaires IA", "Films et courts métrages IA", "Contenus de marque IA", "Expériences visuelles créatives", "Développement de concepts et direction IA"],
       worksLabel: "Sélection",
+      presentationLabel: "Vidéo de présentation",
       watch: "Voir la vidéo",
       cta: "Parlons de votre projet",
     },
@@ -248,6 +249,7 @@ export const content = {
       servicesLabel: "What we create",
       services: ["AI Advertising Campaigns", "AI Films & Short Films", "AI Branded Content", "Creative Visual Experiences", "AI Concept Development & Direction"],
       worksLabel: "Selected work",
+      presentationLabel: "Presentation video",
       watch: "Watch the video",
       cta: "Let's talk about your project",
     },
@@ -430,6 +432,7 @@ export const defaultContent = {
   homeSections: ["about", "founders", "films", "commercials", "dna", "vision", "expertise", "discover", "press", "contact"].map((id) => ({ id, show: true })),
   aiStudioMedia: {
     cover: { image: "/images/ai1.jpg", video: "" },
+    presentation: { image: "/images/ai3.jpg", video: "" },
     works: [
       { title: { fr: "[Projet IA 01]", en: "[AI project 01]" }, category: { fr: "Campagne publicitaire IA", en: "AI Advertising Campaign" }, image: "/images/ai2.jpg", video: "" },
       { title: { fr: "[Projet IA 02]", en: "[AI project 02]" }, category: { fr: "Court métrage IA", en: "AI Short Film" }, image: "/images/ai3.jpg", video: "" },

@@ -20,6 +20,7 @@ from pydantic import BaseModel, Field, EmailStr, BeforeValidator, ConfigDict
 from starlette.middleware.cors import CORSMiddleware
 
 from email_service import send_email, contact_notification_html, password_reset_html
+from video_storage import build_video_router
 import hashlib
 import secrets
 
@@ -430,6 +431,7 @@ async def root():
     return {"message": "Outsiders Production API"}
 
 
+api.include_router(build_video_router(db, require_editor))
 app.include_router(api)
 app.add_middleware(
     CORSMiddleware,

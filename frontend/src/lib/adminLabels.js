@@ -22,6 +22,7 @@ export const LABELS_EN = {
   partners: "Partners", url: "Website (optional)", partnersLabel: "Partners title", logo: "Logo (transparent PNG, ideally white; without logo the name is shown)",
   discover: "« Discover » banners (home)",
   showFilms: "Show the Film tab", showPhotos: "Show the Photo tab", videos: "Films (videos)",
+  presentation: "Presentation video (under the intro text)", presentationLabel: "Presentation video title",
   video: "Video (YouTube, Vimeo or .mp4 link — silent loop preview, full screen on click)", photos: "Photos", film: "Film",
   link: "Video link (YouTube, Vimeo or .mp4 file — played on the site; Netflix opens in a new tab)", key: "Key", route: "Page (do not change)",
   all: "« All » filter", viewAll: "« See all » button", search: "Search placeholder", noResult: "No result message",

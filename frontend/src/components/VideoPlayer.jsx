@@ -9,7 +9,7 @@ export const toPlayable = (url) => {
   if (yt) return { kind: "iframe", src: `https://www.youtube.com/embed/${yt[1]}?autoplay=1&rel=0&modestbranding=1&playsinline=1` };
   const vm = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
   if (vm) return { kind: "iframe", src: `https://player.vimeo.com/video/${vm[1]}?autoplay=1&title=0&byline=0` };
-  if (/\.(mp4|webm|mov|m3u8)(\?|$)/i.test(url) || url.startsWith("/api/media/")) return { kind: "video", src: url };
+  if (/\.(mp4|webm|mov|m3u8)(\?|$)/i.test(url) || url.includes("/api/media/")) return { kind: "video", src: url };
   return null;
 };
 
@@ -20,7 +20,7 @@ export const toPreview = (url) => {
   if (yt) return { kind: "iframe", src: `https://www.youtube.com/embed/${yt[1]}?autoplay=1&mute=1&loop=1&playlist=${yt[1]}&controls=0&rel=0&modestbranding=1&playsinline=1&disablekb=1` };
   const vm = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
   if (vm) return { kind: "iframe", src: `https://player.vimeo.com/video/${vm[1]}?background=1&autoplay=1&muted=1&loop=1&autopause=0` };
-  if (/\.(mp4|webm|mov)(\?|$)/i.test(url) || url.startsWith("/api/media/")) return { kind: "video", src: url };
+  if (/\.(mp4|webm|mov)(\?|$)/i.test(url) || url.includes("/api/media/")) return { kind: "video", src: url };
   return null;
 };
 

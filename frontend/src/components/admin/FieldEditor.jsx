@@ -5,6 +5,7 @@ import { ChevronDown, ChevronUp, GripVertical, ImageUp, Plus, Trash2 } from "luc
 import { asset } from "../../lib/i18n";
 import { useAdminLang, useAT } from "../../lib/adminI18n";
 import { LABELS_EN } from "../../lib/adminLabels";
+import { VideoField } from "./VideoField";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -31,9 +32,11 @@ const LABELS = {
   partners: "Partenaires", url: "Site web (optionnel)", partnersLabel: "Titre des partenaires", logo: "Logo (PNG transparent, idéalement blanc ; sans logo, le nom s'affiche)",
   discover: "Bandeaux « À découvrir » (accueil)",
   showFilms: "Afficher l'onglet Film", showPhotos: "Afficher l'onglet Photo", videos: "Films (vidéos)",
+  presentation: "Vidéo de présentation (sous le texte d'intro)", presentationLabel: "Titre de la vidéo de présentation",
   video: "Vidéo (lien YouTube, Vimeo ou .mp4 — aperçu muet en boucle, plein écran au clic)", photos: "Photos", film: "Film", link: "Lien vidéo (YouTube, Vimeo ou fichier .mp4 — lu sur le site ; Netflix s'ouvre dans un nouvel onglet)", key: "Clé", route: "Page (ne pas modifier)",
 };
 const IMAGE_KEYS = ["img", "image", "poster", "hero", "about", "manifesto", "logoMark", "logoFull", "logo"];
+const VIDEO_KEYS = ["video", "trailer"];
 const LONG_KEYS = ["bio", "synopsis", "quote", "intro", "note", "blurb", "text", "paragraphs", "success"];
 
 const labelOf = (k, lang = "fr") => (typeof k === "number" ? `#${k + 1}` : (lang === "en" ? LABELS_EN[k] : LABELS[k]) || LABELS[k] || k);
@@ -99,6 +102,7 @@ export const FieldEditor = ({ k, value, onChange, path, depth = 0 }) => {
         <span className="op-label !text-[10px] !tracking-[0.2em]">{labelOf(k, lang)}</span>
         <div className="mt-2">
           {IMAGE_KEYS.includes(key) || /\.photos\.\d+$/.test(path) ? <ImageField value={value} onChange={onChange} path={path} />
+            : VIDEO_KEYS.includes(key) || /^artists\.\d+\.videos\.\d+\.link$/.test(path) ? <VideoField value={value} onChange={onChange} path={path} />
             : long ? <textarea rows={3} className="op-admin-input" value={value} onChange={(e) => onChange(e.target.value)} data-testid={`cms-${path}`} />
             : <input className="op-admin-input" value={value} onChange={(e) => onChange(e.target.value)} readOnly={key === "id" || key === "route"} data-testid={`cms-${path}`} />}
         </div>

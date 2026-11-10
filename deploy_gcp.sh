@@ -46,11 +46,20 @@ ensure_secret JWT_SECRET ""
 ensure_secret ADMIN_PASSWORD "Mot de passe admin initial"
 ensure_secret RESEND_API_KEY "Clé API Resend (re_...)"
 
+# Espace de stockage des vidéos importées depuis l'admin (privé, lu uniquement via l'API)
+VIDEO_BUCKET="${PROJECT_ID}-outsiders-videos"
+gcloud services enable storage.googleapis.com
+if ! gcloud storage buckets describe "gs://${VIDEO_BUCKET}" >/dev/null 2>&1; then
+  gcloud storage buckets create "gs://${VIDEO_BUCKET}" --location="$REGION" --uniform-bucket-level-access
+fi
+gcloud storage buckets add-iam-policy-binding "gs://${VIDEO_BUCKET}" --member="$SA" --role="roles/storage.objectUser" >/dev/null
+
 gcloud run deploy outsiders-api \
   --source backend \
   --allow-unauthenticated \
   --memory 512Mi \
-  --set-env-vars "^|^DB_NAME=outsiders|ADMIN_EMAIL=${ADMIN_EMAIL}|EMAIL_PROVIDER=resend|EMAIL_FROM_NAME=Outsiders Production|EMAIL_FROM=${EMAIL_FROM}|CONTACT_NOTIFY_EMAIL=${CONTACT_EMAIL}|CORS_ORIGINS=${SITE_URL}|FRONTEND_URL=${SITE_URL}" \
+  --timeout 300 \
+  --set-env-vars "^|^DB_NAME=outsiders|GCS_BUCKET=${VIDEO_BUCKET}|ADMIN_EMAIL=${ADMIN_EMAIL}|EMAIL_PROVIDER=resend|EMAIL_FROM_NAME=Outsiders Production|EMAIL_FROM=${EMAIL_FROM}|CONTACT_NOTIFY_EMAIL=${CONTACT_EMAIL}|CORS_ORIGINS=${SITE_URL}|FRONTEND_URL=${SITE_URL}" \
   --set-secrets "MONGO_URL=MONGO_URL:latest,JWT_SECRET=JWT_SECRET:latest,ADMIN_PASSWORD=ADMIN_PASSWORD:latest,RESEND_API_KEY=RESEND_API_KEY:latest"
 
 API_URL=$(gcloud run services describe outsiders-api --format='value(status.url)')

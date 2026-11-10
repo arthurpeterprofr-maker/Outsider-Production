@@ -1,0 +1,20 @@
+{
+  "summary": "Backend + frontend verification of AI Studio presentation video feature. Backend: pytest /app/backend/tests/test_videos.py — 3/3 pass (auth required, type/size rejection, chunked upload + range streaming). Frontend (admin + preview, Chromium): logged in with admin@outsidersproduction.ma, opened Contenu du site > 'AI Studio — vidéos', expanded new 'Vidéo de présentation (sous le texte d'intro)' block (Image + Vidéo fields), uploaded /app/backend/tests/fixtures/sample.mp4 (991 KB) via cms-video-file-aiStudioMedia.presentation.video — progress bar cms-video-progress-aiStudioMedia.presentation.video appeared, toast 'Vidéo importée — pensez à enregistrer' shown, field value set to /api/media/video/<id>, and after debounce localStorage op-preview-draft.aiStudioMedia.presentation.video matches. Opened /ai-studio?preview=1: section data-testid=ai-presentation renders between ai-text and ai-services (DOM order lead=16, text=17, presentation=18, services=21) with label 'Vidéo de présentation'; ai-presentation-player shows cover + play; clicking play reveals ai-presentation-player-video whose currentSrc ends with /api/media/video/<id> and readyState=4, error=null. YouTube link https://www.youtube.com/watch?v=aqz-KE-bpKQ renders ai-presentation-player-iframe (youtube.com/embed/aqz-KE-bpKQ). Empty presentation.video hides ai-presentation (count=0). Mobile 390: player bounding box 350x196.875 (16:9 ratio=1.7778, full width minus px-5 padding). EN: admin label 'Presentation video (under the intro text)' and upload button title exactly 'Upload a video file (500 MB max)'; EN public site section label 'Presentation video'. No content was saved (draft only; localStorage cleared at end). No console errors.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {"ui_bugs": [], "integration_issues": [], "design_issues": []},
+  "test_report_links": ["/app/backend/tests/test_videos.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "VideoField.jsx: chunked upload via /api/admin/videos/init|chunk|complete works well; onProgress UI is clean. Good use of 5MB slices to stay under proxy limits.",
+    "InlineVideo.jsx correctly branches on toPlayable kind (iframe vs file) and uses cover image as poster for video playback.",
+    "AiStudio Presentation section is correctly gated on p.video truthiness and uses PageShell/Reveal styling consistent with the rest of the page.",
+    "ContentEditor debounces draft -> localStorage by 300ms; any post-change assertion in tests must wait >=300ms (now documented)."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "100% (3/3)", "frontend": "100%"},
+  "test_credentials": "admin@outsidersproduction.ma / Outsiders2026! (from review request)",
+  "seed_data_creation": "Two uploaded video files remain in GridFS (TEST uploads). Content document was not modified — draft only, cleared from localStorage after tests.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "AI Studio presentation video block is under tab aiStudioMedia; the collapsed 'Vidéo de présentation (sous le texte d'intro)' group must be clicked to expand before testids cms-upload-video-aiStudioMedia.presentation.video / cms-video-file-aiStudioMedia.presentation.video become visible. Admin lang toggle is a button with text 'en'/'fr' in the admin header. ContentEditor debounces draft write to op-preview-draft by 300ms — always wait before reading localStorage."
+}

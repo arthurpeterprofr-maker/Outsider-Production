@@ -106,6 +106,10 @@ User choices: bilingue FR/EN avec bouton de langue; formulaire = enregistrement 
 - Artistes : plusieurs films par artiste (artists[].videos [{title, image, link}], ancien champ film migré automatiquement), interrupteurs showFilms / showPhotos (champ booléen générique dans FieldEditor). Page artiste : onglets affichés seulement s'ils sont activés et non vides ; 1er film en grand, les autres en grille 2 colonnes. Aperçu au survol de la liste : photo ou image du 1er film.
 - Guides PDF (FR/EN) : la page Artistes décrit encore l'ancien champ « Film » unique.
 
+## Implemented (2026-11-10, itération 23)
+- AI Studio : section « Vidéo de présentation » sous le texte d'intro (aiStudioMedia.presentation {image, video}), grand lecteur 16:9 lu sur place avec le son (InlineVideo.jsx). Masquée si pas de vidéo.
+- Import de fichiers vidéo dans l'admin (500 Mo max, mp4/webm/mov) : bouton film sur tous les champs video/trailer + liens des films d'artistes (VideoField.jsx). Envoi en morceaux de 5 Mo (init/chunk/complete, backend/video_storage.py), lecture en streaming avec Range (/api/media/video/{id}). Stockage : Google Cloud Storage si GCS_BUCKET (deploy_gcp.sh crée le bucket privé ${PROJECT_ID}-outsiders-videos et donne les droits au compte de service), sinon GridFS (preview). Tests : backend/tests/test_videos.py.
+
 
 ## Backlog
 - P0 : renseigner l'email de réception réel (CONTACT_NOTIFY_EMAIL), remplacer contenus/photos par ceux du client.
